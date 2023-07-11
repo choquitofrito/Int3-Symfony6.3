@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+
+<h2>La commande complete avec id est ici</h2>
+{{ dump (commandeBD) }}
+<h3>Date commande:</h3>
+{{ commandeBD.dateCreation | date('Y-m-d')}}
+<h3>Date modification:</h3>
+{{ commandeBD.dateModification |date('Y-m-d') }}
+<h3>Etat:</h3>
+{{ commandeBD.etat }}
+<hr>
+{% for detail in commandeBD.details %}
+	<h4>{{ detail.produit.nom }}:
+		{{ detail.quantite }} unités
+        
+		<img style="width:10em" src='{{ asset ("/images/" ~ detail.produit.lien ) }}'/>
+	</h4>
+	<hr>
+{% endfor %}
+<h3>Total:
+{{ commandeBD.total }} euros</h3>
+{% endblock %}

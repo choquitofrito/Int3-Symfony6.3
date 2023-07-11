@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!
+{% endblock %}
+
+{% block body %}
+	<h1>Eat chocolate or die</h4>
+	{% for produit in produits %}
+		<br>{{ produit.nom }}
+		<br>
+		<a href='{{ path ("produit_detail",{'id': produit.id}) }}'>
+		<br>
+			<img style="width:10em" src='{{ asset ("/images/" ~ produit.lien ) }}'/>
+		</a>
+	{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<h1>Liste de produits</h1>
+{% for produit in produits %}
+    <h4><a href ="/mini/panier/detail/produit/{{produit.id}}">{{produit.titre}}</a></h4><br> 
+{% endfor %}
+

@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([[920],{83330:function(n,t,e){"use strict";var i=e(19755),u=e.n(i),a=window.DISQUS_COMMENT_URL;window.onNewDisqusComment=function(n){u().ajax({url:a,method:"POST",data:{id:n.id,text:n.text}})}}},0,[[83330,3666,9755]]]);

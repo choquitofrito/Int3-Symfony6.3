@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+	<form action="{{ path('traitement_form_simple_post') }}" method="POST">
+		Nom:<input type="text" name="nom">
+		Age:<input type="number" name="age">
+		<button class="btn-primary" type="submit">Envoyer POST</button>
+	</form>
+
+
+	<form action="{{ path('traitement_form_simple_get') }}" method="GET">
+		Nom:<input type="text" name="produit">
+		Age:<input type="number" name="prix">
+		<button class="btn-secondary" type="submit">Envoyer GET</button>
+	</form>
+
+	{# <img src="{{ asset ('build/imagesStatiques/montagne.jpg') }}" /> #}
+	<img src="{{ asset ('build/imagesStatiques/logo.png') }}" />
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent () }}
+	{{ encore_entry_link_tags('vue1') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('vue1') }}
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Devinez le chiffre <input id="valUser" type="number" />
+    <br />
+    Il vous reste
+    <div id="temps">10</div>
+    secondes
+    <script>
+      //   let val = Math.floor(Math.random() * 10) + 1;
+      let val = 8;
+
+      let attente = function () {
+        return new Promise((resolve, reject) => {
+          let valUser = parseInt(document.getElementById("valUser").value);
+          //   console.log(val);
+          //   console.log(valUser);
+          setTimeout(() => {
+            if (val == valUser) {
+              resolve("Super!");
+            } else {
+              resolve("Noooooooo!");
+            }
+          }, 5000);
+        });
+      };
+
+      attente().then((res) => {
+        console.log(res);
+      });
+    </script>
+  </body>
+</html>

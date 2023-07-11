@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let promise1 = new Promise((resolve, reject) => {
+        // du code ici (normalement on aura un appel à un code asynchrone - AJAX, timer)
+        let resultat = 5; // comme si on avait obtenu de l'appel AJAX ce résultat
+
+        if (Math.floor(Math.random() * 2) == 1) {
+          // si l'opération est ok
+          resolve(resultat);
+        } else {
+          // si l'opération échoue...
+          reject("ça ne fonctionne pas");
+        }
+      });
+
+      promise1.then(
+        (res) => {
+          console.log(`resolve: ${res}`);
+        },
+        (resReject) => {
+          console.log(`reject: ${resReject}`);
+        }
+      );
+    </script>
+  </body>
+</html>

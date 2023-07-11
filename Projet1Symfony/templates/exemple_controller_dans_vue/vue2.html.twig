@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExempleControllerDansVueController!{% endblock %}
+
+{% block body %}
+
+
+<h1>Je suis la vue 2</h1>
+
+<div id='container1'>
+  Contenu de la vue 2<br>
+  Coucou!!!!!!!!!!!!!
+</div>
+<div id='container2'>
+    <ul>
+        {% for nouvelle in nouvelles %}
+            <li>{{ nouvelle }}</li>
+        {% endfor %}
+    </ul>   
+</div>
+
+
+<style>
+    #container1 {
+        border: 3px black solid;
+        height: 400px;
+        width: 500px;
+        float:left;
+        padding:10px;
+        font-family: calibri;
+    }
+    #container2 {
+        border: 3px black solid;
+        height: 400px;
+        width: 300px;
+        float:left;
+        padding:10px;
+        font-family :calibri;
+        color:#2020ff;
+    }
+</style>
+{% endblock %}

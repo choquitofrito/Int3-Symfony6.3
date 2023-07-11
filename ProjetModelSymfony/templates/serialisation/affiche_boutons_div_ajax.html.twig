@@ -1,0 +1,49 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SerialisationController!{% endblock %}
+
+{% block body %}
+
+
+<form action="{{ path('action4')}}" method="POST">
+    <button id="envoyer">Envoyer</button>
+</form>
+
+
+<div id="divContenu"></div>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+envoyer.addEventListener ("click", (event) => {
+    event.preventDefault ();
+
+    axios ({
+        url : '{{ path ("action4") }}',
+        method : 'POST',
+        headers: {'Content-Type': 'multipart/form-data'},
+        // data: new FormData (formulaireLivre)
+    })
+    .then (function (response){
+        console.log (response.data); // array $vars encodé en json (ne nous sert à rien par lui même)
+        console.log (response.data.jsonLivres); // les livres tels que string json
+
+        let livres = JSON.parse(response.data.jsonLivres); // voilà! un array d'objets après avoir fait parse
+        console.log (livres);
+
+        // juste pour le test, afficher en console et dans le DOM. Ce sont des objets et on peut accéder à leurs propriétés
+        livres.forEach(livre => {
+            console.log (livre); // voici le contenu dans la console, déjà un array d'objets
+            divContenu.innerHTML += "<br>" + livre.titre; // utilisez vos propres méthodes pour mettre le contenu dans la page (ex: JQuery)
+        });
+
+    })
+    .catch (function (error){
+        console.log (error);
+    });
+});
+</script>
+
+{% endblock %}

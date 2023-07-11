@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Cette vue fait appel à une autre action en lui envoyant de paramètres
+Ex: un href
+<a href="{{ path ('action2_recoit_params',{nom: 'Luca',ville: 'Rome'}) }}">lien vers action 2 avec params</a>
+{% endblock %}

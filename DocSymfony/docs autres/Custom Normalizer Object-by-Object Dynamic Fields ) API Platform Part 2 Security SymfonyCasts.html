@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html class=" video" lang="en"><head prefix="og: http://ogp.me/ns#">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style class="vjs-styles-defaults">
+      .video-js {
+        width: 300px;
+        height: 150px;
+      }
+
+      .vjs-fluid {
+        padding-top: 56.25%
+      }
+    </style>
+                    <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Custom Normalizer: Object-by-Object Dynamic Fields &gt; API Platform Part 2: Security | SymfonyCasts</title>
+
+                    <link rel="stylesheet" href="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/4045.css"><link rel="stylesheet" href="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/2181.css"><link rel="stylesheet" href="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/app.css">
+    
+
+    <link rel="stylesheet" href="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/tomorrow-night.css">
+
+
+
+    <link rel="stylesheet" href="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/course_show.css">
+
+                                <script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/runtime.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/6835.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/7138.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/8786.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/production_routing.js"></script>
+        
+        <script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/9755.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/6313.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/8764.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/5076.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/6490.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/77.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/4045.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/1731.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/9406.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/app.js"></script>
+    
+
+    <script type="text/javascript">
+        Core.courseTitle = 'API Platform Part 2: Security';
+        Core.courseId = '117';
+                    Core.chapterTitle = 'Custom Normalizer: Object-by-Object Dynamic Fields';
+            Core.chapterId = '45817';
+            </script>
+
+
+    
+    <script>
+        window.DISQUS_COMMENT_URL = '/disqus/comment/create/chapter/45817';
+    </script>
+    <script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/disqus_comments.js"></script>
+
+    <script>
+        // video settings
+        window.video = {
+            isCourseChapterPaid: false,
+            courseChapterId: 45817,
+            requiredTimeToWatch: 380,
+            markAsViewed: false
+        };
+
+        window.video.nextDetails = {
+            url: '/screencast/next-details/117/custom-normalizer'
+        };
+
+            </script>
+
+    <script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/4987.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/3266.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/361.js"></script><script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/course_show.js"></script>
+
+    <link rel="alternate" type="application/rss+xml" title="Blog feed with technical articles around PHP and screencast and tutorial updates from SymfonyCasts.com" href="https://feeds.feedburner.com/knpuniversity">
+
+    <meta name="description" content="We now know how to add dynamic groups: we added &quot;admin:read&quot; above &quot;phoneNumber&quot; and then, via our context builder, we're dynamically adding that group to the serialization context *if* the authenticated user has &quot;ROLE_ADMIN&quot;.  So... we're pretty cool! We can easily run around and expose input our o...">
+
+    <meta property="og:site_name" content="SymfonyCasts - PHP and Symfony Video Tutorial Screencasts">
+    <meta name="twitter:site" content="@SymfonyCasts"><link rel="apple-touch-icon" sizes="180x180" href="https://symfonycasts.com/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="SymfonyCasts">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://symfonycasts.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://symfonycasts.com/favicon-16x16.png">
+    <link rel="manifest" href="https://symfonycasts.com/site.webmanifest">
+    <link rel="mask-icon" href="https://symfonycasts.com/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">                        
+    <meta property="og:title" content="Custom Normalizer: Object-by-Object Dynamic Fields">
+<meta property="og:description" content="We now know how to add dynamic groups: we added &amp;quot;admin:read&amp;quot; above &amp;quot;phoneNumber&amp;quot; and then, via our context builder, we&amp;#039;re dynamically adding that group to the serialization context *if* the authenticated user has &amp;quot;ROLE_ADMIN&amp;quot;.  So... we&amp;#039;re pretty cool! We can ...">
+<meta property="og:url" content="https://symfonycasts.com/screencast/api-platform-security/custom-normalizer">
+            <meta property="og:image" content="https://i.vimeocdn.com/video/813219229_1108x624.jpg?r=pad">
+    
+<meta name="twitter:card" content="summary">
+
+
+                            
+    <script type="text/javascript" async="" src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/embed.js"></script></head>
+<body data-user-id="">
+
+<!-- Start Main Navigation -->
+<nav data-controller="user-navigation" class="navbar nav-sfcasts navbar-expand-lg  ">
+    <a class="navbar-brand" href="https://symfonycasts.com/">
+        <span class="sfcasts-logo d-block" alt="SymfonyCasts Logo"></span>
+    </a>
+
+            <form id="js-search-form" data-controller="global-search" class="form-inline nav-search-form ml-3" autocomplete="off" role="search" method="GET" action="/search">
+        <input id="js-search-input" data-global-search-target="input" data-action="
+                keydown-&gt;global-search#moveWithKeys
+                keypress-&gt;global-search#updateInput
+                input-&gt;global-search#updateInput
+                focusin-&gt;global-search#expandSearch
+                blur-&gt;global-search#hideSearch
+            " name="q" type="text" class="form-control" placeholder="Search Tutorials" style="font-family:Montserrat, FontAwesome" spellcheck="false" aria-label="search">
+        <button type="submit">	
+            <i class="fal fa-search"></i>	
+        </button>
+
+                    <div data-global-search-target="list" class="search-list-wrapper">
+                <ul class="list-unstyled search-form-list">
+                    <li data-global-search-target="listItem" data-action="mouseover-&gt;global-search#moveWithMouse" class="search-item search-item-active">
+                        <a data-global-search-target="link" class="search-option-link" href="https://symfonycasts.com/screencast/api-platform-security/search">
+                            <i class="fa fa-search"></i>
+                            <span data-global-search-target="textItem" class="search-item-text"></span>
+                            <div class="search-button-wrapper">
+                                <span class="search-option-button">In this course</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li data-global-search-target="listItem" data-action="mouseover-&gt;global-search#moveWithMouse" class="search-item">
+                        <a data-global-search-target="link" class="search-option-link" href="https://symfonycasts.com/search">
+                            <i class="fa fa-search"></i>
+                            <span data-global-search-target="textItem" class="search-item-text"></span>
+                            <div class="search-button-wrapper">
+                                <span class="search-option-button">All SymfonyCasts</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </form>
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavToggler" aria-controls="mainNavToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <svg class="toggler-nav" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end drop-down-spacing" id="mainNavToggler">
+        
+
+<ul class="navbar-nav font-weight-bold">
+                <li id="js-nav-updates" class="dropdown">
+        <a data-action="click-&gt;user-navigation#openNotifications" class="nav-link nav-bell mt-3 mr-4dropdown-toggle js-notifications-bell" data-toggle="dropdown" href="#" title="Account Menu" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-bell"></i>
+                            <div class="alert-circle"></div>
+                    </a>
+        <div class="dropdown-menu dropdown-menu-right p-3 notifications-dropdown" style="width: 300px;" aria-labelledby="dropdownMenuButton">
+            <div class="d-flex justify-content-between">
+                <div class="py-2"> Updates </div><a href="https://symfonycasts.com/updates" class="font-blue">See all</a>
+            </div>
+            <hr>
+            <div data-user-navigation-target="notificationWrapper" style="font-weight: normal;"></div>
+        </div>
+    </li>
+    <li><a class="nav-link mt-3 mr-4" href="https://symfonycasts.com/courses">Tutorials</a></li>
+            <li><a class="nav-link mt-3 mr-4" href="https://symfonycasts.com/pricing">Pricing</a></li>
+                    <li><a class="nav-link text-primary mt-3 mr-4 text-nowrap" href="https://symfonycasts.com/login">Log In</a></li>
+        <li><a class="btn btn-xs btn-primary nav-btn text-nowrap mt-1" href="https://symfonycasts.com/signup">Sign Up</a></li>
+    </ul>
+
+    </div>
+</nav>
+<!-- End Main Navigation -->
+
+
+    
+
+
+
+
+
+<div class="container-fluid p-3 course-secondary-nav">
+    <div class="row">
+        <div class="col-12 col-md-6">
+    <div class="row">
+                <div class="col-auto">
+            <h6 class="font-light-gray">TRACK</h6>
+            <h4 style="font-size: 0.875rem;">
+                <a class="text-underline" href="https://symfonycasts.com/tracks/symfony">Symfony 5</a>
+                <span class="pl-3">&gt;</span>
+            </h4>
+        </div>
+                <div class="col">
+            <h6 class="font-light-gray">COURSE</h6>
+            <h4>
+                <a class="text-underline" href="https://symfonycasts.com/screencast/api-platform-security">API Platform Part 2: Security</a>
+            </h4>
+        </div>
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="pr-0 mt-2 text-left text-sm-right">
+        
+                    <a href="https://symfonycasts.com/pricing/api-platform-security" class="btn btn-sm-outline btn-outline-secondary">Buy Access to Course</a>
+        
+        <div class="dropdown d-inline">
+            <button class="btn btn-sm btn-caution dropdown-toggle" type="button" id="downloadDropdown" data-toggle="dropdown" aria-expanded="true">
+                <span><i class="fa fa-download"></i></span>
+                <span class="d-none px-1 d-md-inline">Download</span>
+                <span class="px-1" style="border-left: solid 1px white;"></span>
+                <i class="fa fa-chevron-down"></i>
+            </button>
+
+            <div class="dropdown-menu" role="menu" aria-labelledby="downloadDropdown">
+
+                
+                                                    <span class="js-tooltip" title="Subscribe to download the code! Compatible PHP versions: ^7.1.3" data-placement="left">
+                        <a href="javascript:void(0)" class="js-analytics-download dropdown-item disabled" data-download-type="code">
+                            <i class="fal fa-code fa-fw mr-2 py-1"></i>Course Code
+                        </a>
+                    </span>
+                
+                                    <span class="js-tooltip" title="Subscribe to download the video!" data-placement="left">
+                        <a href="javascript:void(0)" class="js-analytics-download dropdown-item disabled" data-download-type="video">
+                            <i class="fal fa-video fa-fw mr-2 py-1"></i>This Video
+                        </a>
+                    </span>
+                
+                <span class="js-tooltip" title="Subscribe to download the script!" data-placement="left">
+                    <a href="javascript:void(0)" class="js-analytics-download dropdown-item disabled" data-download-type="script">
+                        <i class="fal fa-book fa-fw mr-2 py-1"></i>Course Script
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+        
+
+    <div class="js-notification-box alert-info p-3 text-center" style="display: none; transition: opacity 1s ease;">
+    <p>Scroll down to the script below, click on any sentence (including terminal blocks!) to jump to that spot in the video!</p>
+    <button class="btn btn-outline-white" data-feature-close="">Cool, got it!</button>
+    <button id="js-show-me-script" class="btn btn-secondary">Show me the script!</button>
+</div>
+
+
+    <div class="subs-alert-box js-subs-sync-alert p-3" style="top: 1214.15px; left: 73.5px; display: none;">
+    <div class="knp-tooltip-arrow"></div>
+            <a class="text-underline" href="https://symfonycasts.com/pricing">Subscribe</a> to jump to this part in the video!
+    </div>
+
+
+    <div class="container-lg px-3 mt-4">
+        <div class="row py-3">
+            <div class="col">
+                    
+    <div class="dropdown">
+        <a class="btn btn-sm btn-outline-archived dropdown-toggle" data-toggle="dropdown" data-flip="false" href="#" title="Chapter List" id="chapterListButton" aria-haspopup="true" aria-expanded="false">
+            <span class="pr-6">Chapter 29</span> <i class="fa fa-chevron-down pl-1"></i>
+        </a>
+        <div class="dropdown-menu dropdown-chapter-list" aria-labelledby="chapterListButton">
+                
+    
+    <!-- Table of contents -->
+    <ul class="box-shadow chapter-list list-unstyled">
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/production-docs" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                01.
+                        Hello API Security + API Docs on Production?
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:55</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/tokens-cookies" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                02.
+                        API Auth 101: Session? Cookies? Tokens?
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">4:05</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/json-login" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                03.
+                        Login with json_login
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:27</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/auth-errors" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                04.
+                        Authentication Errors
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">5:55</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/login-success" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                05.
+                        Login Success &amp; the Session
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">4:28</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/login-response" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                06.
+                        On Authentication Success
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">7:40</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/data-page-load" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                07.
+                        Logout &amp; Passing API Data to JS on Page Load
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:49</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/samesite-csrf" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                08.
+                        SameSite Cookies &amp; CSRF Attacks
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:06</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/access-control" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                09.
+                        ApiResource access_control
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:03</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/test-setup" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                10.
+                        Bootstrapping a Test Suite
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">4:29</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/backport-api-tests" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                11.
+                        Backport the API Platform 2.5 Test Tools
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">5:01</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/api-tests" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                12.
+                        Api Tests &amp; Assertions
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:51</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/test-user-login" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                13.
+                        Logging in Inside the Test
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:57</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/test-reset-database" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                14.
+                        Resetting the Database Between Tests
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">4:51</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/rock-solid-test-setup" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                15.
+                        Base Test Class full of Goodies
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:30</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/acl-cheese-owner" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                16.
+                        ACL: Only Owners can PUT a CheeseListing
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">9:23</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/previous-object" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                17.
+                        ACL &amp; previousObject
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:04</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/access-control-voter" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                18.
+                        Access Control &amp; Voters
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:25</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/plain-password" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                19.
+                        Adding the plainPassword Field
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">7:31</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/encode-user-password" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                20.
+                        Data Persister: Encoding the Plain Password
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:03</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/validation-groups" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                21.
+                        Validation Groups
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">5:44</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/conditional-field-setup" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                22.
+                        Conditional Field Setup
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:42</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/test-roles-reload" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                23.
+                        Testing, Updating Roles &amp; Refreshing Data
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">9:22</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/service-decoration" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                24.
+                        Context Builder &amp; Service Decoration
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:50</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/context-builder" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                25.
+                        Context Builder: Dynamic Fields/Groups
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">7:47</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/auto-groups" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                26.
+                        Automatic Serialization Groups
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">5:59</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/resource-metadata-factory" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                27.
+                        Resource Metadata Factory: Dynamic ApiResource Options
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:45</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/uncached-metadata" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                28.
+                        Dynamic Groups without Caching
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">10:34</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/custom-normalizer" class="p-4 d-block  chapter-list-item-active">
+            <div class="row">
+
+                    <div class="col title-active">
+                                                29.
+                        Custom Normalizer: Object-by-Object Dynamic Fields
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item-active"><i class="fa fa-clock pr-1  "></i> <div class="length-styling">9:30</div></span>
+                            <i class="play-circle-chapter-list-item-active fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/normalizer-chain" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                30.
+                        Diving into the Normalizer Internals
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">4:49</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/normalizer-aware" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                31.
+                        A "Normalizer Aware" Normalizer
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:49</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/custom-field" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                32.
+                        Normalizer &amp; Completely Custom Fields
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">7:32</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/owner-cleanup" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                33.
+                        Locking down the CheeseListing.owner Field
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">8:16</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/custom-validator" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                34.
+                        Custom Validator
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">5:40</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/validator-logic" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                35.
+                        Security Logic in the Validator
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">6:46</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/entity-listener" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                36.
+                        Auto-set the Owner: Entity Listener
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">9:46</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/query-extension" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                37.
+                        Query Extension: Auto-Filter a Collection
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">9:37</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/query-item-extension" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                38.
+                        Automatic 404 on Unpublished Items
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">5:26</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+        
+            
+                            <li class="">
+            <a href="https://symfonycasts.com/screencast/api-platform-security/filtered-collection" class="p-4 d-block  ">
+            <div class="row">
+
+                    <div class="col  ">
+                                                39.
+                        Filtering Related Collections
+                                            </div>
+
+                                            <div class="col-auto">
+                            <span class="clock-item"><i class="fa fa-clock pr-1 font-blue-light"></i> <div class="length-styling">10:50</div></span>
+                            <i class="play-circle-chapter-list-item  fa fa-play-circle"></i>
+                        </div>
+                                    </div>
+            </a>
+        </li>
+        
+
+            </ul>
+
+    
+        </div>
+    </div>
+
+            </div>
+            <div class="col-auto">
+                            </div>
+        </div>
+        <div class="row mb-4 pb-3 border-bottom">
+            <div class="col">
+                <h1 class="mt-4 mb-0 highlight-header">Custom Normalizer: Object-by-Object Dynamic Fields</h1>
+            </div>
+            <div class="col-auto" style="margin-top: 38px;">
+                <a class="course-view-nav-icon mr-4 js-tooltip js-scroll-to-comments font-light-gray" title="scroll to comments" href="#tab-comment"><i class="fal fa-comment"></i></a>
+                <span class="js-bookmark-app">
+        <span class="js-bookmark-container">
+                    <a class="font-light-gray course-view-nav-icon js-tooltip" href="javascript:void(0)" title="Login to bookmark this video" data-placement="bottom">
+                <i class="fal fa-bookmark js-bookmark-icon"></i>
+            </a>
+            </span>
+</span>
+            </div>
+        </div>
+                        <div class="row">
+            <div class="col">
+                <div id="player">
+                                                        <div class="video-size video-placeholder-container">
+                        <div class="video-placeholder vjs-poster">
+                             
+                                <h3 class="font-weight-bold header-placeholder">Keep on Learning!</h3>
+                                <p class="placeholder-text"> If you liked what you've learned so far, dive in!<br>
+                                    Subscribe to get access to this tutorial plus<br> video, code and script downloads.
+                                </p>
+
+                                <a href="https://symfonycasts.com/pricing" class="btn btn-lg btn-primary mb-3">Start your All-Access Pass</a>
+
+                                <br><small><a class="text-underline" href="https://symfonycasts.com/screencast/buy/api-platform-security">Buy just this tutorial for $12.00</a></small>
+                                                    </div>
+                    </div>
+                                </div>
+            </div>
+        </div>
+                <div class="row d-flex justify-content-between my-5 pb-5 px-3 border-bottom">
+            <div class="pn-button-holder">
+                                <a class="btn btn-md btn-outline-secondary d-block" href="https://symfonycasts.com/screencast/api-platform-security/uncached-metadata#play">
+              <i class="fa fa-arrow-left"></i> <span class="previous-next-link-text">Previous Chapter</span>
+        </a>
+    
+            </div>
+            <div class="text-center d-none">
+                                <label for="autoplay-checkbox" class="js-tooltip m-0" title="Turn on or off autoplay of next video">Autoplay</label><br>
+                <label class="switch" for="autoplay-checkbox" id="autoplay-checkbox-label">
+                    <input class="js-autoplay-checkbox" id="autoplay-checkbox" type="checkbox">
+                    <span class="slider round">
+                    <span class="on">ON</span><span class="off">OFF</span>
+                    </span>
+                </label>
+            </div>
+            <div class="pn-button-holder">
+                                <a class="btn btn-md btn-secondary d-block" href="https://symfonycasts.com/screencast/api-platform-security/normalizer-chain#play">
+            <span class="previous-next-link-text">Next Chapter</span> <i class="fa fa-arrow-right"></i>
+        </a>
+    
+            </div>
+        </div>
+         
+            <div class="nav-tabs-container">
+                            <a href="https://github.com/symfonycasts/api-platform/edit/master/sfcasts/ep2-security/custom-normalizer.md" target="_blank" class="pt-2 nav-tabs-github-link"><span class="fab fa-github"></span> <span class="github-link-text">Edit on Github</span></a>
+        
+        <ul class="nav nav-tabs nav-tabs-noborder" role="tablist">
+            <li class="nav-item nav-item-active js-nav-item"><a class="nav-link active js-tab-script " data-toggle="tab" href="#tab-script">Script</a></li>
+                            <li class="ml-1 nav-item js-nav-item">
+                    <a class="nav-link js-tab-comment " data-toggle="tab" href="#tab-comment">
+                                                                                                                                <span class="d-none d-md-inline">Conversation</span><span class="d-md-none"><i class="fa fa-comments"></i></span>
+                    </a>
+                </li>
+                                        <li class="ml-1 nav-item js-nav-item">
+                    <a class="nav-link " data-toggle="tab" href="#tab-versions">
+                        Versions
+                    </a>
+                </li>
+                    </ul>
+    </div>
+
+
+        <div class="tab-content p-4">
+            <div class="tab-pane active" id="tab-script" role="tabpanel">
+                <div data-controller="code-blocks subtitles-sync" data-action="click-&gt;subtitles-sync#syncVideo" data-code-blocks-target="wrapper" class="top-margin-script markdown-content">
+
+                    
+
+                                            <div class="text-center script-feature-info-container p-3 mb-3">
+                            <p class="script-feature-info">With a Subscription, click any sentence in the script to jump to that part of the video!</p>
+                                                            <a href="https://symfonycasts.com/login" class="btn btn-sm btn-primary">Login</a>
+                                                        <a href="https://symfonycasts.com/pricing" class="btn btn-sm btn-warning">Subscribe</a>
+                        </div>
+                    
+                                <p><span class="subs-paragraph" data-start-time="1.056">We now know how to add dynamic groups: we added <code>admin:read</code> above <code>phoneNumber</code> and then, </span><span class="subs-paragraph" data-start-time="6.696">via our context builder, we're dynamically adding that group to the serialization context </span><span class="subs-paragraph" data-start-time="13.146"><em>if</em> the authenticated user has <code>ROLE_ADMIN</code>.</span></p>
+<p><span class="subs-paragraph" data-start-time="16.586">So... we're pretty cool! </span><span class="subs-paragraph" data-start-time="18.806">We can easily run around and expose input our output fields only </span><span class="subs-paragraph" data-start-time="22.866">to admin users by using these two groups.</span></p>
+<p><span class="subs-paragraph" data-start-time="25.706">But... the context builder - and also the more advanced resource metadata factory - </span><span class="subs-paragraph" data-start-time="31.636">has a tragic flaw! </span><span class="subs-paragraph" data-start-time="34.056">We can only change the context <em>globally</em>. </span><span class="subs-paragraph" data-start-time="38.076">What I mean is, we're deciding which groups should be used for normalizing </span><span class="subs-paragraph" data-start-time="42.556">or denormalizing a specific <em>class</em>... </span><span class="subs-paragraph" data-start-time="45.976">no matter how many different objects we might be working with. </span><span class="subs-paragraph" data-start-time="50.776">It does <em>not</em> allow us to change the groups on an object-by-object basis.</span></p>
+<p><span class="subs-paragraph" data-start-time="57.396">Let me give you a concrete example: in addition to making the <code>$phoneNumber</code> readable </span><span class="subs-paragraph" data-start-time="62.566">by admin users, I <em>now</em> want a user to <em>also</em> be able to read their <em>own</em> <code>phoneNumber</code>: </span><span class="subs-paragraph" data-start-time="70.146">if I make a request and the response will contain data for my <em>own</em> <code>User</code> object, </span><span class="subs-paragraph" data-start-time="76.116">it <em>should</em> include the <code>phoneNumber</code> field.</span></p>
+<p><span class="subs-paragraph" data-start-time="79.366">You might think:</span></p>
+<blockquote><p><span class="subs-paragraph" data-start-time="79.366">Ok, let's put <code>phoneNumber</code> in some new group, like <code>owner:read</code>... </span><span class="subs-paragraph" data-start-time="84.996">and add that group dynamically in the context builder.</span></p></blockquote>
+<p><span class="subs-paragraph" data-start-time="88.946">That's great thinking! </span><span class="subs-paragraph" data-start-time="90.656">But... look in the context builder, look at what's passed </span><span class="subs-paragraph" data-start-time="94.716">to the <code>createFromRequest()</code> method... </span><span class="subs-paragraph" data-start-time="97.176">or really, what's <em>not</em> passed: it does <em>not</em> pass us the specific <em>object</em> that's being serialized. </span><span class="subs-paragraph" data-start-time="106.276">Nope, this method is called just <em>once</em> per request.</span></p>
+<h2 id="creating-a-normalizer" class="headline"><a href="#creating-a-normalizer" title="Permalink to this headline">Creating a Normalizer</a></h2>
+<p><span class="subs-paragraph" data-start-time="110.926">Ok, no worries. </span><span class="subs-paragraph" data-start-time="112.926">Context builders are a <em>great</em> way to add or remove groups </span><span class="subs-paragraph" data-start-time="117.206">on a global or class-by-class basis. </span><span class="subs-paragraph" data-start-time="120.516">But they are <em>not</em> the way to dynamically add or remove groups on an object-by-object basis. </span><span class="subs-paragraph" data-start-time="127.406">Nope, for that we need a custom normalizer. </span><span class="subs-paragraph" data-start-time="131.256">Let's convince MakerBundle to create one for us. </span><span class="subs-paragraph" data-start-time="134.936">Run:</span></p>
+<div class="terminal-wrapper"><div class="terminal-controls"><span></span><span></span><span></span></div><pre class="notranslate"><code class="language-bash hljs"><div class="line"><span class="subs-paragraph" data-start-time="134.936">php bin/console make:serializer:normalizer</span></div></code></pre></div>
+<p><span class="subs-paragraph" data-start-time="134.936">Call this <code>UserNormalizer</code>. </span><span class="subs-paragraph" data-start-time="142.346">When an object is being transformed into JSON, XML or any format, it goes through two steps. </span><span class="subs-paragraph" data-start-time="150.466">First, a "normalizer" transforms the object into an array. </span><span class="subs-paragraph" data-start-time="157.466">And second, an "encoder" transforms that array </span><span class="subs-paragraph" data-start-time="161.086">into whatever format you want - like JSON or XML.</span></p>
+<p><span class="subs-paragraph" data-start-time="165.816">When a <code>User</code> object is serialized, it's already going through a core normalizer that looks </span><span class="subs-paragraph" data-start-time="171.776">at our normalization groups &amp; reads the data via the getter methods. </span><span class="subs-paragraph" data-start-time="176.816">We're now going to hook <em>into</em> that process </span><span class="subs-paragraph" data-start-time="179.466">so that we can change the normalization groups <em>before</em> that core normalizer does its job.</span></p>
+<p><span class="subs-paragraph" data-start-time="186.236">Go check out the new class: <code>src/Serializer/Normalizer/UserNormalizer.php</code>.</span></p>
+<p></p>
+<div id="codeblock-e552154f0f"><div class="code-block-wrapper notranslate" data-controller="code-blocks" data-code-blocks-target="wrapper" data-code-blocks-guid-value="e552154f0f" data-code-blocks-total-lines-value="37">
+    <div class="meta">
+        <div class="actions">
+            <span class="fa fa-clipboard js-activate-clipboard" data-toggle="tooltip" title="" data-placement="top" data-original-title="Copy&nbsp;Code"></span>
+        </div>
+        <div class="info">
+                        <span class="js-expand-all" data-action="click-&gt;code-blocks#loadAllLines" data-toggle="tooltip" title="" data-placement="top" data-original-title="Show All Lines">
+                <i class="fa fa-expand js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </span>
+            
+            37 lines
+            <span class="meta-divider"></span>
+            <a href="#codeblock-e552154f0f" title="src/Serializer/Normalizer/UserNormalizer.php">src/Serializer/Normalizer/UserNormalizer.php</a>
+        </div>
+    </div>
+    <table class="hljs code-block-table"><tbody class="js-tr-container"><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="e552154f0f" data-code-blocks-lines-start-gap-line-value="1" data-code-blocks-lines-end-gap-line-value="8"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="0" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 1 - 8
+                            </td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="9"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserNormalizer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">NormalizerInterface</span>, <span class="hljs-title">CacheableSupportsMethodInterface</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="10"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">{</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="11"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">private</span> $normalizer;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="12"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="13"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(ObjectNormalizer $normalizer)</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="14"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="15"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">$this</span>-&gt;normalizer = $normalizer;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="16"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="17"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="18"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">normalize</span><span class="hljs-params">($object, $format = null, array $context = array<span class="hljs-params">()</span>)</span>: <span class="hljs-title">array</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="19"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="20"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        $data = <span class="hljs-keyword">$this</span>-&gt;normalizer-&gt;normalize($object, $format, $context);</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="21"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="22"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-comment">// Here: add, edit, or delete some data</span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="23"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="24"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">return</span> $data;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="25"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="26"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="27"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">supportsNormalization</span><span class="hljs-params">($data, $format = null)</span>: <span class="hljs-title">bool</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="28"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="29"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">return</span> $data <span class="hljs-keyword">instanceof</span> \App\Entity\BlogPost;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="30"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="31"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="32"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hasCacheableSupportsMethod</span><span class="hljs-params">()</span>: <span class="hljs-title">bool</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="33"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="34"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="35"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="36"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">}</span></td>
+        </tr></tbody></table></div>
+</div>
+<p><span class="subs-paragraph" data-start-time="193.276">This works a bit differently than the context builder - it works more like the voter system. </span><span class="subs-paragraph" data-start-time="200.376">The serializer doesn't have just <em>one</em> normalizer, it has <em>many</em> normalizers. </span><span class="subs-paragraph" data-start-time="207.066">Each time it needs to normalize something, it loops over <em>all</em> the normalizers, </span><span class="subs-paragraph" data-start-time="212.326">calls <code>supportsNormalization()</code> and passes us the data that it needs to normalize. </span><span class="subs-paragraph" data-start-time="217.876">If we return <code>true</code> from <code>supportsNormalization()</code>, </span><span class="subs-paragraph" data-start-time="222.236">it means that <em>we</em> know how to normalize this data. </span><span class="subs-paragraph" data-start-time="226.376">And so, the serializer will call <em>our</em> <code>normalize()</code> method. </span><span class="subs-paragraph" data-start-time="230.346">Our normalizer is then the <em>only</em> normalizer that will be called for this data: </span><span class="subs-paragraph" data-start-time="236.686">we are 100% responsible for transforming the object into an array.</span></p>
+<h2 id="normalizer-logic" class="headline"><a href="#normalizer-logic" title="Permalink to this headline">Normalizer Logic</a></h2>
+<p><span class="subs-paragraph" data-start-time="242.676">Of course... </span><span class="subs-paragraph" data-start-time="243.186">we don't <em>really</em> want to <em>completely</em> take over the normalization process. </span><span class="subs-paragraph" data-start-time="248.736">What we <em>really</em> want to do is change the normalization groups... </span><span class="subs-paragraph" data-start-time="253.096">and then call the <em>core</em> normalizer so it can do its normal work. </span><span class="subs-paragraph" data-start-time="258.676">That's why the class was generated with a constructor </span><span class="subs-paragraph" data-start-time="261.446">where we're autowiring a class called <code>ObjectNormalizer</code>. </span><span class="subs-paragraph" data-start-time="266.616">This is the main, core, normalizer for objects: it's the one that's responsible </span><span class="subs-paragraph" data-start-time="271.796">for reading the data via our getter methods. </span><span class="subs-paragraph" data-start-time="274.796">So... cool! </span><span class="subs-paragraph" data-start-time="276.536">Our custom normalizer is basically... </span><span class="subs-paragraph" data-start-time="279.156">just offloading all the work to the <em>core</em> normalizer!</span></p>
+<p><span class="subs-paragraph" data-start-time="282.996">Let's start customizing this! </span><span class="subs-paragraph" data-start-time="284.336">For <code>supportsNormalization()</code>, return <code>$data instanceof User</code>. </span><span class="subs-paragraph" data-start-time="290.216">So if the thing that's being normalized is a <code>User</code> object, we handle that.</span></p>
+<p></p>
+<div id="codeblock-212ef6e7a0"><div class="code-block-wrapper notranslate" data-controller="code-blocks" data-code-blocks-target="wrapper" data-code-blocks-guid-value="212ef6e7a0" data-code-blocks-total-lines-value="50">
+    <div class="meta">
+        <div class="actions">
+            <span class="fa fa-clipboard js-activate-clipboard" data-toggle="tooltip" title="" data-placement="top" data-original-title="Copy&nbsp;Code"></span>
+        </div>
+        <div class="info">
+                        <span class="js-expand-all" data-action="click-&gt;code-blocks#loadAllLines" data-toggle="tooltip" title="" data-placement="top" data-original-title="Show All Lines">
+                <i class="fa fa-expand js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </span>
+            
+            50 lines
+            <span class="meta-divider"></span>
+            <a href="#codeblock-212ef6e7a0" title="src/Serializer/Normalizer/UserNormalizer.php">src/Serializer/Normalizer/UserNormalizer.php</a>
+        </div>
+    </div>
+    <table class="hljs code-block-table"><tbody class="js-tr-container"><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="212ef6e7a0" data-code-blocks-lines-start-gap-line-value="1" data-code-blocks-lines-end-gap-line-value="9"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="0" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 1 - 9
+                            </td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="10"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserNormalizer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">NormalizerInterface</span>, <span class="hljs-title">CacheableSupportsMethodInterface</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="11"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">{</span></td>
+        </tr>            <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="12"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">private</span> $normalizer;</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="13"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="14"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(ObjectNormalizer $normalizer)</span></span></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="15"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="16"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">$this</span>-&gt;normalizer = $normalizer;</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="17"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="18"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="19"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-comment">/**</span></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="20"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">     <span class="hljs-comment">* <span class="hljs-doctag">@param</span> User $object</span></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="21"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">     <span class="hljs-comment">*/</span></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="22"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">normalize</span><span class="hljs-params">($object, $format = null, array $context = array<span class="hljs-params">()</span>)</span>: <span class="hljs-title">array</span></span></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="23"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="24"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;userIsOwner($object)) {</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="25"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">            $context[<span class="hljs-string">'groups'</span>][] = <span class="hljs-string">'owner:read'</span>;</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="26"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        }</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="27"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="28"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        $data = <span class="hljs-keyword">$this</span>-&gt;normalizer-&gt;normalize($object, $format, $context);</span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="29"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="30"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-comment">// Here: add, edit, or delete some data</span></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="31"></td>
+            <td class="blob-code"><span class="blob-code-wrapper"></span></td>
+        </tr>
+                <tr class="code-block-highlight">
+            <td class="line-number line-number-displayed" data-line-number-displayed="32"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">return</span> $data;</span></td>
+        </tr>
+    <tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="212ef6e7a0" data-code-blocks-lines-start-gap-line-value="33" data-code-blocks-lines-end-gap-line-value="34"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="0" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">... lines 33 - 34</td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="35"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">supportsNormalization</span><span class="hljs-params">($data, $format = null)</span>: <span class="hljs-title">bool</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="36"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="37"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">return</span> $data <span class="hljs-keyword">instanceof</span> User;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="38"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="212ef6e7a0" data-code-blocks-lines-start-gap-line-value="39" data-code-blocks-lines-end-gap-line-value="48"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="0" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 39 - 48
+                            </td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="49"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">}</span></td>
+        </tr></tbody></table></div>
+</div>
+<p><span class="subs-paragraph" data-start-time="295.546">Now we know that <code>normalize()</code> will <em>only</em> be called if <code>$object</code> is a <code>User</code>. </span><span class="subs-paragraph" data-start-time="301.146">Let's add some PHPDoc above this to help my editor.</span></p>
+<p></p>
+<div id="codeblock-9732dd0102"><div class="code-block-wrapper notranslate" data-controller="code-blocks" data-code-blocks-target="wrapper" data-code-blocks-guid-value="9732dd0102" data-code-blocks-total-lines-value="50">
+    <div class="meta">
+        <div class="actions">
+            <span class="fa fa-clipboard js-activate-clipboard" data-toggle="tooltip" title="" data-placement="top" data-original-title="Copy&nbsp;Code"></span>
+        </div>
+        <div class="info">
+                        <span class="js-expand-all" data-action="click-&gt;code-blocks#loadAllLines" data-toggle="tooltip" title="" data-placement="top" data-original-title="Show All Lines">
+                <i class="fa fa-expand js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </span>
+            
+            50 lines
+            <span class="meta-divider"></span>
+            <a href="#codeblock-9732dd0102" title="src/Serializer/Normalizer/UserNormalizer.php">src/Serializer/Normalizer/UserNormalizer.php</a>
+        </div>
+    </div>
+    <table class="hljs code-block-table"><tbody class="js-tr-container"><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="9732dd0102" data-code-blocks-lines-start-gap-line-value="1" data-code-blocks-lines-end-gap-line-value="18"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="0" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 1 - 18
+                            </td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="19"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-comment">/**</span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="20"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">     <span class="hljs-comment">* <span class="hljs-doctag">@param</span> User $object</span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="21"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">     <span class="hljs-comment">*/</span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="22"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">normalize</span><span class="hljs-params">($object, $format = null, array $context = array<span class="hljs-params">()</span>)</span>: <span class="hljs-title">array</span></span></span></td>
+        </tr><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="9732dd0102" data-code-blocks-lines-start-gap-line-value="23" data-code-blocks-lines-end-gap-line-value="50"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="1" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 23 - 50
+                            </td>
+        </tr></tbody></table></div>
+</div>
+<p><span class="subs-paragraph" data-start-time="305.346">The goal here is to check to see if the <code>User</code> object that's being normalized is the <em>same</em> </span><span class="subs-paragraph" data-start-time="310.616">as the currently-authenticated <code>User</code>. </span><span class="subs-paragraph" data-start-time="312.816">If it is, we'll add that <code>owner:read</code> group. </span><span class="subs-paragraph" data-start-time="318.206">Add that check on top: if <code>$this-&gt;userIsOwner($object)</code> - </span><span class="subs-paragraph" data-start-time="324.106">that's a method we'll create in a minute - then, add the group. </span><span class="subs-paragraph" data-start-time="328.186">The <code>$context</code> is passed as the third argument... </span><span class="subs-paragraph" data-start-time="332.646">and we're passing <em>it</em> to the core normalizer below. </span><span class="subs-paragraph" data-start-time="336.936">Let's modify it first! </span><span class="subs-paragraph" data-start-time="339.636">Use <code>$context['groups'][] = 'owner:read</code>.</span></p>
+<p><span class="subs-paragraph" data-start-time="346.586">That's lovely! </span><span class="subs-paragraph" data-start-time="348.926">A normalizer is only used for... </span><span class="subs-paragraph" data-start-time="351.286">um... <em>normalizing</em> an object to an array - </span><span class="subs-paragraph" data-start-time="355.156">it is <em>not</em> used for <em>denormalizing</em> an array back into an object. </span><span class="subs-paragraph" data-start-time="361.306">That's why we're always adding <code>owner:read</code> here. </span><span class="subs-paragraph" data-start-time="364.276">If you wanted to create this <em>same</em> feature for denormalization... </span><span class="subs-paragraph" data-start-time="369.176">and add an <code>owner:write</code> group.. </span><span class="subs-paragraph" data-start-time="372.116">you'll need to create a separate <em>denormalizer</em> class. </span><span class="subs-paragraph" data-start-time="375.746">There's no MakerBundle command to generate it, </span><span class="subs-paragraph" data-start-time="378.336">but the logic will be almost identical to this... </span><span class="subs-paragraph" data-start-time="381.216">and you can even make your <em>one</em> normalizer class implement both <code>NormalizerInterface</code> </span><span class="subs-paragraph" data-start-time="387.116"><em>and</em> <code>DenormalizerInterface</code>.</span></p>
+<p><span class="subs-paragraph" data-start-time="390.016">Oh, also, we don't need to check for the existence of a <code>groups</code> key on the array because, </span><span class="subs-paragraph" data-start-time="395.456">in our system, we are <em>always</em> setting at least one group.</span></p>
+<p><span class="subs-paragraph" data-start-time="400.066">Let's add that missing method: <code>private function userIsOwner()</code>. </span><span class="subs-paragraph" data-start-time="404.716">This will take a <code>User</code> object and return a <code>bool</code>. </span><span class="subs-paragraph" data-start-time="409.096">For now, fake it: <code>return rand(0, 10) &gt; 5</code>.</span></p>
+<p></p>
+<div id="codeblock-1de2216072"><div class="code-block-wrapper notranslate" data-controller="code-blocks" data-code-blocks-target="wrapper" data-code-blocks-guid-value="1de2216072" data-code-blocks-total-lines-value="46">
+    <div class="meta">
+        <div class="actions">
+            <span class="fa fa-clipboard js-activate-clipboard" data-toggle="tooltip" title="" data-placement="top" data-original-title="Copy&nbsp;Code"></span>
+        </div>
+        <div class="info">
+                        <span class="js-expand-all" data-action="click-&gt;code-blocks#loadAllLines" data-toggle="tooltip" title="" data-placement="top" data-original-title="Show All Lines">
+                <i class="fa fa-expand js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </span>
+            
+            46 lines
+            <span class="meta-divider"></span>
+            <a href="#codeblock-1de2216072" title="src/Serializer/Normalizer/UserNormalizer.php">src/Serializer/Normalizer/UserNormalizer.php</a>
+        </div>
+    </div>
+    <table class="hljs code-block-table"><tbody class="js-tr-container"><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="1de2216072" data-code-blocks-lines-start-gap-line-value="1" data-code-blocks-lines-end-gap-line-value="35"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="0" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 1 - 35
+                            </td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="36"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">userIsOwner</span><span class="hljs-params">(User $user)</span>: <span class="hljs-title">bool</span></span></span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="37"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    {</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="38"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">        <span class="hljs-keyword">return</span> mt_rand(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>) &gt; <span class="hljs-number">5</span>;</span></td>
+        </tr><tr><td class="line-number line-number-displayed" data-line-number-displayed="39"></td>
+            <td class="blob-code"><span class="blob-code-wrapper">    }</span></td>
+        </tr><tr data-controller="code-blocks-lines" data-code-blocks-lines-guid-value="1de2216072" data-code-blocks-lines-start-gap-line-value="40" data-code-blocks-lines-end-gap-line-value="46"><td class="line-number line-number-expandable js-load-more" data-action="click-&gt;code-blocks-lines#loadMoreLines" data-last="1" data-toggle="tooltip" data-placement="left" title="" data-original-title="Show Lines">
+                <i class="fa fa-arrows-v fa-fw js-icon-load-more"></i>
+                <i class="fa fa-spinner fa-spin js-icon-loading"></i>
+            </td>
+            <td class="gap-line">
+                                                    ... lines 40 - 46
+                            </td>
+        </tr></tbody></table></div>
+</div>
+<p><span class="subs-paragraph" data-start-time="414.086">And... I think that's it! </span><span class="subs-paragraph" data-start-time="417.606">Like with voters, this is a situation where we <em>don't</em> need to add any configuration: </span><span class="subs-paragraph" data-start-time="424.136">as soon as we create a class and make it implement <code>NormalizerInterface</code>, </span><span class="subs-paragraph" data-start-time="428.346">the serializer will see it and start using it.</span></p>
+<p><span class="subs-paragraph" data-start-time="431.806">So... let's take this for a test drive! </span><span class="subs-paragraph" data-start-time="434.666">Back on the docs, I'm currently <em>not</em> logged in. </span><span class="subs-paragraph" data-start-time="438.946">Let's refresh the page... </span><span class="subs-paragraph" data-start-time="440.476">and create a new user. </span><span class="subs-paragraph" data-start-time="443.276">How about email <code>goudadude@example.com</code>, password <code>foo</code>, same username, </span><span class="subs-paragraph" data-start-time="452.016">no <code>cheeseListings</code>, but <em>with</em> a <code>phoneNumber</code>. </span><span class="subs-paragraph" data-start-time="458.336">Execute and... </span><span class="subs-paragraph" data-start-time="461.676">perfect! A 201 status code. </span><span class="subs-paragraph" data-start-time="465.106">Copy that <code>email</code>... </span><span class="subs-paragraph" data-start-time="467.286">go back to the homepage.. </span><span class="subs-paragraph" data-start-time="469.216">and log in: <code>goudadude@example.com</code>, password <code>foo</code> and... </span><span class="subs-paragraph" data-start-time="474.706">go!</span></p>
+<p><span class="subs-paragraph" data-start-time="474.706">Cool! Now that we're authenticated, head back to <code>/api</code>. </span><span class="subs-paragraph" data-start-time="481.236">Yep, the web debug toolbar <em>confirms</em> that I'm a "gouda dude". </span><span class="subs-paragraph" data-start-time="486.276">Let's try the GET operation to fetch a collection of users. </span><span class="subs-paragraph" data-start-time="490.846">Because of our random logic, I'd expect <em>some</em> results to show the <code>phoneNumber</code> and some not. </span><span class="subs-paragraph" data-start-time="497.386">Execute and... </span><span class="subs-paragraph" data-start-time="499.776">hey! The first user has a <code>phoneNumber</code> field! </span><span class="subs-paragraph" data-start-time="503.326">It's null... </span><span class="subs-paragraph" data-start-time="504.626">because apparently we didn't set a <code>phoneNumber</code> for that user, but the field <em>is</em> there. </span><span class="subs-paragraph" data-start-time="511.076">And, thanks to the randomness, there is <em>no</em> <code>phoneNumber</code> for the second and third users. </span><span class="subs-paragraph" data-start-time="516.056">If you try the operation again... </span><span class="subs-paragraph" data-start-time="520.406">yes! This time the first <em>and</em> second users have that field, but not the third. </span><span class="subs-paragraph" data-start-time="527.306">Hey! We're now dynamically adding the <code>owner:read</code> group on an object-by-object basis! </span><span class="subs-paragraph" data-start-time="535.006">Normalizers rock!</span></p>
+<p><span class="subs-paragraph" data-start-time="536.926">But... wait a second. </span><span class="subs-paragraph" data-start-time="538.926">Something is wrong! </span><span class="subs-paragraph" data-start-time="540.606">We're missing the JSON-LD fields for these users. </span><span class="subs-paragraph" data-start-time="544.816">Well, ok, we have them on the top-level for the collection itself... </span><span class="subs-paragraph" data-start-time="549.506">and even the embedded <code>CheeseListing</code> data has them... </span><span class="subs-paragraph" data-start-time="553.406">but each user is missing <code>@id</code> and <code>@type</code>. </span><span class="subs-paragraph" data-start-time="558.486">Something in our new normalizer killed the JSON-LD stuff!</span></p>
+<p><span class="subs-paragraph" data-start-time="563.996">Next, let's figure out what's going on, find this bug, then <em>crush</em> it!</span></p>
+
+    
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-comment" role="tabpanel">
+                <h3>Leave a comment!</h3>
+                                                        
+        
+            <iframe style="background-color: rgb(255, 255, 255) !important; border: 1px solid rgb(236, 147, 41) !important; min-width: 220px !important; min-height: 210px !important; max-height: 600px !important; z-index: 2147483647 !important;" srcdoc="&lt;html&gt;&lt;head&gt;&lt;style&gt;html, body {
+  height: 100% !important;
+  overflow: hidden !important;
+}
+#btn-once-021354637532394516 {
+  border: 2px solid #f06a0a !important;
+  background-color: #f06a0a !important;
+  color: #fefefe !important;
+}
+#btn-site-0961845760853762 {
+  border: 2px solid #333 !important;
+  background-color: #fefefe !important;
+  color: #333 !important;
+}
+#btn-once-021354637532394516:hover {
+  background-color: #fefefe !important;
+  color: #333 !important;
+}
+#btn-site-0961845760853762:hover {
+  background-color: #fefefe !important;
+  border: 2px solid #f06a0a !important;
+}
+#ico-help-08671519024578239 {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  line-height: 12px;
+  text-decoration: none;
+}
+#ico-help-08671519024578239:before {
+  border: 2px solid;
+  border-radius: 50%;
+  display: inline-block;
+  color: #555;
+  content: '?';
+  font-size: 12px;
+  font-weight: bold;
+  padding: 1px;
+  height: 1em;
+  width: 1em;
+}
+#ico-help-08671519024578239:hover:before {
+  color: #ec9329;
+}
+a {
+  text-decoration: underline;
+  color: black;
+}
+a:hover {
+  color: #ec9329;
+}&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot;margin:0&quot;&gt;&lt;div style=&quot;display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; width: 100% !important; height: 100% !important;&quot;&gt;&lt;div style=&quot;color: rgb(48, 48, 48) !important; font-family: helvetica, arial, sans-serif !important; font-size: 16px !important; display: flex !important; flex-wrap: wrap !important; justify-content: center !important; text-align: center !important; margin: 10px !important;&quot;&gt;Privacy Badger a remplacé ce widget Disqus &lt;a id=&quot;ico-help-08671519024578239&quot; href=&quot;https://privacybadger.org/#How-does-Privacy-Badger-handle-social-media-widgets&quot; rel=&quot;noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(48, 48, 48) !important; font-family: helvetica, arial, sans-serif !important; font-size: 16px !important; display: flex !important; flex-wrap: wrap !important; justify-content: center !important; text-align: center !important; margin: 10px !important; width: 100% !important;&quot;&gt;&lt;button id=&quot;btn-once-021354637532394516&quot; style=&quot;transition: background-color 0.25s ease-out 0s, border-color 0.25s ease-out 0s, color 0.25s ease-out 0s !important; border-radius: 3px !important; cursor: pointer !important; font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif !important; font-size: 14px !important; font-weight: bold !important; line-height: 16px !important; padding: 10px !important; margin: 4px !important; text-align: center !important; width: 70% !important; max-width: 280px !important;&quot;&gt;Autoriser une fois&lt;/button&gt;&lt;button id=&quot;btn-site-0961845760853762&quot; style=&quot;transition: background-color 0.25s ease-out 0s, border-color 0.25s ease-out 0s, color 0.25s ease-out 0s !important; border-radius: 3px !important; cursor: pointer !important; font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif !important; font-size: 14px !important; font-weight: bold !important; line-height: 16px !important; padding: 10px !important; margin: 4px !important; text-align: center !important; width: 70% !important; max-width: 280px !important;&quot;&gt;Toujours autoriser sur ce site&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+
+    <script type="text/javascript">
+    var disqus_shortname = 'knpuniversity';
+    var disqus_container_id = 'disqus_thread';var disqus_developer = 1;var disqus_identifier = 'course_video_45817';var disqus_url = 'https://symfonycasts.com/screencast/api-platform-security/custom-normalizer';var disqus_config = function () {var fn = window['onNewDisqusComment'];
+            if(typeof fn === 'function') {
+                this.callbacks.onNewComment = [ fn ];
+            } else {
+                throw "The new comment callback function is invalid! Make sure it's set globally on the window object.";
+            }};
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+    
+                            </div>
+
+                            <div class="tab-pane" id="tab-versions" role="tabpanel">
+                                            <div class="alert alert-warning mb-4">This tutorial works great for Symfony 5 and API Platform 2.5.</div>
+                    
+                                            <div class="mt-3 mb-3">
+                                                            <a class="btn btn-sm btn-archived d-inline mr-3 " href="#composer.json">Symfony 4</a>
+                                                            <a class="btn btn-sm btn-archived d-inline mr-3 " href="#composer.json">API Platform 2.4</a>
+                                                    </div>
+                    
+                                                                                                <h3 id="composer.json">What PHP libraries does this tutorial use?</h3>
+
+                            <pre><code class="language-json hljs"><span class="hljs-comment">// composer.json</span>
+{
+    <span class="hljs-attr">"require"</span>: {
+        <span class="hljs-attr">"php"</span>: <span class="hljs-string">"^7.1.3"</span>,
+        <span class="hljs-attr">"ext-ctype"</span>: <span class="hljs-string">"*"</span>,
+        <span class="hljs-attr">"ext-iconv"</span>: <span class="hljs-string">"*"</span>,
+        <span class="hljs-attr">"api-platform/api-pack"</span>: <span class="hljs-string">"^1.2"</span>, <span class="hljs-comment">// v1.2.0</span>
+        <span class="hljs-attr">"composer/package-versions-deprecated"</span>: <span class="hljs-string">"^1.11"</span>, <span class="hljs-comment">// 1.11.99</span>
+        <span class="hljs-attr">"doctrine/doctrine-migrations-bundle"</span>: <span class="hljs-string">"^2.0"</span>, <span class="hljs-comment">// v2.0.0</span>
+        <span class="hljs-attr">"nesbot/carbon"</span>: <span class="hljs-string">"^2.17"</span>, <span class="hljs-comment">// 2.21.3</span>
+        <span class="hljs-attr">"symfony/console"</span>: <span class="hljs-string">"4.3.*"</span>, <span class="hljs-comment">// v4.3.2</span>
+        <span class="hljs-attr">"symfony/dotenv"</span>: <span class="hljs-string">"4.3.*"</span>, <span class="hljs-comment">// v4.3.2</span>
+        <span class="hljs-attr">"symfony/flex"</span>: <span class="hljs-string">"^1.1"</span>, <span class="hljs-comment">// v1.9.10</span>
+        <span class="hljs-attr">"symfony/framework-bundle"</span>: <span class="hljs-string">"4.3.*"</span>, <span class="hljs-comment">// v4.3.2</span>
+        <span class="hljs-attr">"symfony/http-client"</span>: <span class="hljs-string">"4.3.*"</span>, <span class="hljs-comment">// v4.3.3</span>
+        <span class="hljs-attr">"symfony/monolog-bundle"</span>: <span class="hljs-string">"^3.4"</span>, <span class="hljs-comment">// v3.4.0</span>
+        <span class="hljs-attr">"symfony/webpack-encore-bundle"</span>: <span class="hljs-string">"^1.6"</span>, <span class="hljs-comment">// v1.6.2</span>
+        <span class="hljs-attr">"symfony/yaml"</span>: <span class="hljs-string">"4.3.*"</span> <span class="hljs-comment">// v4.3.2</span>
+    },
+    <span class="hljs-attr">"require-dev"</span>: {
+        <span class="hljs-attr">"hautelook/alice-bundle"</span>: <span class="hljs-string">"^2.5"</span>, <span class="hljs-comment">// v2.5.1</span>
+        <span class="hljs-attr">"symfony/maker-bundle"</span>: <span class="hljs-string">"^1.11"</span>, <span class="hljs-comment">// v1.12.0</span>
+        <span class="hljs-attr">"symfony/profiler-pack"</span>: <span class="hljs-string">"^1.0"</span>, <span class="hljs-comment">// v1.0.4</span>
+        <span class="hljs-attr">"symfony/test-pack"</span>: <span class="hljs-string">"^1.0"</span> <span class="hljs-comment">// v1.0.6</span>
+    }
+}</code></pre>
+                                                            </div>
+                    </div>
+
+            <div class="nav-tabs-container nav-tabs-container-inverse">
+                            <a href="https://github.com/symfonycasts/api-platform/edit/master/sfcasts/ep2-security/custom-normalizer.md" target="_blank" class="pt-2 nav-tabs-github-link"><span class="fab fa-github"></span> <span class="github-link-text">Edit on Github</span></a>
+        
+        <ul class="nav nav-tabs nav-tabs-noborder" role="tablist">
+            <li class="inverse-nav-item nav-item-active js-nav-item"><a class="nav-link active js-tab-script inverse-nav-tabs-tab" data-toggle="tab" href="#tab-script">Script</a></li>
+                            <li class="ml-1 inverse-nav-item js-nav-item">
+                    <a class="nav-link js-tab-comment inverse-nav-tabs-tab" data-toggle="tab" href="#tab-comment">
+                                                                                                                                <span class="d-none d-md-inline">Conversation</span><span class="d-md-none"><i class="fa fa-comments"></i></span>
+                    </a>
+                </li>
+                                        <li class="ml-1 inverse-nav-item js-nav-item">
+                    <a class="nav-link inverse-nav-tabs-tab" data-toggle="tab" href="#tab-versions">
+                        Versions
+                    </a>
+                </li>
+                    </ul>
+    </div>
+
+
+                <div class="d-flex justify-content-between mt-4">
+            <div class="pn-button-holder">
+                                <a class="btn btn-md btn-outline-secondary d-block" href="https://symfonycasts.com/screencast/api-platform-security/uncached-metadata#play">
+              <i class="fa fa-arrow-left"></i> <span class="previous-next-link-text">Previous Chapter</span>
+        </a>
+    
+            </div>
+            <div class="pn-button-holder">
+                                <a class="btn btn-md btn-secondary d-block" href="https://symfonycasts.com/screencast/api-platform-security/normalizer-chain#play">
+            <span class="previous-next-link-text">Next Chapter</span> <i class="fa fa-arrow-right"></i>
+        </a>
+    
+            </div>
+        </div>
+
+        <div class="addthis-module mt-4">
+            
+    <img src="data:image/svg+xml;charset=utf-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3C!--%20Created%20with%20Inkscape%20(http%3A%2F%2Fwww.inkscape.org%2F)%20--%3E%0A%0A%3Csvg%0A%20%20%20xmlns%3Adc%3D%22http%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%22%0A%20%20%20xmlns%3Acc%3D%22http%3A%2F%2Fcreativecommons.org%2Fns%23%22%0A%20%20%20xmlns%3Ardf%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%22%0A%20%20%20xmlns%3Asvg%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%0A%20%20%20xmlns%3Asodipodi%3D%22http%3A%2F%2Fsodipodi.sourceforge.net%2FDTD%2Fsodipodi-0.dtd%22%0A%20%20%20xmlns%3Ainkscape%3D%22http%3A%2F%2Fwww.inkscape.org%2Fnamespaces%2Finkscape%22%0A%20%20%20width%3D%2277.709106%22%0A%20%20%20height%3D%2227.523844%22%0A%20%20%20id%3D%22svg2%22%0A%20%20%20version%3D%221.1%22%0A%20%20%20inkscape%3Aversion%3D%220.48.4%20r9939%22%0A%20%20%20sodipodi%3Adocname%3D%22AddThis.svg%22%3E%0A%20%20%3Cdefs%0A%20%20%20%20%20id%3D%22defs4%22%3E%0A%20%20%20%20%3ClinearGradient%0A%20%20%20%20%20%20%20id%3D%22linearGradient3785%22%3E%0A%20%20%20%20%20%20%3Cstop%0A%20%20%20%20%20%20%20%20%20style%3D%22stop-color%3A%23fefefe%3Bstop-opacity%3A1%3B%22%0A%20%20%20%20%20%20%20%20%20offset%3D%220%22%0A%20%20%20%20%20%20%20%20%20id%3D%22stop3787%22%20%2F%3E%0A%20%20%20%20%20%20%3Cstop%0A%20%20%20%20%20%20%20%20%20style%3D%22stop-color%3A%23ececec%3Bstop-opacity%3A1%3B%22%0A%20%20%20%20%20%20%20%20%20offset%3D%221%22%0A%20%20%20%20%20%20%20%20%20id%3D%22stop3789%22%20%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%0A%20%20%20%20%20%20%20inkscape%3Acollect%3D%22always%22%0A%20%20%20%20%20%20%20xlink%3Ahref%3D%22%23linearGradient3785%22%0A%20%20%20%20%20%20%20id%3D%22linearGradient3791%22%0A%20%20%20%20%20%20%20x1%3D%2239.280788%22%0A%20%20%20%20%20%20%20y1%3D%2212.902368%22%0A%20%20%20%20%20%20%20x2%3D%2239.280788%22%0A%20%20%20%20%20%20%20y2%3D%2232.148937%22%0A%20%20%20%20%20%20%20gradientUnits%3D%22userSpaceOnUse%22%0A%20%20%20%20%20%20%20gradientTransform%3D%22matrix(0.66264012%2C0%2C0%2C1%2C0.37825171%2C0)%22%20%2F%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Csodipodi%3Anamedview%0A%20%20%20%20%20id%3D%22base%22%0A%20%20%20%20%20pagecolor%3D%22%23ffffff%22%0A%20%20%20%20%20bordercolor%3D%22%23666666%22%0A%20%20%20%20%20borderopacity%3D%221.0%22%0A%20%20%20%20%20inkscape%3Apageopacity%3D%220.0%22%0A%20%20%20%20%20inkscape%3Apageshadow%3D%222%22%0A%20%20%20%20%20inkscape%3Azoom%3D%225.6568542%22%0A%20%20%20%20%20inkscape%3Acx%3D%2221.742285%22%0A%20%20%20%20%20inkscape%3Acy%3D%22-12.594547%22%0A%20%20%20%20%20inkscape%3Adocument-units%3D%22px%22%0A%20%20%20%20%20inkscape%3Acurrent-layer%3D%22layer1%22%0A%20%20%20%20%20showgrid%3D%22false%22%0A%20%20%20%20%20fit-margin-top%3D%220%22%0A%20%20%20%20%20fit-margin-left%3D%220%22%0A%20%20%20%20%20fit-margin-right%3D%220%22%0A%20%20%20%20%20fit-margin-bottom%3D%220%22%0A%20%20%20%20%20inkscape%3Awindow-width%3D%221344%22%0A%20%20%20%20%20inkscape%3Awindow-height%3D%221419%22%0A%20%20%20%20%20inkscape%3Awindow-x%3D%220%22%0A%20%20%20%20%20inkscape%3Awindow-y%3D%2219%22%0A%20%20%20%20%20inkscape%3Awindow-maximized%3D%220%22%20%2F%3E%0A%20%20%3Cmetadata%0A%20%20%20%20%20id%3D%22metadata7%22%3E%0A%20%20%20%20%3Crdf%3ARDF%3E%0A%20%20%20%20%20%20%3Ccc%3AWork%0A%20%20%20%20%20%20%20%20%20rdf%3Aabout%3D%22%22%3E%0A%20%20%20%20%20%20%20%20%3Cdc%3Aformat%3Eimage%2Fsvg%2Bxml%3C%2Fdc%3Aformat%3E%0A%20%20%20%20%20%20%20%20%3Cdc%3Atype%0A%20%20%20%20%20%20%20%20%20%20%20rdf%3Aresource%3D%22http%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2FStillImage%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Cdc%3Atitle%20%2F%3E%0A%20%20%20%20%20%20%3C%2Fcc%3AWork%3E%0A%20%20%20%20%3C%2Frdf%3ARDF%3E%0A%20%20%3C%2Fmetadata%3E%0A%20%20%3Cg%0A%20%20%20%20%20inkscape%3Alabel%3D%22Layer%201%22%0A%20%20%20%20%20inkscape%3Agroupmode%3D%22layer%22%0A%20%20%20%20%20id%3D%22layer1%22%0A%20%20%20%20%20transform%3D%22translate(-0.64200988%2C-12.505455)%22%3E%0A%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20style%3D%22fill%3Aurl(%23linearGradient3791)%3Bfill-opacity%3A1%3Bstroke%3A%23e2e2e2%3Bstroke-width%3A0.95840281%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Amiter%3Bstroke-miterlimit%3A4%3Bstroke-opacity%3A1%3Bstroke-dasharray%3Anone%22%0A%20%20%20%20%20%20%20id%3D%22rect2985%22%0A%20%20%20%20%20%20%20width%3D%2268.890198%22%0A%20%20%20%20%20%20%20height%3D%2219%22%0A%20%20%20%20%20%20%20x%3D%221.1212113%22%0A%20%20%20%20%20%20%20y%3D%2212.984656%22%0A%20%20%20%20%20%20%20ry%3D%222.1487894%22%0A%20%20%20%20%20%20%20rx%3D%221.9737403%22%20%2F%3E%0A%20%20%20%20%3Cimage%0A%20%20%20%20%20%20%20y%3D%2224.247705%22%0A%20%20%20%20%20%20%20x%3D%2262.569523%22%0A%20%20%20%20%20%20%20id%3D%22image3002%22%0A%20%20%20%20%20%20%20xlink%3Ahref%3D%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAKoAAACqCAYAAAA9dtSCAAAABHNCSVQICAgIfAhkiAAAIABJREFU%20eJztnXl4E9Xex7%2BzJE2TbqQLBGiBIrQFikUWsSxWKSIoFMSFRa6yiYoXFMUFxKuooKIICq8ioiJC%20uQIioCDWAlcB2ZRVoBVQCrR0oXRvtpnz%2FpFm2mmWJmmWUefzPHkeOJmZnGS%2BPXPObzuAjIyMjIyM%20jIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjJehAt0BV%2BDLLhPjyqGAWR%2Forvx9YFVQTt0BOqLt%20X0IDdKA74Arm3W%2FJIvU2Zr3ld%2F2LIHmhcnmHCH92R6C78beEP7sDXN4hEuh%2BuAIb6A44g%2BfMxPTp%20yEB342%2BN%2Bfv54DkzoRlW0lMAaQv12HqQ4hxRG7uxEMxvVQHq0V8frmsIzPe2FP5PinPAH1sfwB65%20hmSFSmrLiHHFYFEbdVkP5peKAPXo7wHzSwW4vuEgbVVCG%2FfTUpDaMkIFR0h2VJXsHNX803sgtWWi%20NnZbcYB68%2Fei8e9Iastg%2Fum9APXGNSQpVL44l3C%2FrhO1MYfKQefJK39vQOfpwRwqF7Vxv64DX5wr%202YWVJIVq%2Fn4%2BQLj6BgMPJuta4Dr0N4TJugYY%2BPoGwll%2Bd4kiOaFyOTsJn3dQ1MZmXQNVxTk4Q8YT%20qCoObKM%2Ffj7vILicnZIcVSUlVGKqJebsN0RtVJERzIFyB2fINAfmQDmoIqOozZz9BoipVnJilZRQ%20uUOfgJRfFrWxO0oATnK%2F298Djlh%2B3waQ8svgDn0SoA45RjJC5csuE%2FP%2BD0VtdG4N6LPVAerRPwP6%20bDXo3BpRm3n%2Fh%2BDLLktqdJCMUG38%2BRyRzVF%2Bgt1WLH5qSTAOQBJCtefPZ%2FaXgSoxOjhDxptQJUYw%20%2B8U2a6nFAQRcqDxnJo3NIlQVB3ZXaYB69M%2BE3VVqY1mxxgEEqEsiAi9UO%2F585rsSQM87OEPGJ%2Bh5%20y%2B%2FeACnFAQRUqKS2jHA%2FLRW1yf78wMH8UgHqstj7Z40DCFCXBAIqVNmfLz2kGgcQMKHa9ecfrZT9%20%2BQGGztODOVopapNCHEDAhGrXn79dHk2lALO9WHJxAAERquzPlzZSjAPwu1Blf%2F5fA6nFAfhdqLI%2F%20%2Fy%2BCxOIA%2FCpU2Z%2F%2F10JKcQB%2BFarsz%2F%2FrIZU4AL8l93F5h4hp7XhRmxT8%2BSRKCT5BDb59MEgEC6gZ%20yxtmAqrMDPpiLegz1aAKDAHtZ6CwxgFwA1oIbdY4ACauj9%2BSAf0iVMJzxPhJhqgt0P58PlED8yCt%20KBuzMSRGCb6zGhgcCeqyHmx26T9ymsLuKgXfIwwkhBHazN%2FPB%2BE5QtGMX8TqF6FyRzOl489X0TCN%20bgm%2BW4ioOafYiFNXjSip5lBt5BGtYZAQo0SP1kFQMBRIWxVMD7UGc6gc7Nbif9biry4OoHE9AO5o%20pt%2B64HOhSik%2Fn4SzME1qAxKjBAAUVXH48OcyfHigAqU1ZrvnaNUsxqaE4LnbtIgJYcD1CQeJUEDx%20ef4%2FSqyBrgfg88WUZPz5Klok0jW%2FVKDzW39iwa5ShyIFgNIaM5bvL0PKu3nIPmdZAfOd1TCNaeWX%20bkuJQMYB%2BFSoUvLnm4dGCSJd%2FON1TN1YCL3J9alHaY0Zd626gk0nLeWE%2BG4h4PpF%2BKSvUiWQcQA%2B%20ffRLxZ9PdEHg%2BoQDADadrMKcRoZsd5i8oRDdWimREK2EeXAk6OOV0nX9MhT4NkEgsSqQcBYIYUEU%20FCgTAUw8qCIjqGsmUJf1Ln8HZnsxuC4aIKhujPNTHIDPhMrl7CSmr54Qf1iA%2FPlcX4tITRzBC99d%20b9a19CYes7YV49tJbYAgGtzAFmC3ey58X8AnasD1DAOfoAEUrk0fqct6MGeqLSkpTha51jgA893R%209Z9XFwfAJAzx2VzVJ0IlplpiXDlM1EaVmgLmz%2Be7WFb4W09XI6%2FU8bRDq2YRomJRVGl0Oi3I%2Fr0G%202edqMOgGNfgeYYBEhEp0QTDdE2PX5FZUxeF6LYdyPQ%2B1gkKYioEulIGizrpE2qpgbquCOU0Ldk8p%20mP9dd7hYZA6Ug0uNANEqhDZrHAClCPaJWH0iVLv%2B%2FMYeDj9BopSC%2FW%2BHAxvouPQU%2FGfxSnRO7gUA%20MBqNyFz2Gh59%2FnWHgs08WolBN6hBQhhwPcNAVXMgkQogiLY8ZhU0iJ3RjKrhAAMPqtxseeyWmy3B%20H838bbh%2BETAPjQLqhFdUxeGLXyuQfa4GR68Y7S4YVQoa3WIjcHMrHg%2BkhKJPrApQUDAPjgSXpIFi%20db79J2CdR9H0UGuhyddxAF5XP19x1WKOauAqpXNroPj0irc%2FyrX%2BxKlgeiwWAHDXJ1eQ%2FbvYdz1z%20TDqWZGbZPXfjijdw36Mv2H1Pq2ZxcU57YURqFhwBVWAAnW8AlacHfa4GVLljS4QIhoJ5dEtwPUIB%20AJUGHu%2F%2BeB2Lfypza7EIAEk6DVaM0loEC0tUm%2FKDSw6nAqaJbSwOESusCsppWaDDWnldV16%2FoHHz%20DHHqM0egXJIXMFcpn6gR%2FvJ7vJePMwXiUbWkqBCR0TEOz%2B%2FdMRJHLtj3oB2f1Q4J0UpRW6WBx%2FVa%20HhV6DjUmgsoGAcihQTTCVTRaBDOIaeDlsQdVZARzvNK5%2B5ahYPpXa0Esp64acM%2BaIqfTG1dYMDQK%20swZaXKbM0UqwX161exyJUsL4ZJwwigMAnTgUylHveV1XXn30S9GfT5WYhH%2F31DE4U1D%2FnkpBOxUp%20ADwweiSOLLL%2FSPuobs59ttiI%2FCoKf5TUujyKqRQ0YkKV6NmaRVKMEl1bBWFAh2BBwCTGYlWwum%2BZ%20Y5UWJ4l1dGMomMa0EkSafa4Goz8vcHsUtcecHSVo10KB0ckh4HqEgj5QZtek6M84AK9djPAcMX52%20D0jh6fqLV3FQvvNnwFOfjXPjQUIYbDpZhfHrCkTvnTqyF1179nN47p6t63BbxniH77uDK4u1JJ0G%20t3dQYFiSBgM7BIunFgYezKFyMPvKwA2JEh733hRpw77mPNsOoUG001EVKhrGp9uL4gColl2gfPgr%20eDMOwGsGf%2B74BpFIAenk59OnLUb6EV00SNJpRO8tfdX%2BHJTjOOzI%2FAgr318kak%2FSaTAuPQVTMwa4%209NkqBY2pGQPww6bVKKrQ4%2BK1WtQaOeRfysMPm1Zj0exJGJeegjitZV54pqAay%2FeX4a5VV9BuwZ94%20elsxTl2te%2FQH0eAGtIDx%2BQ4%2BFSlgcXCsqzPuc91DAJUDqdirB1B4GtzxDV7tj1cUb%2FXnN3SVUpf1%20UC6%2F5I3LN5uGc6nsczW4a5V4YffT9i%2FRf%2Bh9AIDfftmHlW%2B%2FjDVb96C0xow4rQr9b0rEqHsfwOD7%20piBcG4UdmR%2FhwSnTnbpe47QqPP3YQ5g4%2Bw2EhrvmwbqY%2BxuyNq3G1m%2B%2BQdbhHJH4esVr8VTfIIxO%20rg%2BmOXXVgDtW5jvtR3MY1EltsRcDUKzOdxo5ZpweKzKLUcERUE7LgqT2BTB9P5%2FoF3YSvbg4FSGA%20ZF6mYVFC3%2BbcriUAhJdWzZLP3plH0pJjhf%2BPS08hP2xaTXjOTBry2TvzROc2fsVpVWTlgtnEbBaf%205y5l14rJygWzSa94cV%2BTdBqydpyO5M2NJ3FaldO%2BNPx%2B49JTyPKXZ5CVC2aTOZMzbK5r76VS0MJv%20Zu4X4fT35eJUNhowfT9fOlE7fHEu0b%2BRKO7g%2Fa0CLkybF0MRw%2Bz2Qh8fvCnM5sb0iteSlQtmk6qq%20CrviWTR7klMxLJo9iRgMhmYJ1B5H%2FvcdGZeeYiMiR31p%2BJo5Jp2UXSu2uSbP806%2Fj%2FVV%2FHJHyz0d%20FtX0YHB%2FK7FY30gk3ooDaPYc1Zy9EDb%2B%2FJ3S8NQIMBTMQyJFnpRH%2BoZDpbB8%2FbTkWOzeshaHz1%2FD%20lBfegkYTKjqdEIK5U0ZitoPV%2F7j0FJw8k4Nn3loFpVJp95jm0HPgEKzNOoqcE4cxLj0FAJqck2rV%20LHZvWYslmVkI10bZvE9RFJ55axWGpya51AfKhbUGs7PEth5A9kKXrt8UzRIql7OT8H%2FsFbWxP153%203VjtB0iUEsZH2womlKIqDlM2FGLg%2F11Ct9gI7N6yFrtP5CFtxDj75xOCaaNuxYJVW2zei9OqsPO%2F%20K7E26yhax8X79HsAQOfkXlibdRQ%2F%2F7AFveK1Do9L0mlw9MQph9%2BpIa2ibUVsRatmEWoNPjE0LVSq%203Az2R3EsBf%2FHXq%2FUA%2FBYqHbz80tNFh%2BxROATNTA%2BUT%2FJzz5Xg%2F4f5GPjySosmj0JB3KLmryZ00bd%20ipVbfrJpn5oxAKcuFOCO%2B6f4pO%2FO6DtoBA7kFmHR7EnCU8FKkk6D%2Fx05g7iOCU1ep7K8DDt%2FOuzw%20%2FVvjGyyOLrnmRGD%2Bdx1UqUnU5o16AB4b%2FKXkz7cH1zMM5lExFsM4R7BwVykW7CpFnFaFAz9m48a%2B%20aU1eY%2B6UkTYi1apZrF6xBHc%2FON1rfa2ursTh7G04ffQgcs%2BeRnFJCSprDHj1nf9z2E%2BGYfDMW6tw%202933455RIwVvVP8%2BNyFK17bJz6wsL8OIAd2derHu7V43BTLwoK%2B4mNwYgDgAh%2FAVV4l%2BUbJo4myc%202CbwC6a6l7lfhNCv4pc7kkGd1AQASUuOJUVX811awNhbaKQlx5IrF897ZYF05eJ5smj2JJKWHGt3%20YbRo9iSXr1VRdp0MT00Szh2XnuJ0UbdtzTKSpNM4XUQl6TSk8rUbLAupUTFu3wPjxDbihdWiZMJX%20XPXvKGbcOkvcidduIHyUMuACbSzS3Oc6CDckLTnW4Wq%2BMRs%2BXGhz4%2BZMzmi2yYnnebJtzTKRqOy9%200pJj3b622WwmUzMGCNcYnpok6u%2FFc2fJ0rnTXDZL%2Ffh4bP29DWfdvg98lJLo64QuDGZbZ3ksVLeN%20sXb9%2BT9dl0TwMNczTMiUzCszI31lAfJK9egVr8WeE3%2FarObt8cuPO9E%2FfZiwqvbGo57wHD5f8gre%20fHuxTVCMPY787zsk970Nl86fQcGfuTDU1uJ6cT7CWkRBHRqOFjGt0T6xu13rxItTRwkLv%2BGpSWgV%20HYW9h361%2B7lJOo3d9rXjdIJjgc26BsbDtHbzsChRHAAAKMavhSdxAG6dIGV%2FPp%2BogelBHcBQKKri%200P%2BDfOSV6qFS0Dj%2By0Eh1tQZ14qLcFNiO2HelqTTYMO2nU5jAZrimy%2BW45X%2FvOQwAssejgTUmDit%20CvFtonFj1wSk3zUSt436FzSaUDw5djCWrv%2BhyfNX3tsSt3ZU47PD5fjwgCUreM3Ylhh0gyXQhc6t%20aV62rRfjANw62Hx0PTF%2FN0%2FUxm4sDHgpcxLOwvhUOyCIRqWBx8AVV4UbvfzlGXj8P0ubuIJlNMro%203xXb9p8BYLGtfr3nV7s2SFc4f%2BY4npoyVrieP1ApaAzunYBHHpuOzNUfY90Px5wePz01Au8Mt6SU%20mDgCvZkI5ig6twaKzIJmD0ANn3JW2DtfBdtjjG%2BESmrLiPGjO0Fq6utmSsKfz1AwPtpWMEE1DI5O%20S47FruMXQVFNf823n50sGPTHpafg028PemS85zgO777wCOYt%2BczrgSLuEKdV2V3Rx2lV6BRJIzFa%20iWFJGmH0bIi3i2zYxAGoI6F85Du34gBcNk%2BZf3pPJFJAGvX2zUMihR9hftY1UQT%2Fko8%2Bd0mkB7K3%20Yt6SzyzXmD4GL76%2FzqXzGpN78gjGjxzi1mPeVzQWaa94Lb4aG%2BEwYJsqNQE1HNhtxV5PZ2e3FQtZ%20FgBAaq65XQ%2FAJYO%2FlPLzG8LHqcClWiKTss%2FVYEGDSf%2FUjAEu2Uory8vwwP0PQG%2Fi8dk78zBvWaZH%20Iv144bO4sefNkhCpPY5cKMXJq2JbKFVqAn2qyrIY%2Fu9VKJdf8sk99UY9AJdGVEn68%2BtyhcBQqDTw%20eGxz%2FWivVbNYuHKjS5d5%2BqERKKo0YvMnizFy4lNud6O6uhKPjBzY5HxQCjyzvQxHZ1ge9cyhcrCb%20i%2Fz22czOEtt6AG7EATQ5okrVn8%2F1DRcqn7z8%2FTXRo%2B7Jifc2mWICADsyP8KmrJ%2FxzfpPPRLp%2BTPH%200buT7i8hUsASlG2t9ML1CHMcDO0DmhsH4LSnxGyQpj9fRYNLswRlnLpqwPIG%2B3hq1SyefP2DJi9R%20WV6Gp5%2BehW%2B3bsKge%2F7l9Fij0Tbna%2B%2BODejTq5dLZiQp8e6Buse%2FggLXM8yvn%2B0wDsBsaFKsToXK%20HfxYkv58LjVCsM0918jR0DI8CCMGdEeX1iHYu8NxOsSSuY%2FhkzXr0HfQCKeftWfrOky862ZR2%2BrF%20L2FwxhifRdb7kiMXSoXUFuv83m%2FYqTBOyi%2BDO%2Fhxk6c6FCpfcVWS9fZJCANzXSpv9rkamzz9MwXV%202HPyEnp07SSklzQmNycHw%2B5%2FuEmR7sj8CEPvnYDv9p8Cx1nm6K8%2BMRYPP%2F1qQE1PzeXTwxa7N9Eq%20wMc5LmTsCxzuC9BEHIBDoZr3SLPePjewhTAh%2F8%2FuWrvHaNUsFq3a5PAaHW%2B4AT0HDnH6OdlffY57%20HnoMehOP0hozTh3%2BCU%2BOHYyXlktjE9vmsO1s%2FX0lsf4VKuBgX4A9zvcFsLvql2J%2BPgCQKKXIHOXI%20FPTmi085DWRmGOfFHw5kb8XdYyaKRs2x99ztdD46PDUJwybMQLt27dC6dWtUV1fjxIkT2LZtK3Zl%207ZTUCJxXqkdemRlxESz49sFg9pU1fZIXsVsP4LdtTusB2DRK2Z9vLSFj4gj6LC%2BwKxx3vFH2OH5g%20D24fNNjl%2BWdyty548623MXToUIfH5Obk4KlZT2H79h0Oj%2FE31sATqtQE5aI%2F%2Fd8BN%2BMAbEZUqebn%2084kaoSrIJ4cr7IpUq2axenOWxyLNz7uAEXcNdVmkw4YNxfp165pMh%2B6ckIBvv92OJ5%2BciaVLvVOh%20OU6rwo2JHdAqOgrRURYLSHV1NS7kXcG5P%2FKatEbs%2F7MWo5NDLHlkDOX%2FBbK9fQGc1AMQCZXXVxKT%20ROrti1DRFuM%2BLDlPr2TZf%2BSvWPyqSykY9qiurkTGbb1drtuU3K2LjUg5jsOGL%2F%2BLAwcPIjExCRMm%20jBeF4i1ZshS%2F%2F%2F67xyNrr3gtHhg9EvdNmYV2nbs6PfZacRE2f%2Fw21maux56TtvEY%2BRX1f4ykhSIg%200zq7%2BwL8uAS8vpLQqlDHo41U8%2FNNo2KE%2FozqFmI32HdqxoBmBTQ3Tkdu6rV9%2B3bRNTLXrSUx0VGi%20Y7RqlnzwwQei4%2FIv5bmc6mx9pSXHku3rVnj8%2FY79vNsmWLtXvFYS99jVegDCql%2By%2FvxEjais%2BeZT%20VTbH9IrXYtmXTcdfOuK1f49zy7uU3K2LaE66Y8cOTHxoAoqKxTZdVhOB0aPE%2B2vp2sZi2uPiStzO%20GJ6ahOnTH4dBX40D2VtRcNn9aLUb%2B6Zh677T%2BGHTaqF0UHVtvd%2Bf7xu4vQjcjgMwrp8oVvZ8z1IQ%20vPniw1miryuAkDc3nmjVrM1oo1Wz5OK5sx6PNps%2FWezW6AaAzJw5Q3SN5G5dbI5RKWiyb98%2Bu5%2B5%20fft2tz%2Bz8XdOS44ly1%2Be4XYOlzW%2FSpRu4mKBCZ%2Fe5%2FmN0lbWTxQJlQYc%2BPP3lAbWn89Qloj9Opvp%20xC%2Bv2ixyVAoaWzau83heeiB7K8ZOe8bt8xIT64s2FBcW4OSp0zbHTHv8CaSmpto9v2N882oAlNaY%20sefkJUx%2F%2BT20adcR4wf3wPkzx106NzQ8Aht3H8Pg3gm4Y%2BWVei%2FVgBZ%2Bd6laocrNYPeI1x2N4wBo%20qfrzzaNbOowztbLm%2Fdcdep%2BaIvfkEdw1YrRH9s127doJ%2F86%2Faj8C6cLhLDz55Eysz1yHHTt2oLiw%20vtxlpLaF3XNcRatm0Stei7TkWKQlxyL3Qh6GD%2BqH1Ytfcul8pVKJjbuPoW9iG9yxMh9FdeXPzRkx%20ILqgZvXNU5qKA2Cl6M%2FnbteKyiousJNctmj2JNw77XmPrp978ggGpw3w2Fd%2F8eJF4d%2FtY9vYPWbb%20%2FjPA%2FjOwJsFs374dQ4fqAADXSt0fBIanJmH06Hsx%2BN6HHTozKsvLQHgOFO3coQFYxPr1nl9xS7f2%20uCezDLsnaaFQWIoDK9%2FL8%2F%2F9d1QPoC4OgOaOrBEdT1VxAfXncz3DLJWWYdmfdEJmoc0x86ePwTNv%20rfLo%2BlaRNqd8%2BNmz9XlQ4dooDBvm2NgPADHRURg0aJDw%2F19%2F%2FcXlzxqemoScE4exdd9pPDRrvlOP%20W2h4hEsitRKujcKGbTtx6lIZnq8L7iExSpiHRLp8DW9Cn6222dzCqk%2Ba6TVB9AYJYcAniovd%2Bgs%2B%20USMYgIuqOAz%2FrNBm1JszOQPzlnm2WezxA3uaLVIAyFy3TghSAYAP3nvXprROQ5YuXSrKv1rzxRdN%20foZWzWLDhwuxdd9plzJoPaVrz3748I25WL6%2FTNhCkxvQwu%2FBKoDl%2FpNGqTJWfdLMzVNAhYtLwJiH%20R4s2EPAHXM8wy%2BIJlg0bhnxSaCOoOZMz8PrHX3t0%2FQPZW3H7oMHNFikAFBWXYOXKlcL%2F4zom4PjJ%2000ju1kV0XEx0FDLXrcWYsfX1rY4fP96kwb9XvBa%2FHj3m8dTGXR6aNR%2FDU5Pw2OZrwuYYVgeL32Ao%20i%2B4aQIW3BXOzpbYXBTjeZc%2FTwgPuwvWLEHaCqzTwGPr5dZuAk%2FnTx3g8ku7I%2FEiIhPIWMdFROPbr%20r9C1jRW1V5aX4eRvp9EhLtbmPY7j0COlu10rgZU5kzMwf8WmJgNnvE3e%2BRwkJHXB5N5hQgq1P1Ph%20udu1wpTPiuKeZbDuBkgDAJMwhKI79BcdZE7TWjb28iUMBfOwKEGkRVUcBq64aiPSlQtmeyzSjxc%2B%20i2Hjpnk9eqmouARDht6JynJx5FFoeARSU1NtREp4DiNGDHcoUq2axfZ1K%2FD6x1%2F7XaSA5akw55H7%20sepwBXKKLe5U7s4ovzxZSTgLc5q4jCbdoT8ablkp%2FIMvziXGVSPQMInP6W4YzUVFwzRWJwSaNCzB%20IxyioLHhk%2Fc8KqdDGpW38RUx0VE4tHePU997ZXkZ%2BvXv51Ckw1OTsGrDTkS3jrX7vr%2Borq5EXIwW%20t8arkDneMg1jvyn2eRig%2Bf5WgpUHAEAxUE7eCjq6s6BPYQVAR3emmJvEtUK5HqE%2BmVTzcSoY%2Fx0n%20iPTQJT36vn9JJFJreUhPRFpZXoaM%2Fl19LlLAMrK2T%2BiGR0YOROHZQ%2FXB5pwRxfmX8H%2BvzERYRAu7%20Io3TqoQFU6BFCsBSDmjivdh8qgqH6uqhcmlan46qfJxKLFIAzE3jRCIFGsWjWqOnfFYNhaHA3doC%205tvrv%2FyaXyrw7y3FokdzWnIsvsw6iOiWOrc%2F4vyZ4xg%2BqJ%2Bkk%2B5UChqz%2FjUcz7%2Fzmcs7pviL4sIC%20xMW2xdAEdf2o6sO5qr0qKoppWWgcPSWyqdCqUIoZ%2BKToQqStyiuuNWuJcvPgSCEXf8qGQkzdWCgS%206fzpY7Dr2B8eiTT7q88lnRkap1Vh%2FvQxyLt0Ga9%2F%2FLXkRAoA0S11mDCsHzafqkJemcU0yHdvugqi%20J3A9w2x2wmYGPmkjUsAfEf7WUTRNK%2Bwdf%2BiSHtM2l9oIyrrbcYhGg9DQECQndUaHjp1xyx0ZTVbU%20e%2B%2FFRzHz9RXu98%2FHJOk06N%2FnJjzwrylIyxgfkIVSQ3ZkfoSdWy3ByRqNBi1btUJi9164OX2kUBDO%20ulvhnNu1eKluJa584w%2Fvxn64GeFvd%2FLhtRqo1v06u9Vv4jU%2F65pdl2hTxGlVGDKgN6bNmitKzGtu%20pRKVgkbfxDZI7XMTOnfpjo5JyQhtEY0IrcUSYTDUovL6NdRWV6CmshwV10tQVlqKmuoKlJeVQ6%2Bv%20RXV1%2FR9cZGQUIqNjkJDcE937DfboyeBLivMv4dZeSXafOr3itbjjtgGY9PQr6NOrF0JULHJnW%2BbO%203l5UuVs71eEs2bh1FuF%2F21bf4MEu0Q1Xc45GUU%2FoFa%2FFonffR%2BsOnTFySJrb11QpaNxza3eMfWgK%207rh%2Fqk%2B23JEy%2BXkXkJyUgNIaM0Z1C0HrMBa7%2FjCJfkeVgobexOPIzDh0axXk1a3s7e5K3XU4lCMW%20O9Sjwzf4iqvEuGKwKGXanc423H7cV%2Ft1Wn9MV0nSafDopAfx0KzXPK57%2Bnfhmy%2BWY%2FiEJxCnVWHv%20Y60RE8Igp9iIb89U48ODVYIFRtgSnSMIeu2CV3LnrEmaAqwKymlZoMNaOdSjQwc1HdaKYlMfFbXx%20ndUuxwGYB1kMuEVVHCZkFrosqF7xWiydOw0%2F%2F7AF504fQ86Jw%2Fhh02rMmZwhRKdbcfWaacmx2LZm%20GX67UokZr334jxcpANz94HSMS09BXqkeb%2B62TMUSopWYNbAFcmfH4tvJbZCk0wj%2BfzAU%2BPbBzf7c%20hkmaVtjUR52KFGiikC8xGyzFexuEAVKlJigXX3QaBkZCGBjnWqJ83JmTDk9Nwpa9vznMIi0vLUF8%20rM7l8LzhqUmYM%2F%2BNJiuieAtiqMKpvduxc%2BdO%2FLjvZxRcLYRB3QrDb%2B6Eu4YNxS13jQcVFNL0hfxE%207skjSOjeGwBwfFY7JETbToE2nawS6vk3e68GhoJxVjvRDopUeFtLUV82yKkWndaeotggih0kDowg%20WgW4W50H%2FjbsyEEXN9ICgIKrhSgpuOzw%2FTNH96PGhVF0XHoKjv28G1v3nfaPSM16fP3pu3jq4VHY%20uXMnlEoFBva7Bf363ITCwiIsWLUF%2FUY%2FilaxHXAy%2B0vf98dFOif3ErasXLSnPkaWuqwXdupruJs1%2036F5Iyp3awuRNgCAHfR8kyIFXCyNblw%2FUZyqYuChfPeiQ3NFw%2Flpj%2Ffy3VrsWOvQ9%2B5xI3RtYmE0%20GnDl0kXsP%2FSr3bTfhoxLT8GcN5Y1a3MITygvLUF4eBjA2F%2BUFZ49hHnPPyNsrnbih%2F8iedD9%2Fuyi%20Qw5kb8Ut6RlQKWjkPtseMSEM6FNVYLcUgRsWbeM1CnrlvEfz1Ib7LFihO%2FSHcsynLmnQpYPcjQMg%20uiAYZ8QBAMauLbCbOeptjv2826UK04Hk%2F16Ziekvv4eY6CgU5p0DVOF%2B%2BVyO43Dq8E%2F448xRlF%2B%2F%20jsiYlkjq2R8dk24EAHRpHYIzBdVYmhGDaX3DAROxCJIj4ONUMA%2BPFgzUxYyAAAAOQElEQVTzitX5%20HgXWu%2BLPd4ZLlVzdjQOgioyAyTKHTetou5mBt0nSaQIq0vy8C3j1ibHo3TESwUoGkRoFeneMxI7M%20j0THPTZvMZK7dUFRcQlO7tvpl77NnTISMWEqpNxyG0ZNmoWHn34Vwyc8gRu6pKBdZDBefWIs7rj1%20FgDA1tN1A4qCAt%2BpbgufPD2UH14Gu7EQMPDgk9wPqnfVn%2B8Ml0sOMwOfAqUWxws2DnQV4AjoPyyV%209kZ1C3Ea%2Fe4NZv37cZ9e3xHFhQV4cuxgdLyhE15avh6nLpWhb2IbdO%2Bow6lLZRg2bhq%2B%2BWK5cDxF%20M1jwnKWvOecu%2BLx%2F33yxHAtWbREtPlUKGlo1C5WCRl6pHi8tXy%2FsSbXvTz1MdYtk0rpBkh9HwPxS%20gaA3%2FrAMQm5iExCtjgQ7YIZb13BZQe7GATA%2FW7wYMSEMXkp3vGV3c5k5Jh1TXnBestAXbFzxBhLj%2047B0%2FQ%2FoFhuBDR8uRHlVLXafyMPuE3k48GM2VAoazz77nOi8djrLTWsd3bxM1KYouHwJ02fWp4LH%20aVU4PqsdyuZ3RP68Diib3xG5z3XA0owYJOkso6TexONoviV9mm9nZ%2BGk5932Tjny57uzdQ%2Fg5jbo%20zI33gWopTrfg7oyyWwu%2BYcHWf%2FeLwKhu3jXLaNUsVi6YjSWZWV69blOUl5Zg%2FOAeuO%2FRFwAAn70z%20D4fOleDeac%2BLPFw39k1D38Q2NgvJynLL6rpjlx4%2B6yPHcRg3rJ8obHLhnS1szE9xESym9Q3H0Rmt%20sTQjBioFjaN1u0iLRlRPUdEWfTSAatkFzI3up7i7JVSKZig2fa6ojYQwlrA9O7DbigEDDwVDIXO8%20DkszYqBVNy9rIE6rwpzJGTh7Ic%2FvI%2BneHRvQvVOsEFcQomLRrVc%2Fu3bf6upKnDhfYOOk%2BHb7DkzN%20GICWiX180kdCCB4bfZvIQvLgTWGCmYk%2BVQV2YyHYb4pBn6oS7OHT%2BoZj7%2BP1uXMkhLFJtHMX8%2B1a%20m2uw6XPd3l4ScFOoAMDE9aHorsNFbVxqBEiUrWmGKjFC8ckVIQV2Wt9wrBnrftJYkk6DqRkDsH3d%20CvxeUI7XP%2F7ar8EexfmX8MjIgRgw7H7kleoxf%2FoYLH95BvJK9eifPkw0D7WyYOYElNaYMWXsSKGt%20vLQEJ8%2FkYsUax3sLNJcXp44SzGCA5Q%2F73RGW6QZVaoJikyW2lNlXBsXaAigX%2FSk8%2Bbq1CrKs%2Buto%20%2FMh2h4ZFl63QXYd7tGEv4MHu0oD7cQAkhIH5vlaC6%2BzpbcVYvr8MWjWLxa%2B%2BAF3bOBRczkN5aRGM%20RhMiWkQiQqtFh6Qe6HzjzQGL2ywvLcFbz07B4s%2B3QW%2FiEadVYfWnq5A2wmIBaZg0uHTuNMx4zbLn%20werFL%2BHhp19Fkk6DY3%2BWClOCwrOH0LJTikN7a3Owl3qjUtDY%2B3hbdGtleYwrPnC84RnXLwLmoeIc%20qeZETHniz%2FcJ5n3LbUtUJmocF8NiKGJ4qh3RL%2BxEKl%2B7gTx4U5hQ9Gv%2B9DHEYDB4UuPMJ1y5eJ7M%20mZwhFGVTKWgyZ3IGqaqqsDn22M%2B7SZxWZSmeNiadzJ8%2BRihklnPisF%2F6azAYbMpmqhQ0%2BXZyG%2BHe%20mG%2FXNl2sTBck3CP9wk7EdH8rz0pJJmpstGHet7xZpVc8Vjcx1RLjymFuxQGQKCVM09qChDAwcQQL%20d5UKcQBJOg2ee2YWxj7xYkDC7oxGI7I3fYYPli1B1uEcUcDLzz9sceqKzc%2B7gPS%2B3YWFU5JOg693%207vFp4YiGnz3%2B7jQbr5219DngZpImQ8E8Ihpcn3DP0pAc%2BfOnbgelCPbvaGqFy9lp%2B5fTxF8urwsi%20hrnxwvHfTm5DknQaYSSI06rInMkZ5Mj%2FviM8Z%2FbpSFRVVUG2rVlGpmYMsClpOS49hWz4cCFRKWiS%20lhzrcMT%2FafuXoiK5UzMGkIqy6z7tt5Vta5bZ9FuloMnacbr68o0T2xDCUB6Nioa58W6fa75da%2Fuk%20dXF3Pmc0W%2BHuxgEAFr%2Bv6UGdMFk3cQTrj1Vi8b4qkTlHq2bRL6UTBva7Bd173YLk1CE2%2BfLucK24%20CL%2Fs3oqDP2Zj14%2F7cODsFdHIGadV4cFRQzDthTeFUpY7Mj%2FCsHHTMC49BV98%2FytKS4px6IevsXPr%20Bmz%2Bfq9gAkpLjsXCd5f5JQimvLQEjz8w2CarQatmsWZsS2Frc%2BqyHspVVzyOISXhLCgD7%2FL5zfXn%20O6PZF%2FC4HoCdjFTAkgnw32OV2HZWb7f8jkpBo0NUMFpGaREaGoJQdRCio8S2uppaA6qrK1FZY0DB%201UJU1xpQWG5wGB5oFWiP3n3RIro1amsqoa%2BuRFlpKQquXELmV9twpqAaWjUruoZWzWL04Fts0mN8%20BeE5rHrzBTz32rs23yVJp8H6sVGCrZTOrYHi83y%2FVuVrrj%2FfGV6ZM5i%2Bn0%2B4X8RVAZ2tMBtCwllw%20Q6LAdQ%2BxyR%2FPKTbiUJ4ex%2FINOHiVRlFZjVdqR3mKdSeSgf1uQf8hGeiddpcoWa%2B6uhL7vv0v7rh%2F%20ilc%2FlxCCLZ8twZy58%2BxGok1PjcDLd0QitG4kY45Wgt1U6FeR8nEqmB4TP%2B2YnhOguOMlr2jMKxch%20tWXEuGIwSG29KcPdiTgJYcD3CQd3Y6iwa7Q9TBzBhVITyvU8Kg088htMMWpMBGoFBbXScsMigmmE%20BtFoFcpCxVIoqjKjsIpDWS2PkmoOhZVmlOt55FeYcfYaEUQwPDUJI%2B6%2BGxFaLaJ0cYjt1BWxHZMc%20LvKMRiM%2BXjgby1aswoZtO70WZlhdXYnVb7%2BIZStW2RVokk6Dt4dFCI96cATsjhK%2Fb3AG2MnPD46A%20clqW265SR3htFWY%2Bup6Yv5snavO0cAGJUoJPUINvHwzSOsgm2NYXmDiCkavzhcrW49JT8Oyr7zqN%20yirOv4TVS17G%2B6vWoajS6HH5oYYQnsO%2BnV%2Fh8xXvY1PWz3anK3FaFebdHo4xKaFQ1D2FqCIjFOuv%20giow2Bzva7ieYaL9ogCAvfNVsD3GeE1fXruQL3f8IyEMiFYBEq0EwlmQcBZEzQBKGkRdN3FX0gBL%20AWYCGC2fR9XwgJEHVcNZItZDWBANYzlHzYBoGNHEv7HJDLCIov9NiWjfrh1aaCNRW1ODszlnkXsh%20T1TMrVe8FtOmTMZtI8cLcZ4ufTdCcOHsCez%2Bei1278rCd%2FtPOZxLD%2BqkxqTe4aKoe3AE7K5SSyn7%20QFQJdzM%2F31O8atfyWj0Af8JYYi9NY1oJos0pNmLRnuvYeLLKYQKhSkFjaIIarcNYm4WfVs2ie0cd%20WreMRHRUFDQaDVSqYASr1bheeg3V1dUoLilB7oU8XLha4TQHLEmnwYSUYNzbPRRxEQ3iJOpC75hd%20gd0UxN38fE%2FxugHWuHkG4c82KFTrQT2AQECilDA90FI0zzJxBEfzDcgpMqK42mLViNYwSIhRokfr%20IOGxCwCnrhrw1ckqfP8nHG4m7ApJOg166hjcGh%2BMWzuqxeIEAAMP5lA5mH1lgd21Bg7y8xOHQjnq%20Pa%2FryusXbG49gEDD9QwDN7CF0wVdU1QaeBy6pMfxfANOFxpRUGlGOadCda0BrUMsj%2BewIBqtw1iE%20q2h00CqQEKNEUoxSWLmLO0VAn68FfaISzLHKgG4E0hB%2F%2BvN94tIy71tOzD8uEbV5mmsTKPg4FcgN%20avDtgkEiWEBdNwcrM4EqM4MuMIA6VwOq3Ay%2BWwj4zhrwHYO9VqKRquJA%2F14D6nwNmN%2BqAr5pcmMa%20JnBaYQc%2BCbbfdJ9oyicX9SQO4G%2BBigbfPhh8fDBIyyDw7VSixZpdDDyocjOoIiOo6ybQF2pBFRgC%20%2Flh3SgD8%2BT6pfU4pgqnG%2BwJY6wH4a1%2BAgKDnLZkNDZ4cJIQBQlmQukqGVF3SI2o4S5zuX%2FAP12F%2B%20vg%2BDTnyWdcckDKHouJtFbeaBLZodNf5Xg6riQBUYQOfpQefpLaOldcT8C4qUhDAwDxSv8um4m0X1%209n2BT9ND2TteAqgGwgyiwQ1zkLkq85eAGxYtns5QjOU%2B%2BxifCtWf%2BwLI%2BB5v5Od7im8T7gGwA2aA%20ChankjisByAjaWzy84Mj3M7P9xSfC5UKjqCYATNFbd7aF0DGf9jNzx8w02tBJ03hc6ECANNjLKjo%20BFGbo3oAMhLEXn5%2BdAKYHmP91gW%2FKIWiGarxhNtZPQAZaWE3P%2F%2BOl7wadNIUfhvSmLg%2BFJ0o3i7c%20UT0AGelgNz8%2FcajXg06awq%2FPXva2ZwG2wTzHzo7CMtLCZqdxVmW5j37Gr0KlI9o2a18AGf%2FisN5%2B%20RFu%2Fpz37fTXD9JkEKrytqK1xhQ4ZCcBQlvvSACq8LZg%2BkwLSHb8LlVIE2%2B4LEKME19c%2F1ZdlXIPr%20G24T6uhrf74zAmIfshsHMDjyHxcHIFVICGPZs7YB%2FvDnOyNghkw5DkC6BMqf74yACVWOA5AmgfTn%20OyOgriE5DkB6BNKf74yAClWOA5AWgfbnOyPgznY6ZYwcByAFHPjz6ZQxAeqQmICrgWZYOQ5AAjjy%2059MMG%2FDRFJCAUAE5DiDQSMWf7wxJCBWQ4wACiVT8%2Bc6QjFDlOIDAICV%2FvjMkI1RAjgPwOxLz5ztD%20UkKV4wD8i9T8%2Bc6QlFABOQ7AX0jRn%2B8MyQkVcBAH0OhHlWke3OBIyfnznSFJodqNA%2BgTLscBeAk%2B%20TgWuj3g6JQV%2FvjMkKVRAjgPwJVL15zvDJ0XSvAEVHEGZf%2FmCmL9%2FRWizxgEwv1UFsGd%2FbbiuIZL1%205ztD0p3jOTMxfToSpDgn0F3520JFJ0Ax8WvJuEodIdlHP2A%2FDkDGu0jJn%2B8MSQsVsB8HIOMdpObP%20d4bkhQrYiQOQaT4S9OfLyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjI%2FH34f4DnQZLCUbKg%20AAAAAElFTkSuQmCC%20%22%0A%20%20%20%20%20%20%20height%3D%2215.781592%22%0A%20%20%20%20%20%20%20width%3D%2215.781592%22%20%2F%3E%0A%20%20%20%20%3Ctext%0A%20%20%20%20%20%20%20xml%3Aspace%3D%22preserve%22%0A%20%20%20%20%20%20%20style%3D%22font-size%3A40px%3Bfont-style%3Anormal%3Bfont-weight%3Anormal%3Bline-height%3A125%25%3Bletter-spacing%3A0px%3Bword-spacing%3A0px%3Bfill%3A%23000000%3Bfill-opacity%3A1%3Bstroke%3Anone%3Bfont-family%3ASans%22%0A%20%20%20%20%20%20%20x%3D%2221.661425%22%0A%20%20%20%20%20%20%20y%3D%2226.843145%22%0A%20%20%20%20%20%20%20id%3D%22text2990%22%0A%20%20%20%20%20%20%20sodipodi%3Alinespacing%3D%22125%25%22%3E%3Ctspan%0A%20%20%20%20%20%20%20%20%20sodipodi%3Arole%3D%22line%22%0A%20%20%20%20%20%20%20%20%20id%3D%22tspan2992%22%0A%20%20%20%20%20%20%20%20%20x%3D%2221.661425%22%0A%20%20%20%20%20%20%20%20%20y%3D%2226.843145%22%0A%20%20%20%20%20%20%20%20%20style%3D%22font-size%3A11px%3Bfont-weight%3Abold%3Bfont-family%3AArial%3B-inkscape-font-specification%3AArial%22%3EAddThis%3C%2Ftspan%3E%3C%2Ftext%3E%0A%20%20%20%20%3Cpath%0A%20%20%20%20%20%20%20inkscape%3Aconnector-curvature%3D%220%22%0A%20%20%20%20%20%20%20style%3D%22fill%3A%23fd8363%22%0A%20%20%20%20%20%20%20d%3D%22m%2019.392263%2C29.202057%20c%200%2C0.470446%20-0.381554%2C0.852%20-0.852%2C0.852%20H%206.0442638%20c%20-0.470446%2C0%20-0.852%2C-0.381554%20-0.852%2C-0.852%20V%2016.706058%20c%200%2C-0.470446%200.381554%2C-0.852%200.852%2C-0.852%20H%2018.540263%20c%200.470446%2C0%200.852%2C0.381554%200.852%2C0.852%20v%2012.495999%20z%22%0A%20%20%20%20%20%20%20id%3D%22path3%22%20%2F%3E%0A%20%20%20%20%3Cg%0A%20%20%20%20%20%20%20id%3D%22g5%22%0A%20%20%20%20%20%20%20transform%3D%22matrix(0.142%2C0%2C0%2C0.142%2C5.1922638%2C15.854058)%22%3E%0A%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20x%3D%2241%22%0A%20%20%20%20%20%20%20%20%20y%3D%2212%22%0A%20%20%20%20%20%20%20%20%20style%3D%22fill%3A%23ffffff%22%0A%20%20%20%20%20%20%20%20%20width%3D%2219%22%0A%20%20%20%20%20%20%20%20%20height%3D%2275%22%0A%20%20%20%20%20%20%20%20%20id%3D%22rect7%22%20%2F%3E%0A%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20x%3D%2213%22%0A%20%20%20%20%20%20%20%20%20y%3D%2240%22%0A%20%20%20%20%20%20%20%20%20style%3D%22fill%3A%23ffffff%22%0A%20%20%20%20%20%20%20%20%20width%3D%2275%22%0A%20%20%20%20%20%20%20%20%20height%3D%2219%22%0A%20%20%20%20%20%20%20%20%20id%3D%22rect9%22%20%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A" title="Privacy Badger a remplacé ce bouton AddThis" style="border: none !important;cursor: pointer !important;height: auto !important;width: auto !important">
+        </div>
+
+    </div>
+
+<!-- Start Footer -->
+<div class="container-fluid container-xl">
+    <footer class="footer mt-6 p-4">
+        <div class="row d-flex justify-content-between">
+            <div class="col-md-4 col-xs-12">
+                <div class="row">
+                    <div class="col">
+                        <ul class="footer-links list-unstyled">
+                            <li><a href="https://symfonycasts.com/courses#all">Courses</a></li>
+                            <li><a href="https://symfonycasts.com/courses#tracks">Tracks</a></li>
+                                                            <li><a href="https://symfonycasts.com/pricing">Pricing</a></li>
+                                                        <li><a href="https://symfonycasts.com/faq">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <ul class="footer-links list-unstyled">
+                            <li><a href="https://symfonycasts.com/about">About</a></li>
+                            <li>
+                                <a href="https://symfonycasts.com/terms">Terms</a>
+                                <span>&amp;</span>
+                                <a href="https://symfonycasts.com/privacy">Privacy</a>
+                            </li>
+                            <li><a href="https://symfonycasts.com/blog">Blog</a></li>
+                                                    </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto pb-2">
+                <div class="social-icons">
+                    <a class="social-links" href="https://twitter.com/SymfonyCasts">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="social-links" href="https://github.com/SymfonyCasts">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a class="social-links" href="https://www.facebook.com/SymfonyCasts/">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+
+                <a class="btn btn-secondary mt-2 text-nowrap" href="https://symfonycasts.com/contact">Contact Us</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm">
+                <p class="pt-2">Powered by <span class="font-blue"> <i class="fa fa-shield-alt"></i> Knp</span>University</p>
+            </div>
+            <div class="col-auto">
+                <p class="pt-2">Hosted with <i class="fa fa-heart" style="color: #b00020;"></i> on <i class="fas fa-cloud"></i> <a href="https://symfony.com/cloud/" class="text-underline">SymfonyCloud</a></p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- JS -->
+            <script>
+        Core.analyticsVideoStatsUrl = '/api/analytics/video/duration';
+    </script>
+
+            <script async="" defer="defer" src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/latest.js"></script>
+    <noscript><img src="https://sa.symfonycasts.com/noscript.gif" alt=""/></noscript>
+    
+                <script type="text/javascript">
+        UserVoice = window.UserVoice || [];
+
+        UserVoice.push(['set', {
+            accent_color: '#448dd6',
+            trigger_color: 'white',
+            trigger_background_color: '#448dd6'
+        }]);
+
+        
+        UserVoice.push(['addTrigger', {mode: 'feedback', trigger_position: 'bottom-right' }]);
+
+        window.loadUVScript = function() {
+            const userVoiceScript = document.createElement('script');
+            const targetScript = document.getElementsByTagName('script')[0];
+            const fakeIconRemovable = document.getElementsByClassName('js-fake-icon-removable')[0];
+
+            fakeIconRemovable.parentNode.removeChild(fakeIconRemovable);
+
+            userVoiceScript.type = 'text/javascript';
+            userVoiceScript.async = true;
+            userVoiceScript.src = 'https://widget.uservoice.com/pOay2WLVabhXiEffbarO6Q.js';
+            userVoiceScript.onload = function() {
+                document.getElementsByClassName('uv-icon')[0].click();
+            };
+
+            targetScript.parentNode.insertBefore(userVoiceScript, targetScript);
+        }
+    </script>
+        <div data-html2canvas-ignore="true" class="uv-icon uv-bottom-right js-fake-icon-removable">
+        <button class="uv-icon-trigger" aria-label="Open Feedback Widget" onclick="window.loadUVScript()">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="39px" height="39px" viewBox="0 0 39 39" enable-background="new 0 0 39 39" xml:space="preserve">
+                <g>
+                    <path class="uv-bubble-background" fill="rgba(46, 49, 51, 0.6)" d="M31.425,34.514c-0.432-0.944-0.579-2.007-0.591-2.999c4.264-3.133,7.008-7.969,7.008-13.409
+                        C37.842,8.658,29.594,1,19.421,1S1,8.658,1,18.105c0,9.446,7.932,16.79,18.105,16.79c1.845,0,3.94,0.057,5.62-0.412
+                        c0.979,1.023,2.243,2.3,2.915,2.791c3.785,2.759,7.571,0,7.571,0S32.687,37.274,31.425,34.514z" style="fill: rgb(68, 141, 214);"> </path>
+                </g>
+                <g>
+                    <g>
+                        <path class="uv-bubble-foreground" fill="#FFFFFF" d="M24.951,9.07c-0.83-0.836-1.857-1.453-2.976-1.786C21.337,7.096,20.672,7,20,7
+                    c-1.87,0-3.628,0.736-4.952,2.07C13.728,10.403,13,11.864,13,13.751l0.03,0.648c0.086,0.972,0.368,1.896,0.834,2.752
+                    c0.776,1.399,2.367,2.849,2.637,4.993l0.163,0.972C16.809,23.703,17.105,24,17.549,24h5.054c0.445,0,0.742-0.297,0.884-0.884
+                    l0.014-0.972c0.268-2.144,1.802-3.593,2.657-4.993c0.443-0.855,0.725-1.779,0.811-2.752L27,13.751
+                    C26.999,11.864,26.271,10.405,24.951,9.07z M17.101,26.554h5.741v-1.66h-5.741V26.554z M18.392,28.668h3.216l0.414-0.83h-4.101
+                    L18.392,28.668z" style="fill: white;"> </path>
+                    </g>
+                </g>
+            </svg>
+        </button>
+    </div>
+            
+        <script type="text/javascript">
+        window._sf_async_config = {
+            uid: 54262,
+            domain: "symfonycasts.com",
+            useCanonical: true,
+            noCookies: true,
+        };
+
+        window.addEventListener('load', function() {
+            window._sf_endpt=(new Date()).getTime();
+            const e = document.createElement('script');
+            e.setAttribute('language', 'javascript');
+            e.setAttribute('type', 'text/javascript');
+            e.setAttribute('src', 'https://static.chartbeat.com/js/chartbeat.js');
+            document.body.appendChild(e);
+        });
+    </script>
+    
+
+
+    
+    <script src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/highlight.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+
+
+    <script type="text/javascript">
+    var addthis_share = {
+        templates: {
+            twitter: '{{title}} - {{url}} | via @SymfonyCasts'
+        }
+    }
+</script>
+<script type="text/javascript" src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/addthis_widget.js"></script>
+
+
+
+<script language="javascript" type="text/javascript" src="Custom%20Normalizer%20Object-by-Object%20Dynamic%20Fields%20)%20API%20Platform%20Part%202%20Security%20SymfonyCasts_fichiers/chartbeat.js"></script></body></html>

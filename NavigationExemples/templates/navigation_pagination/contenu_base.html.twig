@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block contenu %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{# ici le formulaire. Vous pouvez le rendre avec form_row ou quoi qui vous vouliez #}
+
+<div class ="text-primary">
+{{ form_start(form,{'action': path('contenu_base'), 'method': 'GET'}) }}
+<h3>Filtres de Recherche</h3><input type="submit">
+{{ form_end(form) }}
+</div>
+
+
+<div id="contenuRecherche">
+    <h1>Div Contenu Recherche No AJAX</h1>
+    {# {{ dump (filmsFiltres) }} #}
+    {# filmsFiltres est envoyé par le controller dans tous les cas #}
+
+    <div class="bg-light">
+    {% if(filmsFiltres | length > 0) %} 
+        {% for film in filmsFiltres %} 
+            <br>
+            <h6>Id: {{film.id }}</h6>
+            <h5>Titre du film : {{ film.titre }} - <strong>{{ film.getGenre.nom }}</strong></h5> 
+            </h5>Duree du film : {{ film.duree }} min. </h5>
+        {% endfor %}
+    {% else %}
+        <h3 class="text-danger">Pas de résultats...</h3>
+    {% endif %}
+
+    </div>
+</div>
+
+{# div pour le paginator #}
+<div>
+{{ knp_pagination_render(filmsFiltres, 
+        'templates_pagination/twitter_bootstrap_v4_pagination.html.twig') }}
+</div>
+
+
+<script>
+// Si vous voulez envoyer le form quand on change le contenu d'un élément
+// il faut rajouter des événements et de lancer le submit du propre formulaire
+
+// Vous pouvez rajouter l'event en cherchan les éléments par type, class ou id
+// Par défaut, Symfony crée des names et classes (si on rajoute le bootrstrap)
+// Si ce n'est pas suffisant, vous pouvez rajouter de classes dans:
+// 1. Le code de création du formulaire (classe dans Forms) pour le form ou pour chaque elem
+// voici quelques exemples:
+            
+            // ->add(
+            //     'fechaVisita',
+            //     DateType::class,
+            //     [
+
+            //         'widget' => 'single_text',
+            //         'format' => 'dd-MM-yyyy',
+            //         'html5' => false,
+            //         'attr' => ['class' => 'js-datepicker'],
+            //     ]
+            // )
+            // ->add('numeroVisita', NumberType::class)
+            // ->add('manifestacionesClinicas', ChoiceType::class, [
+            //     'choices' => $campos['manifestacionesClinicas'],
+            //     'attr' => ['class' => 'classControlSelectS2']
+            // ])
+            // ->add('paciente', EntityType::class, [
+            //     'class' => Paciente::class,
+            //     'choice_label' => 'identificador',
+            //     'attr' => ['readonly' => true, 'class' => 'classControlSelectS2']
+            // ]);
+
+// 2. Le controller 
+            // $form = $this->createForm(new FormType(), $data, ['attr' => array['class' => 'laClasse']]);
+
+
+// 3. Le twig
+{#        {{ form_start(form, { 'attr' : { 'class': 'class' } })  #}
+
+// À vous de choisir comment le  faire! Ces techniques sont plus adaptées à AJAX, 
+// Autrement on recharge constamment la page!
+
+// Exemple à modifier
+// document.addEventListener ("change", (event)=>{
+//     console.log("change!");
+//     if (event.target.matches ("#search_genre")){
+//         // console.log (event.target);
+//         let form = document.getElementsByName("search")[0];
+//         // console.log (form);
+//         form.submit();
+//     }
+// })
+
+
+// document.addEventListener ("change", (event)=>{
+//     console.log("change!");
+//     if (event.target.matches ("#search_query")){
+//         // console.log (event.target);
+//         let form = document.getElementsByName("search")[0];
+//         // console.log (form);
+//         form.submit();
+//     }
+// })
+
+
+
+</script>
+
+{% endblock %}

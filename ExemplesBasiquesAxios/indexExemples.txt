@@ -1,0 +1,4 @@
+1. Formulaire sans AJAX
+2. Appel AJAX Axios - on n'envoie rien au serveur
+3. Appel AJAX Axios - on envoie un form (pas d'entités, on n'est pas dans Symfony
+

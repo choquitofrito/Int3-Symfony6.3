@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!{% endblock %}
+
+{% block body %}
+<h1>Contenu du Panier</h1>
+{{ dump (panierCommande) }}
+
+{% for detail in panierCommande.details %}
+
+<h4>{{ detail.produit.nom }}: 
+
+
+{# aussi clickable ici  #}
+<a href='{{ path ("produit_detail",{'id': detail.produit.id}) }}'>
+<br>
+<img style="width:4em" src='{{ asset ("/images/" ~ detail.produit.lien ) }}'/>
+</a>
+{{ detail.quantite }} unités</h4>
+
+{# {{ dump (detail)}} #}
+
+{# lien pour effacer le detail de ce produit dans la commande de la session.
+On envoie l'id du produit, car le detail n'a pas encore un id (pas persisté la commande) #}
+<a href='{{ path ("panier_effacer_detail",{'id': detail.produit.id}) }}'>Effacer</a>
+
+
+<hr>
+{% endfor %}
+
+
+
+<h3>Total: {{ panierCommande.total }} euros</h3>
+
+{# Créez les liens selon vos besoins  #}
+<h3><a href="{{ path ('commande_passer') }}">Passer la commande</a></h3>  
+<h3><a href="{{ path ('accueil') }}">Retour aux achats</a></h3>  
+
+
+{% endblock %}

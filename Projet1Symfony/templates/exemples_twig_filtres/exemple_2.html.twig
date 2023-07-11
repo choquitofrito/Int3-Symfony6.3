@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if ville | length > 1 %}
+Le tableau n'est pas vide, voici son contenu
+{{ ville | join (" - ") | upper }}
+{% endif %}
+{% endblock %}

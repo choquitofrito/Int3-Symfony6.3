@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<!-- formulaire à envoyer  -->
+Tapez ici le code d'un aeroport existant:
+<form id="leFormulaire">
+    <input type="text" name="code" />
+    <input type="submit" id="envoyerCode" value="Envoyer" />
+    <div id="divMessage">Ici il y aura le nom de l'aeroport et son code</div>
+    
+</form>
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    envoyerCode.addEventListener("click", function (event) {
+        event.preventDefault();
+        axios({
+            url: '{{ path ("annexe_exemple3_traitement") }}',
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: new FormData(document.getElementById("leFormulaire"))
+        })
+        .then(function (response) {
+            // chaîne JSON
+            let aeroport = response.data.aeroport;
+            // on crée un objet!
+            let aeroportJS = JSON.parse (aeroport); 
+            console.log (aeroportJS.nom);
+
+            console.log (aeroport);
+            console.log (typeof (aeroport));
+            console.log (aeroportJS);
+            console.log (typeof (aeroportJS));
+            
+            document.getElementById("divMessage").innerHTML = aeroportJS.nom + "-" + aeroportJS.code ;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    });    
+</script>
+{% endblock %}

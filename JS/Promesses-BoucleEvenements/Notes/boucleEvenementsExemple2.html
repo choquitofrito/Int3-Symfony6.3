@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boucle événements</title>
+  </head>
+
+  <body>
+    <script>
+      console.log("Début du script");
+      // on "enregistre" le setTimeout et on continue l'exécution du script (le for plus bas)
+      // le moteur js essaiera de lancer ce code dans 3 sec.
+      // il ne pas car la suite du code dure plus de 3 sec.
+      setTimeout(() => {
+        console.log("Exécution d'une tâche longue");
+      }, 3000);
+
+      // operation qui prends longtemps, plus de 3 sec.
+      for (let i = 0; i < 10000000000; i++) {
+        let val = i * 2;
+      }
+
+      console.log("Fin du script");
+    </script>
+  </body>
+</html>

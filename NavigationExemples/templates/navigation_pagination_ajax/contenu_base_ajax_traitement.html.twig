@@ -1,0 +1,15 @@
+<h1>Div Contenu Recherche (AJAX)</h1>
+{% for film in filmsFiltres %}
+    <br>
+    <h6>Id: {{film.id }}</h6>
+    <h5>Titre du film : {{ film.titre }} - <strong>{{ film.getGenre.nom }}</strong></h5> 
+    </h5>Duree du film : {{ film.duree }} min. </h5>
+
+    
+{% endfor %}
+
+{# paginator qui appelle ajax  #}
+<div>
+{{ knp_pagination_render(filmsFiltres, 
+        'templates_pagination/twitter_bootstrap_v4_pagination.html.twig') }}
+</div>

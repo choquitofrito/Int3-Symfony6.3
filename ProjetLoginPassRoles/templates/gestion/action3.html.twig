@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AutreController!{% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_ADMIN') %}
+La vie de l'admin est dure
+{# ex: <a href="{{ path ('effacer_user') }}">effacer</a> #}
+{% else %}
+La vie est belle
+{% endif %}
+{{ dump (app.user)}}
+{{ dump (app.user.getRoles())}}
+{% endblock %}

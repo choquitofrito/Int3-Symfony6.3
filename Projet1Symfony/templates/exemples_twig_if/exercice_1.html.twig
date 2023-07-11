@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if prix >= 100 %}
+    Le prix depasse 100 euros!
+{% else %}
+    Le prix est inférieur à 100 euros!
+{% endif %}
+{% endblock %}

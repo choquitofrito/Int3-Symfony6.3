@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html><head><title>api_client.php – Medium</title><meta name="description" content="You can't perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session."><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="twitter:widgets:csp" content="on"><meta name="robots" content="noindex"><!-- base href="https://medium.com/media/f0c30041841ad30ce40aae29652c25db" --><style>body {text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif; font-weight: 400; color: #333332; font-size: 18px; line-height: 1.4; margin: 0; background-color: white; overflow: hidden;}iframe {max-width: 100%;}</style></head><body><style>.gist .gist-file { margin-bottom: 0 !important; }.gist { text-rendering: auto; }</style><script src="f0c30041841ad30ce40aae29652c25db_data/81de7b5460d99049e73f12037222cae9.js" charset="utf-8"></script><link rel="stylesheet" href="f0c30041841ad30ce40aae29652c25db_data/gist-embed-b4e1b64ab37d0cf7698bb0c5008263fe.css"><div id="gist99193688" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-api_client-php" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-php  ">
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-api_client-php-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-api_client-php-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">&lt;?php</span></td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-api_client-php-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-api_client-php-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-v">ApiClient</span></td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-api_client-php-LC4" class="blob-code blob-code-inner js-file-line">	{</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-api_client-php-LC5" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-api_client-php-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 * @return Project[]</span></td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-api_client-php-LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 */</span></td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-api_client-php-LC8" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">getProjects</span>(): <span class="pl-smi">array</span></td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-api_client-php-LC9" class="blob-code blob-code-inner js-file-line">		{</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-api_client-php-LC10" class="blob-code blob-code-inner js-file-line">		<span class="pl-s1"><span class="pl-c1">$</span>projects</span> = [];</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-api_client-php-LC11" class="blob-code blob-code-inner js-file-line">		<span class="pl-s1"><span class="pl-c1">$</span>response</span> = <span class="pl-s1"><span class="pl-c1">$</span><span class="pl-smi">this</span></span>-&gt;<span class="pl-c1">client</span>-&gt;<span class="pl-en">get</span>(<span class="pl-s">'https://some-awesome.api/projects'</span>);</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-api_client-php-LC12" class="blob-code blob-code-inner js-file-line">		<span class="pl-s1"><span class="pl-c1">$</span>projectCollection</span> = <span class="pl-s1"><span class="pl-c1">$</span><span class="pl-smi">this</span></span>-&gt;<span class="pl-c1">serializer</span>-&gt;<span class="pl-en">deserialize</span>(<span class="pl-s1"><span class="pl-c1">$</span>response</span>-&gt;<span class="pl-en">getBody</span>()-&gt;<span class="pl-en">getContent</span>(), <span class="pl-v">ProjectCollection</span>::class, <span class="pl-s">'json'</span>);</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-api_client-php-LC13" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (!<span class="pl-en">empty</span>(<span class="pl-s1"><span class="pl-c1">$</span>collection</span>-&gt;<span class="pl-en">getResult</span>()))</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-api_client-php-LC14" class="blob-code blob-code-inner js-file-line">			{</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-api_client-php-LC15" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">foreach</span> (<span class="pl-s1"><span class="pl-c1">$</span>collection</span>-&gt;<span class="pl-en">getResult</span>() <span class="pl-k">as</span> <span class="pl-s1"><span class="pl-c1">$</span>project</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-api_client-php-LC16" class="blob-code blob-code-inner js-file-line">				{</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-api_client-php-LC17" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">if</span> (<span class="pl-s1"><span class="pl-c1">$</span>project</span>-&gt;<span class="pl-en">isOnSale</span>())</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-api_client-php-LC18" class="blob-code blob-code-inner js-file-line">					{</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-api_client-php-LC19" class="blob-code blob-code-inner js-file-line">					<span class="pl-s1"><span class="pl-c1">$</span>projects</span>[] = <span class="pl-s1"><span class="pl-c1">$</span>project</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-api_client-php-LC20" class="blob-code blob-code-inner js-file-line">					}</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-api_client-php-LC21" class="blob-code blob-code-inner js-file-line">				}</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-api_client-php-LC22" class="blob-code blob-code-inner js-file-line">			}</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-api_client-php-LC23" class="blob-code blob-code-inner js-file-line">		</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-api_client-php-LC24" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-s1"><span class="pl-c1">$</span>projects</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-api_client-php-LC25" class="blob-code blob-code-inner js-file-line">		}</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-api_client-php-LC26" class="blob-code blob-code-inner js-file-line">	</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-api_client-php-LC27" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">addNewProject</span>(<span class="pl-smi">Project</span> <span class="pl-s1"><span class="pl-c1">$</span>project</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-api_client-php-LC28" class="blob-code blob-code-inner js-file-line">		{</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-api_client-php-LC29" class="blob-code blob-code-inner js-file-line">		<span class="pl-s1"><span class="pl-c1">$</span><span class="pl-smi">this</span></span>-&gt;<span class="pl-c1">client</span>-&gt;<span class="pl-en">post</span>(<span class="pl-s">'https://some-awesome.api/projects'</span>, [</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-api_client-php-LC30" class="blob-code blob-code-inner js-file-line">			<span class="pl-s">'body'</span> =&gt; <span class="pl-s1"><span class="pl-c1">$</span><span class="pl-smi">this</span></span>-&gt;<span class="pl-c1">serializer</span>-&gt;<span class="pl-en">serialize</span>(<span class="pl-s1"><span class="pl-c1">$</span>project</span>, <span class="pl-s">'json'</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-api_client-php-LC31" class="blob-code blob-code-inner js-file-line">			]);</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-api_client-php-LC32" class="blob-code blob-code-inner js-file-line">		}</td>
+      </tr>
+      <tr>
+        <td id="file-api_client-php-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-api_client-php-LC33" class="blob-code blob-code-inner js-file-line">	}</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/nebkam/81de7b5460d99049e73f12037222cae9/raw/86373e0f29431523b4caee08c57c9d6de26c277d/api_client.php" style="float:right">view raw</a>
+        <a href="https://gist.github.com/nebkam/81de7b5460d99049e73f12037222cae9#file-api_client-php">api_client.php</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-project-php" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-php  ">
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-project-php-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-project-php-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">&lt;?php</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-project-php-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-project-php-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> <span class="pl-v">Symfony</span>\<span class="pl-v">Component</span>\<span class="pl-v">Serializer</span>\<span class="pl-v">Annotation</span>\<span class="pl-v">SerializedName</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-project-php-LC4" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-project-php-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-v">Project</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-project-php-LC6" class="blob-code blob-code-inner js-file-line">  {</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-project-php-LC7" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-project-php-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @SerializedName("Id")</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-project-php-LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @var int</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-project-php-LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-project-php-LC11" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">private</span> <span class="pl-c1"><span class="pl-c1">$</span>internalId</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-project-php-LC12" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-project-php-LC13" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-project-php-LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @SerializedName("Name")</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-project-php-LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @var string</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-project-php-LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-project-php-LC17" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">private</span> <span class="pl-c1"><span class="pl-c1">$</span>title</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-project-php-LC18" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-project-php-LC19" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-project-php-LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @SerializedName("Quality")</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-project-php-LC21" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @var float</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-project-php-LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-project-php-LC23" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">private</span> <span class="pl-c1"><span class="pl-c1">$</span>quality</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-project-php-LC24" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-project-php-LC25" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">// getters and setters</span></td>
+      </tr>
+      <tr>
+        <td id="file-project-php-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-project-php-LC26" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/nebkam/81de7b5460d99049e73f12037222cae9/raw/86373e0f29431523b4caee08c57c9d6de26c277d/project.php" style="float:right">view raw</a>
+        <a href="https://gist.github.com/nebkam/81de7b5460d99049e73f12037222cae9#file-project-php">project.php</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-project_collection-php" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-php  ">
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-project_collection-php-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-project_collection-php-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-ent">&lt;?php</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-project_collection-php-LC2" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-project_collection-php-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> <span class="pl-v">Symfony</span>\<span class="pl-v">Component</span>\<span class="pl-v">Serializer</span>\<span class="pl-v">Annotation</span>\<span class="pl-v">SerializedName</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-project_collection-php-LC4" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-project_collection-php-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-v">ProjectCollection</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-project_collection-php-LC6" class="blob-code blob-code-inner js-file-line">  {</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-project_collection-php-LC7" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-project_collection-php-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @SerializedName("Result")</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-project_collection-php-LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @var Project[]</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-project_collection-php-LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-project_collection-php-LC11" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">private</span> <span class="pl-c1"><span class="pl-c1">$</span>result</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-project_collection-php-LC12" class="blob-code blob-code-inner js-file-line">  </td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-project_collection-php-LC13" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-project_collection-php-LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @return Project[]|null</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-project_collection-php-LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-project_collection-php-LC16" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">getResult</span>(): ?<span class="pl-smi">array</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-project_collection-php-LC17" class="blob-code blob-code-inner js-file-line">    {</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-project_collection-php-LC18" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-s1"><span class="pl-c1">$</span><span class="pl-smi">this</span></span>-&gt;<span class="pl-c1">result</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-project_collection-php-LC19" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-project_collection-php-LC20" class="blob-code blob-code-inner js-file-line">	</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-project_collection-php-LC21" class="blob-code blob-code-inner js-file-line">  <span class="pl-c">/**</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-project_collection-php-LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   * @param Project[] $results</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-project_collection-php-LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-c">   */</span></td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-project_collection-php-LC24" class="blob-code blob-code-inner js-file-line">  <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">setResult</span>(<span class="pl-smi">array</span> <span class="pl-s1"><span class="pl-c1">$</span>result</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-project_collection-php-LC25" class="blob-code blob-code-inner js-file-line">    {</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-project_collection-php-LC26" class="blob-code blob-code-inner js-file-line">    <span class="pl-s1"><span class="pl-c1">$</span><span class="pl-smi">this</span></span>-&gt;<span class="pl-c1">result</span> = <span class="pl-s1"><span class="pl-c1">$</span>result</span>;</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-project_collection-php-LC27" class="blob-code blob-code-inner js-file-line">    }</td>
+      </tr>
+      <tr>
+        <td id="file-project_collection-php-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-project_collection-php-LC28" class="blob-code blob-code-inner js-file-line">  }</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/nebkam/81de7b5460d99049e73f12037222cae9/raw/86373e0f29431523b4caee08c57c9d6de26c277d/project_collection.php" style="float:right">view raw</a>
+        <a href="https://gist.github.com/nebkam/81de7b5460d99049e73f12037222cae9#file-project_collection-php">project_collection.php</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+<script>var height = -1; var delayMs = 200; if (document) {document.domain = document.domain;}function notifyResize(height) {height = height ? height : document.documentElement.offsetHeight; var resized = false; if (window.donkey && donkey.resize) {donkey.resize(height);var elements = document.getElementsByClassName("gist-data"); for (var i = 0; i < elements.length; i++) {elements[i].style.overflow = "visible"}resized = true;}if (parent && parent._resizeIframe) {var obj = {iframe: window.frameElement, height: height}; parent._resizeIframe(obj); resized = true;}if (window.location && window.location.hash === "#amp=1" && window.parent && window.parent.postMessage) {window.parent.postMessage({sentinel: "amp", type: "embed-size", height: height}, "*");}if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.resize) {window.webkit.messageHandlers.resize.postMessage(height); resized = true;}return resized;}function maybeResize() {try {if (document.documentElement.offsetHeight != height && notifyResize()) {height = document.documentElement.offsetHeight;}delayMs = Math.min(delayMs * 2, 1000000); setTimeout(maybeResize, delayMs);} catch(error) {console.log('maybeResize error: ', error)}}maybeResize();</script></body></html>

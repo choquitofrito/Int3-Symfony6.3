@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre index{% endblock %}
+
+{% block body %}
+    <h1>Livre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Prix</th>
+                <th>Description</th>
+                <th>DatePublication</th>
+                <th>Isbn</th>
+                <th>DateEdition</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livre in livres %}
+            <tr>
+                <td>{{ livre.id }}</td>
+                <td>{{ livre.titre }}</td>
+                <td>{{ livre.prix }}</td>
+                <td>{{ livre.description }}</td>
+                <td>{{ livre.datePublication ? livre.datePublication|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ livre.isbn }}</td>
+                <td>{{ livre.dateEdition ? livre.dateEdition|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
+                    <a href="{{ path('livre_edit', {'id': livre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('livre_new') }}">Create new</a>
+{% endblock %}

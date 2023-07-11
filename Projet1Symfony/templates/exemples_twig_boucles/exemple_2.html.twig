@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Les données de l'objet sont:
+<table>
+{% for cle, valeur in film %}
+<tr><td>{{ cle }}</td><td>{{ valeur }}</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

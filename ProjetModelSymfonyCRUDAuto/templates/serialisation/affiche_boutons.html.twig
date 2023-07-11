@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SerialisationController!{% endblock %}
+
+{% block body %}
+<h4><a href="{{ path ("action1") }}">Charger nouvelle vue, afficher livres en PHP (twig)</a></h4>
+<h4><a href="{{ path ("action2") }}">Encoder directement avec json_encode (ne marchera pas)</a></h4>
+{% endblock %}

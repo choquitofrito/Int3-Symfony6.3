@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExemplesUtilisationController!
+{% endblock %}
+
+{% block body %}
+	On accède à l'API et on incruste le résultat dans le DOM. On obtient tous les aéroports:
+
+
+	<div id="contenu">
+    
+    </div>
+
+	<script>
+		fetch("/api/aeroports", {method: 'GET'})
+        .then(response => response.json())
+        .then(data => {
+            
+            console.log (data);
+            
+            document.getElementById("contenu").innerHTML = data[1].nom;
+
+        });
+	</script>
+    
+{% endblock %}

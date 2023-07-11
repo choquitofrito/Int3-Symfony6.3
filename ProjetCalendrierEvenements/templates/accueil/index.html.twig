@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!
+{% endblock %}
+
+{% block body %}
+Bonjour on est sur l'accueil. 
+{{ dump (app.user) }}
+{{ dump (app.user.email )}}
+{{ dump (app.user.nom )}}
+{{ dump (app.user.prenom )}}
+
+{% endblock %}

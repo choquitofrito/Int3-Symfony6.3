@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+On cherchait tous les livres...
+<br>
+{{ dump (livres) }}
+{% for livre in livres %}
+    <br>
+    {{ livre.titre }},    
+    {{ livre.prix}} 
+    <br>
+    {{ livre.description | default ("pas de description")}}
+    {{ livre.datePublication.format("y") | default ("pad de date connue")}}
+    <br><br>
+{% endfor %}
+{% endblock %}

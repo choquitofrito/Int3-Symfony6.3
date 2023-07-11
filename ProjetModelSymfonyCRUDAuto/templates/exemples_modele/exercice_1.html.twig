@@ -1,0 +1,16 @@
+{{ livre.titre }}
+<br>
+{{ livre.prix }}
+<br>
+{{ livre.datePublication.format("d/m/Y") }}
+
+
+
+{# uniquement si je fais un casting
+
+    
+{% for cle, val in livre %}
+    {{ val }}
+{% endfor %}
+
+#}

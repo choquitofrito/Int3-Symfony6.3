@@ -1,0 +1,48 @@
+
+Titre<input type="text" id="inputTitre" />
+<button id="envoyerTitre">Envoyer</button>
+<div id="divLivres"></div>
+
+<script>
+// quand on appuie sur une touche et on relâche la touche
+// C'est l'input qui a l'événement. Le bouton ne fait rien ;)s
+inputTitre.addEventListener ("keyup", function (event){
+    var xhr = new XMLHttpRequest ();
+    
+    xhr.onreadystatechange = function (){
+        if (xhr.readyState == 4){
+            if (xhr.status == 200){
+                // transformer le string JSON en objet JavasScript
+                // nous sommes censés de recevoir un array de livres
+                var arrayLivres = JSON.parse (xhr.responseText);
+                
+                // on vide le div
+                divLivres.innerHTML = "";
+                
+                var ul = divLivres.appendChild(document.createElement ("ul"));
+                
+                for (i=0;i<arrayLivres.length;i++){
+                    var li = ul.appendChild (document.createElement ("li"));
+                    li.appendChild (document.createTextNode (arrayLivres[i]['titre']));
+                
+                    
+                }
+                
+                console.log (arrayLivres);
+            }
+            // s'il y a une erreur:
+            else {
+                // effacer en production!
+                console.log (xhr.reponseText);
+            }
+            
+        }
+        
+    }
+    
+    xhr.open ('POST','/exemples/ajax/form/data/exemple/renvoi/entite/traitement');
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send ("titre=" + inputTitre.value);
+    
+});    
+</script>

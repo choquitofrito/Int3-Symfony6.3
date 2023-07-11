@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{{ monArray[0] | upper }}
+<br>
+{{ monArray[1] | capitalize }}
+<br>
+
+{% for cle, val in monArray %}
+{{ val | capitalize }}
+{% endfor %}
+
+
+
+<br>Le nombre de villes est : {{ monArray | length }}
+
+{% if monArray | length > 2 %}
+<br>Il y a plus de 2 villes
+{% endif %}
+
+<br>
+{% for cle, val in monArray %}
+{{ val | slice (0,3) }}
+{% endfor %}
+
+{% endblock %}
