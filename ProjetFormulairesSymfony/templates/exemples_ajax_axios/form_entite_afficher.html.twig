@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ form_start (formulaireLivre)}}
+<button id="envoyer">Envoyer</button>
+{{ form_end (formulaireLivre)}}
+
+<div id="divContenu"></div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+envoyer.addEventListener ("click", (event) => {
+    event.preventDefault ();
+
+    axios ({
+        url : '{{ path ("exemple_axios_form_entite_traiter") }}',
+        method : 'POST',
+        headers: {'Content-Type': 'multipart/form-data'},
+        data: new FormData (formulaireLivre)
+    })
+    .then (function (response){
+        console.log (response.data);
+        // on affiche le resultat dans le div
+        donnees = response.data;
+        console.log (donnees.livre);
+        // Axios fait un prémier parse (notez qu'on ne doit pas parser 'message' ni 'noms')
+        // JSonResponse encode en JSON le message et les noms et Axios parse la response automatiquement 
+        // (nous ne devons pas lancer JSON.parse pour ces deux données)
+        // PAR CONTRE on doit parser encore l'objet Livre car il a été serialisé (transformé en array puis transformé en JSON)
+        // et puis encodé à nouveau en JSON à cause de l'appel à JSonResponse
+        // Nous avons du serialiser le livre car c'est la seule manière de le transformer proprement en JSON, 
+        // on n'aurait pas pu juste envoyer le $livre dans le JSonResponse
+        divContenu.innerHTML = donnees.message + " " + donnees.noms[1] + " ";
+        let livreParse = JSON.parse(donnees.livre);
+        divContenu.innerHTML += "<br>Quelques données du livre: " + livreParse.titre + " " + livreParse.datePublication;
+
+    })
+    .catch (function (error){
+        console.log (error);
+    });
+});
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends '/exemples_ajax_form_data/master_page.html.twig' %}
+
+{% block contenuMain %}
+<form id="leFormulaire" method="POST">
+    <input type="text" name="nom" />
+    <input type="submit" id="envoyerNom" value="Envoyer" />
+    <div id="divMessage"></div>
+</form>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js"></script>
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script> 
+{{ encore_entry_script_tags ('exemple1AjaxFormData') }}
+
+{% endblock %} 
+
+

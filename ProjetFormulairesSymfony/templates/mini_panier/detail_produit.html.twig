@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<h1>Détail d'un produit, on peut rajouter au panier</h1>
+<form name="produitForm" action="/mini/panier/rajouter/produit" method="POST">
+    <input type="hidden" name="id" value="{{produit.id}}">
+    <h4>{{produit.titre}}</h4>
+    <br>Quantité:<input type="number" name="quantite">
+    <button type="submit">Rajouter au panier</button>
+</form>

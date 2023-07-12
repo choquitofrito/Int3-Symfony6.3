@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<!-- formulaire à envoyer  -->
+<form id="leFormulaire" method="POST">
+    <input type="text" name="nom" />
+    <input type="submit" id="envoyerNom" value="Envoyer" />
+    <div id="divMessage"></div>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+<!-- AJAX - AXIOS  -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    envoyerNom.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        console.log (document.getElementById("leFormulaire"));
+
+        axios({
+            url: '{{path ("exemple1_traitement")}}',
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: new FormData(document.getElementById("leFormulaire"))
+        })
+        .then(function (response) {
+            console.log ("reponse reçue");
+
+            // response.data est un objet qui correspond à l'array associatif envoyé dans le controller
+            // JsonResponse a transformé l'array en JSON. Axios transforme le JSON en objet JS
+            // (et on utilise ici les clé "leMessage" et "autreCle")
+            document.getElementById("divMessage").innerHTML = response.data.leMessage;
+            document.getElementById("divMessage").innerHTML += " " + response.data.autreCle;
+            console.log (response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    });    
+</script>
+{% endblock %}

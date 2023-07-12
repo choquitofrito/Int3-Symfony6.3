@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<!-- formulaire à envoyer  -->
+<form id="leFormulaire">
+    <input type="text" name="nom" />
+    <input type="submit" id="envoyerNom" value="Envoyer" />
+    <div id="divMessage"></div>
+</form>
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    envoyerNom.addEventListener("click", function (event) {
+        event.preventDefault();
+        axios({
+            url: '{{ path ("annexe_exemple1_traitement") }}',
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: new FormData(document.getElementById("leFormulaire"))
+        })
+        .then(function (response) {
+            document.getElementById("divMessage").innerHTML = response.data;
+            console.log (response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    });    
+</script>
+{% endblock %}

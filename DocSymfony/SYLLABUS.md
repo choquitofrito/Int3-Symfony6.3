@@ -157,11 +157,11 @@
   - [21.18. Utilisation de blocs dans twig avec AJAX (Vanilla)](#2118-utilisation-de-blocs-dans-twig-avec-ajax-vanilla)
     - [Exercices : utilisation d'AJAX Vanilla](#exercices--utilisation-dajax-vanilla)
   - [21.19. DateTime et datepicker (Bootstrap)](#2119-datetime-et-datepicker-bootstrap)
+  - [21.20. Validation des formulaires](#2120-validation-des-formulaires)
 - [22. Response JSON en Symfony](#22-response-json-en-symfony)
   - [22.1. Renvoi JSON d'un array d'objets depuis le controller](#221-renvoi-json-dun-array-dobjets-depuis-le-controller)
   - [22.2. Renvoi JSON d'un array d'objets obtenu avec DQL](#222-renvoi-json-dun-array-dobjets-obtenu-avec-dql)
 - [23. Mail](#23-mail)
-- [NEW](#new)
 - [24. Authentification : inscription et login/password](#24-authentification--inscription-et-loginpassword)
   - [2.4.1. Configuration de la sécurité et création d'un formulaire de login](#241-configuration-de-la-sécurité-et-création-dun-formulaire-de-login)
   - [24.2. Création d'un formulaire d'inscription](#242-création-dun-formulaire-dinscription)
@@ -5603,7 +5603,7 @@ Observez qu'il n'y a pratiquement rien à faire dans l'action...
     l'entité Adresse pour vous faciliter la tâche d'obtenir les
     adresses d'une certaine ville
 
-<br>
+<br><br>
 
 # 20. Accès à la BD avec Query Builder
 
@@ -8346,6 +8346,12 @@ Observez que pour exprimer la même chose on doit utiliser deux encodages diffé
 **format** dans le formulaire exprime le format qui est attendu par Symfony pour créer l'objet DateTime. On a exprimé la même chose dans **datepicker**, mais le plugin et le framework utilisent des normes différentes!
 
 <br>
+<br>
+
+## 21.20. Validation des formulaires
+
+https://symfony.com/doc/6.3/validation.html
+
 
 
 # 22. Response JSON en Symfony
@@ -8408,7 +8414,7 @@ La séquence peut être résumée en :
 
 # 23. Mail
 
-# NEW 
+#!!!!!!!!!!!!!! NEW 
 
 Mailer test: https://symfony.com/blog/new-in-symfony-6-2-better-debugging-commands
 

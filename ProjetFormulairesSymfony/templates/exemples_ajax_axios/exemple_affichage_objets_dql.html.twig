@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<form id="leFormulaire">
+    Code de l'aeroport:<input type="text" name="code">
+    <button id="btn_envoyer" type="submit">Envoyer</button>
+</form>
+<div id="divMessage"></div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+btn_envoyer.addEventListener ("click", (event) => {
+    event.preventDefault ();
+
+    axios ({
+        url : '{{ path ("exemple_objets_traitement_dql") }}',
+        method : 'POST',
+        headers: {'Content-Type': 'multipart/form-data'},
+        data: new FormData (leFormulaire)
+    })
+    .then (function (response){
+        console.log (response.data);
+        // on affiche le resultat dans le div
+        let arrayAeroports = response.data;
+        divMessage.innerHTML = arrayAeroports[0].nom;
+
+    })
+    .catch (function (error){
+        console.log (error);
+    });
+});
+</script>
+
+
+
+{% endblock %}

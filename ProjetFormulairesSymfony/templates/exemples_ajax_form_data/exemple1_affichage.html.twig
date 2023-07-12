@@ -1,0 +1,50 @@
+<form id="leFormulaire" method="POST">
+<input type="text" id="inputNom" name="nom" />
+<input type="submit" id="envoyerNom" value="Envoyer"/>
+</form>
+
+<div id="divMessage"></div>
+
+<script>
+    
+envoyerNom.addEventListener ("click", function (event){
+    // on annule l'effet du submit
+    event.preventDefault();
+        
+    var xhr = new XMLHttpRequest ();
+
+    // on crée un formulaire à partir de celui du DOM
+    var formulaire = new FormData (leFormulaire); // accès direct, on peut aussi utiliser getElementById
+
+    
+    xhr.onreadystatechange = function (){
+        console.log (xhr.status);
+        if (xhr.readyState == 4){
+            if (xhr.status == 200){
+                // transformer le string JSON envoyé par le serveur 
+                // comme réponse en objet JavasScript
+                var reponse = JSON.parse (xhr.responseText);
+                divMessage.innerHTML = reponse.message;
+                console.log (reponse);
+                console.log (typeof(reponse));
+            }
+            // s'il y a une erreur:
+            else {
+                // effacer en production!
+                console.log (xhr.reponseText);
+            }
+            
+        }
+        
+    }
+    
+    
+    xhr.open ('POST','/exemples/ajax/form/data/exemple1/traitement');
+    // on envoie l'objet formulaire
+    xhr.send (formulaire);
+    
+    // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //xhr.send ("nom=" + inputNom.value);
+    
+});    
+</script>
