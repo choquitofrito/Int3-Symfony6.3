@@ -151,7 +151,8 @@
     - [21.14.1. Exemples extra AJAX (Axios)](#21141-exemples-extra-ajax-axios)
   - [21.15. Utilisation de blocs dans twig avec AJAX](#2115-utilisation-de-blocs-dans-twig-avec-ajax)
     - [Exercices : Ajax avec Axios](#exercices--ajax-avec-axios)
-  - [21.16. Ajax et Axios dans un script JS. Indispensable si script externe au Twig (sans Webpack)](#2116-ajax-et-axios-dans-un-script-js-indispensable-si-script-externe-au-twig-sans-webpack)
+  - [21.16. Ajax et Axios dans un script JS. Indispensable si script externe au Twig](#2116-ajax-et-axios-dans-un-script-js-indispensable-si-script-externe-au-twig)
+    - [21.16.1. Utilisation de FOSJsRoutingBundle pour générer les routes diréctement en JS](#21161-utilisation-de-fosjsroutingbundle-pour-générer-les-routes-diréctement-en-js)
   - [21.17. AJAX en Symfony (Vanilla JS - juste théorie)](#2117-ajax-en-symfony-vanilla-js---juste-théorie)
   - [21.18. Utilisation de blocs dans twig avec AJAX (Vanilla)](#2118-utilisation-de-blocs-dans-twig-avec-ajax-vanilla)
     - [Exercices : utilisation d'AJAX Vanilla](#exercices--utilisation-dajax-vanilla)
@@ -7976,23 +7977,26 @@ nouveau.
     <div id="divMessage"></div>
 </form>
 {% endblock %}
-```
+
 
 3.  Rajoutez **le code Ajax** dans un bloc **javascripts** dans la même vue, le code doit faire appel à une action dans le controller qui gére la petition Ajax.
 
 ```twig
 {% block javascripts %}
+{% block javascripts %}
 <!-- AJAX - AXIOS dans la page, sans avoir un script externe -->
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
     envoyerNom.addEventListener("click", function (event) {
         event.preventDefault();
 
         console.log(document.getElementById("leFormulaire"));
 
         axios({
-            url: '{{path ("exemple1_traitement")}}',
+            url: '{{path ("traitement_ajax_master_page")}}',
             method: 'POST',
             headers: { 'Content-Type': 'multipart/form-data' },
             data: new FormData(document.getElementById("leFormulaire"))
@@ -8001,13 +8005,14 @@ nouveau.
                 // response.data est un objet qui correspond à l'array associatif envoyé dans le controller
                 // JsonResponse a transformé l'array en JSON. Axios transforme le JSON en objet JS
                 // (et on utilise ici la clé "leMessage")
-                document.getElementById("divMessage").innerHTML = response.data.leMessage;
+                document.getElementById("divMessage").innerHTML = response.data.message;
                 console.log(response);
         })
         .catch(function (error) {
                 console.log(error);
         });
     });    
+});
 </script>
 {% endblock %}
 ```
@@ -8032,7 +8037,7 @@ public function exemple1AffichageMasterPage()
 Dans cette action, renvoyez votre réponse JSON. Pour ce faire, au lieu d'envoyer un objet Response ou le rendu d'une vue, vous allez utiliser un objet JSonResponse. Par exemple :
 
 ```php
-#[Route ("/exemples/ajax/axios/exemple1/traitement/master/page")]
+#[Route("/exemples/ajax/axios/exemple1/traitement/master/page", name: "traitement_ajax_master_page")]
 // action qui traite la commande AJAX, elle n'a pas une vue associée
 public function exemple1TraitementMasterPage(Request $requeteAjax)
 {
@@ -8040,6 +8045,7 @@ public function exemple1TraitementMasterPage(Request $requeteAjax)
     $arrayReponse = ['message' => 'Bienvenu, ' . $valeurNom];
     return new JsonResponse($arrayReponse);
 }
+
 ```
 
 ![](./images/axios1.png)
@@ -8054,11 +8060,11 @@ public function exemple1TraitementMasterPage(Request $requeteAjax)
 
 
 
-## 21.16. Ajax et Axios dans un script JS. Indispensable si script externe au Twig (sans Webpack)
+## 21.16. Ajax et Axios dans un script JS. Indispensable si script externe au Twig 
 
 **Si vous voulez générer de routes à l'interieur de JS**, vous allez remarquer que vous ne pouvez pas utiliser **path**.
 
-Ex:
+Cette action n'est pas possible, par exemple:
 
 ```js
 <script>
@@ -8068,13 +8074,42 @@ Ex:
 
 Si on veut **utiliser un script externe JS dans une vue**, le script lui-même ne pourra pas utiliser la fonction **path** à l'intérieur de JS pour générer les routes cible AJAX. Les fonctions de twig telles que **path** fonctionnent uniquement **dans le code TWIG, pas JS**. 
 
-On peut utiliser une variable TWIG pour stocker la route ou bien  résoudre le problème en utilisant le module **FOSJsRoutingBundle**.
+**Une façon simple de gérer ce problème est d'utiliser les attributs 'data' des éléments de la page pour stocker les routes et puis y accéder depuis le script js au moment de faire l'appel AJAX**
+
+Par exemple, on peut stocker la route dans le **data** d'un bouton:
+
+
+Page qui contient le DOM:
+
+```html
+<button id="afficherClients" 
+        data-route="{{ path('afficher_clients')}}"
+        value="Afficher">
+</button>
+```
+
+Script externe: 
+
+```javascript
+<script>
+    let route = document.getElementById ("afficherClients").dataset.route;
+    // puis on fait l'appel ajax ici, la variable route contient la route
+</script>
+```
+
+### 21.16.1. Utilisation de FOSJsRoutingBundle pour générer les routes diréctement en JS
+
+Une autre manière de résoudre le problème est d'utiliser le module **FOSJsRoutingBundle**.
 
 Rajoutez-le au projet :
 
 ```console
 symfony composer req friendsofsymfony/jsrouting-bundle
 ```
+
+Lisez la documentation:
+
+<br>
 
 **Installation:**
 
@@ -8088,7 +8123,7 @@ https://github.com/FriendsOfSymfony/FOSJsRoutingBundle/blob/master/Resources/doc
 php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
 ```
 
-Un exemple pratique **et expliqué** est réalisé dans le projet **ProjetFormulairesSymfony**, dans le **controller ExemplesAjaxAxiosController**. Commencez par la vue et puis les actions du controller.
+Un exemple pratique **et commenté** est réalisé dans le projet **ProjetFormulairesSymfony**, dans le **controller ExemplesAjaxAxiosController**. Commencez par la vue et puis les actions du controller.
 
 Actions:
 ```php
@@ -8137,33 +8172,37 @@ traitement de l'action dans le controller!!
 <div id="divMessage"></div>
 
 <script>
-envoyerNom.addEventListener ("click", function (event){
-    var xhr = new XMLHttpRequest ();
-    
-    xhr.onreadystatechange = function (){
-        if (xhr.readyState == 4){
-            if (xhr.status == 200){
-                // transformer le string JSON envoyé par le serveur 
-                // comme réponse en objet JavasScript
-                var reponse = JSON.parse (xhr.responseText);
-                divMessage.innerHTML = reponse.message;
-                console.log (reponse);
-                console.log (typeof(reponse));
-            }
-            // s'il y a une erreur:
-            else {
-                // effacer en production!
-                console.log (xhr.reponseText);
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    envoyerNom.addEventListener ("click", function (event){
+        var xhr = new XMLHttpRequest ();
+        
+        xhr.onreadystatechange = function (){
+            if (xhr.readyState == 4){
+                if (xhr.status == 200){
+                    // transformer le string JSON envoyé par le serveur 
+                    // comme réponse en objet JavasScript
+                    var reponse = JSON.parse (xhr.responseText);
+                    divMessage.innerHTML = reponse.message;
+                    console.log (reponse);
+                    console.log (typeof(reponse));
+                }
+                // s'il y a une erreur:
+                else {
+                    // effacer en production!
+                    console.log (xhr.reponseText);
+                }
+                
             }
             
         }
         
-    }
-    
-    xhr.open ('POST','/exemples/ajax/exemple1/traitement');
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send ("nom=" + inputNom.value);
-    
+        xhr.open ('POST','/exemples/ajax/exemple1/traitement');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send ("nom=" + inputNom.value);
+        
+    });
 });    
 </script>
 ```
@@ -8247,33 +8286,37 @@ Nom<input type="text" id="inputNom" />
 ```twig
 {% block javascripts %}
 <script>
-envoyerNom.addEventListener ("click", function (event){
-    var xhr = new XMLHttpRequest ();
-    
-    xhr.onreadystatechange = function (){
-        if (xhr.readyState == 4){
-            if (xhr.status == 200){
-                // transformer le string JSON envoyé par le serveur 
-                // comme réponse en objet JavasScript
-                var reponse = JSON.parse (xhr.responseText);
-                divMessage.innerHTML = reponse.message;
-                console.log (reponse);
-                console.log (typeof(reponse));
-            }
-            // s'il y a une erreur:
-            else {
-                // effacer en production!
-                console.log (xhr.reponseText);
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    envoyerNom.addEventListener ("click", function (event){
+        var xhr = new XMLHttpRequest ();
+        
+        xhr.onreadystatechange = function (){
+            if (xhr.readyState == 4){
+                if (xhr.status == 200){
+                    // transformer le string JSON envoyé par le serveur 
+                    // comme réponse en objet JavasScript
+                    var reponse = JSON.parse (xhr.responseText);
+                    divMessage.innerHTML = reponse.message;
+                    console.log (reponse);
+                    console.log (typeof(reponse));
+                }
+                // s'il y a une erreur:
+                else {
+                    // effacer en production!
+                    console.log (xhr.reponseText);
+                }
+                
             }
             
         }
         
-    }
-    
-    xhr.open ('POST','/exemples/ajax/exemple1/traitement/master/page');
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send ("nom=" + inputNom.value);
-    
+        xhr.open ('POST','/exemples/ajax/exemple1/traitement/master/page');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send ("nom=" + inputNom.value);
+        
+    });
 });    
 </script>
 
@@ -8428,7 +8471,7 @@ La séquence peut être résumée en :
 
 # 23. Mail
 
-#!!!!!!!!!!!!!! NEW 
+#!!!!!!!!!!!!!! NEW MailDumper
 
 Mailer test: https://symfony.com/blog/new-in-symfony-6-2-better-debugging-commands
 

@@ -3,32 +3,36 @@
 <div id="divMessage"></div>
 
 <script>
-envoyerNom.addEventListener ("click", function (event){
-    var xhr = new XMLHttpRequest ();
-    
-    xhr.onreadystatechange = function (){
-        if (xhr.readyState == 4){
-            if (xhr.status == 200){
-                // transformer le string JSON envoyé par le serveur 
-                // comme réponse en objet JavasScript
-                var reponse = JSON.parse (xhr.responseText);
-                divMessage.innerHTML = reponse.message;
-                console.log (reponse);
-                console.log (typeof(reponse));
-            }
-            // s'il y a une erreur:
-            else {
-                // effacer en production!
-                console.log (xhr.reponseText);
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    envoyerNom.addEventListener ("click", function (event){
+        var xhr = new XMLHttpRequest ();
+        
+        xhr.onreadystatechange = function (){
+            if (xhr.readyState == 4){
+                if (xhr.status == 200){
+                    // transformer le string JSON envoyé par le serveur 
+                    // comme réponse en objet JavasScript
+                    var reponse = JSON.parse (xhr.responseText);
+                    divMessage.innerHTML = reponse.message;
+                    console.log (reponse);
+                    console.log (typeof(reponse));
+                }
+                // s'il y a une erreur:
+                else {
+                    // effacer en production!
+                    console.log (xhr.reponseText);
+                }
+                
             }
             
         }
         
-    }
-    
-    xhr.open ('POST','/exemples/ajax/exemple1/traitement');
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send ("nom=" + inputNom.value);
-    
+        xhr.open ('POST','/exemples/ajax/exemple1/traitement');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send ("nom=" + inputNom.value);
+        
+    });
 });    
 </script>
