@@ -9199,15 +9199,25 @@ symfony console make:entity User
 .
         $builder
             ->add('email')
-            ->add('nom',TextType::class)
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'You should agree to our terms.',
-            //         ]),
-            //     ],
-            // ])
+            ->add('nom', TextType::class)
+            ->add('plainPassword', PasswordType::class, [
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
+        ;
 .
 .
 ```
@@ -9218,18 +9228,28 @@ symfony console make:entity User
 Et effacez la génération du champ **agreeTerms**
 
 ```php
-{{ form_start(registrationForm) }}
-{{ form_row(registrationForm.email) }}
-{{ form_row(registrationForm.nom) }}
-{{ form_row(registrationForm.plainPassword, {
-label: 'Password'
-}) }}
-{# {{ form_row(registrationForm.agreeTerms) }} #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}
 ```
 
 
-Vous pouvez tester ce formulaire. Il manque uniquement la fonctionnalité
-de rajouter de rôles mais on la fera plus tard. Vous pouvez toujours éditer les rôles plus tard à la main ou en utilisant la méthode **setRoles** de l'entité!
+Vous pouvez tester ce formulaire. Il manque uniquement la fonctionnalité de rajouter les rôles mais on la fera plus tard. Vous pouvez toujours éditer les rôles plus tard à la main ou en utilisant la méthode **setRoles** de l'entité!
 
 1.  Créez et migrez la BD
 ```php
@@ -9324,7 +9344,7 @@ On peut restreindre l'accès à de grandes sections de notre site (ex: partie ad
 
 <https://symfony.com/doc/current/security.html#security-authorization-access-control>
 
-1.  **Créez un controller** GestionController et deux actions. On utilisera ces actions pour vérifier le bon fonctionnement des restrictions qu'on fera plus tard dans security.yaml
+1.  **Créez un controller** *GestionController* et deux actions. On utilisera ces actions pour vérifier le bon fonctionnement des restrictions qu'on fera plus tard dans security.yaml
 
 Pour tester la route vous devez faire login avant. Observez ce qui se passe si vous n'êtes pas connectés (objet app.user vide)
 
@@ -9388,7 +9408,7 @@ La façon la plus simple est d'utiliser des **annotations pour l'action** (@IsGr
 https://symfony.com/bundles/SensioFrameworkExtraBundle/current/annotations/security.html
 
 
-Si l'utilisateur ne possède pas le rôle fixé dans l'action, **une exception sera lancée.** Pour tester le bon fonctionnement faites d'abord logout. Faites login avec un user de chaque type (regardez la BD) et essayez de lancer les actions *autre/action1* et *autre/action2* (depuis l'URL). Observez les résultats selon l'user qui est connecté.
+Si l'utilisateur ne possède pas le rôle fixé dans l'action, **une exception sera lancée.** Pour tester le bon fonctionnement faites d'abord logout. Faites login avec un user de chaque type (regardez la BD) et essayez de lancer les actions *autre/action1* et *autre/action2* (depuis l'URL). Observez les résultats selon l'user qui est connecté: seulement les ROLE_ADMIN peuvent accéder à cette action.
 
 
 ```php
@@ -9446,22 +9466,21 @@ La vie est belle
 
 ## 26.3. Gestion de l'erreur "Access Denied" (exception) en utilisant une classe propre
 
-Pour **personnaliser l'action à réaliser** en cas **d'erreur d'accès
-par rôle** vous devez utiliser une classe propre.
+Pour **personnaliser l'action à réaliser** en cas **d'erreur d'accès par rôle** vous devez utiliser une classe propre.
 
 1.  **Créer une classe** (ici c'est **Security/GestionnaireErreurAcces.php**) **contenant une action où on fixera l'action à réaliser**. Voici un exemple où, **dans le cas d'une erreur d'accès**, on redirige vers login (notez que la redirection se fait de manière différente quand on se trouve à l'extérieur du controller)
 
 Il y a deux cas de figure pour une erreur d'accès:
 
-1. Si l'utilisateur n'est pas authentifié (ou authentifié de manière anonyme), un point d'entrée d'authentification est utilisé pour générer une réponse (généralement une redirection vers la page de connexion ou une réponse 401 non autorisée) ;
+a) Si l'utilisateur n'est pas authentifié (ou authentifié de manière anonyme), un point d'entrée d'authentification est utilisé pour générer une réponse (généralement une redirection vers la page de connexion ou une réponse 401 non autorisée)
 
-2. Si l'utilisateur est authentifié, mais ne dispose pas des autorisations requises, une réponse 403 Forbidden est générée.
+b) Si l'utilisateur est authentifié, mais ne dispose pas des autorisations requises, une réponse 403 Forbidden est générée.
 
 Ici on va traiter le deuxième cas de figure :
 
 ```php
 <?php 
-// src/Security/AccessDeniedHandler.php
+// src/Security/GestionnaireErreurAcces.php
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -9623,7 +9642,7 @@ On peut adapter le code selon nos besoins.
 ```
 <br>
 
-4. Toujours dans le même template, **importer axios et faire un appel ajax** à l'action login **en lui envoyant le form**. La route est **(**"app_login"). Si vous utilisez un fichier externe .js au lieu de twig vous allez devoir utiliser le **FOSJsRoutingBundle**, mais ici on n'a pas besoin.
+4. Toujours dans le même template, **importer axios et faire un appel ajax** à l'action login **en lui envoyant le form**. La route est **(app_login)**. Ce n'est pas notre cas, mais si vous utilisez un fichier externe .js au lieu d'incruster le js dans le twig, utilisez les **datasets** pour stocker la route dans un des objets du DOM ou utilisez **FOSJsRoutingBundle**.
 
 On peut créer un block **customjs** qui sera present seulement dans, par exemple, la master page (base.html.twig, header.html.twig... ça dépend du template). 
 
