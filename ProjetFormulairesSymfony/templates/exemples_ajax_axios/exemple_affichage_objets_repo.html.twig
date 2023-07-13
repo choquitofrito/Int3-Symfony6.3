@@ -12,24 +12,29 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-btn_envoyer.addEventListener ("click", (event) => {
-    event.preventDefault ();
 
-    axios ({
-        url : '{{ path ("exemple_objets_traitement_repo") }}',
-        method : 'POST',
-        headers: {'Content-Type': 'multipart/form-data'},
-        data: new FormData (leFormulaire)
-    })
-    .then (function (response){
-        console.log (response.data);
-        // on affiche le resultat dans le div
-        let arrayAeroports = response.data;
-        divMessage.innerHTML = arrayAeroports[0].nom;
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
 
-    })
-    .catch (function (error){
-        console.log (error);
+    btn_envoyer.addEventListener ("click", (event) => {
+        event.preventDefault ();
+
+        axios ({
+            url : '{{ path ("exemple_objets_traitement_repo") }}',
+            method : 'POST',
+            headers: {'Content-Type': 'multipart/form-data'},
+            data: new FormData (leFormulaire)
+        })
+        .then (function (response){
+            console.log (response.data);
+            // on affiche le resultat dans le div
+            let arrayAeroports = response.data;
+            divMessage.innerHTML = arrayAeroports[0].nom;
+
+        })
+        .catch (function (error){
+            console.log (error);
+        });
     });
 });
 </script>

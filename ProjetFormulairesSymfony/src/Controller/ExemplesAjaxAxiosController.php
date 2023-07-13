@@ -33,7 +33,7 @@ class ExemplesAjaxAxiosController extends AbstractController
         return $this->render("/exemples_ajax_axios/exemple1_affichage.html.twig");
     }
 
-    #[Route("/exemples/ajax/axios/exemple1/traitement")]
+    #[Route("/exemples/ajax/axios/exemple1/traitement", name: "traitement_ajax_master_page")]
     // action qui traite la commande AJAX, elle n'a pas une vue associée
     public function exemple1Traitement(Request $requeteAjax)
     {
@@ -138,7 +138,7 @@ class ExemplesAjaxAxiosController extends AbstractController
         return $this->render("/exemples_ajax_axios/exemple1_affichage_master_page.html.twig");
     }
 
-    #[Route("/exemples/ajax/axios/exemple1/traitement/master/page")]
+    #[Route("/exemples/ajax/axios/exemple1/traitement/master/page", name: "traitement_ajax_master_page")]
     // action qui traite la commande AJAX, elle n'a pas une vue associée
     public function exemple1TraitementMasterPage(Request $requeteAjax)
     {

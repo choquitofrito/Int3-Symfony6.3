@@ -26,8 +26,10 @@ class ExemplesFormCrudUpdateController extends AbstractController
     #[Route('/livre/update/{id}', name: 'livre_update')]
     public function listeUpdate(Livre $livre, ManagerRegistry $doctrine, Request $req): Response
     {
-        // il suffit d'envoyer l'id dans l'URL et d'injecter un objet Livre.
-        // Symfony (ParamConverter) obtient le repo et fait un findBy (id)
+        // il suffit d'envoyer l'id dans l'URL
+        // Symfony (EntityValueResolver) cherche par défaut
+        // un objet contenant l'id de l'URL 
+        // (il fait un find pour nous)
 
         // $livre = new Livre(); cette fois notre entité n'est pas vide. On la reçcoit pour pré-remplir le form
 
@@ -74,4 +76,3 @@ class ExemplesFormCrudUpdateController extends AbstractController
         }
     }
 }
-

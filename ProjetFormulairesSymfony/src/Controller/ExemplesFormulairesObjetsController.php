@@ -16,10 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ExemplesFormulairesObjetsController extends AbstractController
 {
-    #[Route ("/exemples/formulaires/objets/traitement/livre/genre", name:"exemple_livre_genre")]
-    
+    #[Route ("/exemples/formulaires/objets/livre/genre", name:"exemple_livre_genre")]
     // dans la même action on réalise le rendu et la réception 
-    public function exempleLivre (Request $req){
+    public function exempleFormulairesObjetsLivreGenre (Request $req){
         // 1. Création d'une entité vide
         $livre = new Livre();
         // 2. Création du formulaire du type souhaité
@@ -40,6 +39,8 @@ class ExemplesFormulairesObjetsController extends AbstractController
             
             // Rendu d'une vue où on affiche les données
             // Normalement on fera CRUD ici ou une autre opération...
+
+            // Puis il faudrait lancer une action, rédiriger ou autre
             return $this->render ('/exemples_formulaires_objets/traitement_formulaire_livre.html.twig',
                                 ['livre'=> $livre]);
         }

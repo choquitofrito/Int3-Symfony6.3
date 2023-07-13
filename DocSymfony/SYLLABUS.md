@@ -68,7 +68,6 @@
   - [10.7. Accéder au modèle dans un Service](#107-accéder-au-modèle-dans-un-service)
   - [10.8. Injection de paramètres dans le service (II)](#108-injection-de-paramètres-dans-le-service-ii)
   - [10.9. Cas pratique: création d'un service pour uploader des fichiers](#109-cas-pratique-création-dun-service-pour-uploader-des-fichiers)
-- [!!!!!!!!!!!!!!!!! NEW](#-new)
 - [11. Le Modèle](#11-le-modèle)
   - [11.1. Présentation de Doctrine](#111-présentation-de-doctrine)
   - [11.2. Installation de Doctrine dans un projet](#112-installation-de-doctrine-dans-un-projet)
@@ -2981,9 +2980,6 @@ Si on voulait **changer l'adresse** on peut toujours créer de méthodes pour ce
 
 
 ## 10.9. Cas pratique: création d'un service pour uploader des fichiers
-
-# !!!!!!!!!!!!!!!!! NEW
-Validation du type de fichier
 
 https://symfony.com/blog/new-in-symfony-6-2-improved-file-validator
 
@@ -6080,7 +6076,7 @@ On peut rendre le formulaire complète ou morceaux, en utilisant un thème (Boot
 {{ form_end (unFormulaire)}}
 ```
 
-**form_start** et **form_end** générent les **balises** du début et fin du formulaire et **form_widget (nomFormulaire)** génère tous les contrôles d'un coup. 
+**form_start** et **form_end** générent les **balises** du début et fin du formulaire et **form_widget (nomFormulaire)** génère tous les contrôles d'un coup.
 
 
 Vous pouvez générer chaque contrôle de façon indépendante. Vous avez deux options: **form_widget** (contrôle sans etiquettes) et **form_row** (avec etiquettes).
@@ -6216,23 +6212,26 @@ On **doit spécifier l'action à réaliser par le submit** (même avant créer l
 
 **b)**  **L'action et la méthode sont definies dans le controller** lors de la création de l'objet formulaire avec les options de **createForm**. Cette option est **plus souple** car elle nous permet de réutiliser le formulaire pour lancer d'autres actions :
 
-**Dans la classe du formulaire il n'y a pas d'action ni de méthode, tout les deux sont dans le controller :**
+**Dans la classe du formulaire il n'y a pas d'action ni de méthode, tout les deux sont definis dans le controller ou la vue:**, car autrement le formulaire serait utilisable uniquement pour lancer une certaine action!
+
+Voici un exemple de définition d'action et de méthode.
 
 ```php
-#[Route("/exemples/formulaires/exemple/livre")]
-public function exempleLivre()
+#[Route("/insert/livre")]
+public function insertLivre()
 {
     $livre = new Livre();
     $formulaireLivre = $this->createForm(LivreType::class, $livre, array(
-        'action' => $this->generateUrl("rajouter_livre"), // name de la route!
+        'action' => $this->generateUrl("traitement_insert_livre"), 
+        // name de la route
         // si on n'utilise pas le name d'une route on doit l'écrire à la main... mauvaise idée
         // 'action' => "/exemples/formulaires/livre/rajouter", 
         'method' => 'POST'
     ));
-    $vars = ['unFormulaire' => $formulaireLivre];
+    $vars = ['unFormulaire' => $formulaireLivre->createView()];
 
 
-    return $this->render('/exemples_formulaires/exemple_livre.html.twig', $vars);
+    return $this->render('/exemples_formulaires/insert_livre.html.twig', $vars);
 }
 ```
 
@@ -6386,7 +6385,7 @@ Pour créer un formulaire et le traiter :
 
 5.  Créez une **action qui génère et traite le formulaire**
 
-C'est tout!!! Les formulaires sont horribles mais il suffira de rajouter le style. Symfony facilite énormément l'utilisation de Webpack ou Foundation.
+C'est tout!!! Maintenant qu'on sait créer un formulaire on peut **apprendre à les traiter!**. 
 
 <br>
 
@@ -6399,7 +6398,7 @@ Pour **recevoir et traiter** les données introduites dans un formulaire nous de
 Pour le moment on a fait des forms et on les a affiché, mais on ne s'est pas occupé de traiter les données quand on fait submit.
 On pourrait créer alors une action pour afficher le form et une autre pour traiter les données, mais ça complexifierait le controller (trop d'actions!)
 
-Selon les bonnes pratiques de Symfony, **on affiche le form et on le traite dans une même action**.
+Selon **les bonnes pratiques de Symfony**, **on affiche le form et on le traite dans une même action**.
 
 **Exemple** : Rendu et réception d'un formulaire (classe *Livre*) dans une seule action
 
@@ -6592,9 +6591,12 @@ Pas a réaliser dans l'action de création/traitement :
  
 **isValid:** : un formulaire isValid s'il repecte le règles de validation qu'on peut définir dans le FormType (ex: année entre 1950 et 2100, nom de moins de 40 caractères etc...) 
  
-En ce moment n'a pas une validation de données (ex: un champ string dans un certain format ou un chiffre entre deux valeurs). Actuellement nos forms sont tojours Valid.
-   
+On'a pas défini des régles pour la validation de données (ex: un champ string qui doit être dans un certain format ou un chiffre qui doit se trouver entre deux valeurs). Actuellement nos forms sont tojours Valid.
 
+La validation des formulaires est traitée dans ce chapitre de la documentation de Symfony (on ne la traite pas tout de suite dans ce syllabus):
+
+https://symfony.com/doc/current/validation.html
+   
 Dans le controller, on peut aussi obtenir les données du form 'à la main' avec **getData**, au lieu d'utiliser l'entité remplie. C'est indispensable quand on **on a des champs dans le formulaire qui n'existent pas dans l'entité**, ou pour traiter des champs de certains types particuliers.
 
 
@@ -6708,8 +6710,8 @@ class ExemplesFormCrudUpdateController extends AbstractController
     #[Route('/livre/update/{id}', name: 'livre_update')]
     public function listeUpdate(Livre $livre, ManagerRegistry $doctrine, Request $req): Response
     {
-        // il suffit d'envoyer l'id dans l'URL et d'injecter un objet Livre.
-        // Symfony (EntityValueResolver) obtient le repo et fait un findBy (id)
+        // il suffit d'envoyer l'id dans l'URL
+        // Symfony (EntityValueResolver) cherche par défaute un objet contenant l'id de l'URL (il fait un find pour nous)
 
         // $livre = new Livre(); cette fois notre entité n'est pas vide. On la reçcoit pour pré-remplir le form
 
@@ -7520,6 +7522,10 @@ class ExemplesFormulaireUploadController extends AbstractController
 }
 ```
 
+L'action d'upload peut être transformée en **Service** si on envisage de faire des uploads dans d'autres parties de l'application (jne autre action dans le même controller ou dans un autre controller). Vous avez un exemple dans ce même syllabus (section 10.9):
+
+
+
 ### 21.12.2. Possibles problèmes dans l'upload
 
 <br>
@@ -7663,23 +7669,22 @@ Dans l'appel AXIOS on envoie un objet JS contenant :
 2. Créez l'action qui affiche la vue **exemple1_affichage.html** dans 
 
 ```php
-#[Route ("/exemples/ajax/axios/exemple1/affichage" )]
+#[Route("/exemples/ajax/form/data/exemple1/affichage")]
 public function exemple1Affichage()
 {
-    return $this->render("/exemples_ajax_axios/exemple1_affichage.html.twig");
+    return $this->render("/exemples_ajax_form_data/exemple1_affichage.html.twig");
 }
 ```
 
 3.  Créez l'action qui traite la pétition AJAX
 
 ```php
-#[Route ("/exemples/ajax/axios/exemple1/traitement",name:"exemple1_traitement" )]
+#[Route("/exemples/ajax/form/data/exemple1/traitement")]
 // action qui traite la commande AJAX, elle n'a pas une vue associée
 public function exemple1Traitement(Request $requeteAjax)
 {
-
     $valeurNom = $requeteAjax->get('nom');
-    $arrayReponse = ['leMessage' => 'Bienvenu, ' . $valeurNom];
+    $arrayReponse = ['message' => 'Bienvenu, ' . $valeurNom];
     return new JsonResponse($arrayReponse);
 }
 ```
@@ -7765,7 +7770,7 @@ envoyer.addEventListener ("click", (event) => {
 {% endblock %}
 ```
 
-Le **controller** : ExemplesAjaxAxiosController
+Le **controller** (**ExemplesAjaxAxiosController**)
 
 ```php
 #[Route("/exemples/ajax/axios/form/entite/afficher", name: "exemple_axios_form_entite_afficher")]
@@ -7871,33 +7876,42 @@ La vue : form_entite_afficher.html.twig (attention au "then")
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-envoyer.addEventListener ("click", (event) => {
-    event.preventDefault ();
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("envoyer").addEventListener ("click", (event) => {
+        event.preventDefault ();
 
-    axios ({
-        url : '{{ path ("exemple_axios_form_entite_traiter") }}',
-        method : 'POST',
-        headers: {'Content-Type': 'multipart/form-data'},
-        data: new FormData (formulaireLivre)
-    })
-    .then (function (response){
-        console.log (response.data);
-        // on affiche le resultat dans le div
-        donnees = response.data;
-        console.log (donnees.livre);
-        // On doit parser l'objet Livre car il a été serialisé (transformé en JSON)
-        // et puis encore encodé à cause de l'appel à JSonResponse (qui ré-encode en JSON)
-        divContenu.innerHTML = donnees.message + " " + donnees.noms[1] + " " + JSON.parse(donnees.livre).titre;
+        axios ({
+            url : '{{ path ("exemple_axios_form_entite_traiter") }}',
+            method : 'POST',
+            headers: {'Content-Type': 'multipart/form-data'},
+            data: new FormData (formulaireLivre)
+        })
+        .then (function (response){
+            console.log (response.data);
+            // on affiche le resultat dans le div
+            donnees = response.data;
+            console.log (donnees.livre);
+            // Axios fait un prémier parse (notez qu'on ne doit pas parser 'message' ni 'noms')
+            // JSonResponse encode en JSON le message et les noms et Axios parse la response automatiquement 
+            // (nous ne devons pas lancer JSON.parse pour ces deux données)
+            // PAR CONTRE on doit parser encore l'objet Livre car il a été serialisé (transformé en array puis transformé en JSON)
+            // et puis encodé à nouveau en JSON à cause de l'appel à JSonResponse
+            // Nous avons du serialiser le livre car c'est la seule manière de le transformer proprement en JSON, 
+            // on n'aurait pas pu juste envoyer le $livre dans le JSonResponse
+            divContenu.innerHTML = donnees.message + " " + donnees.noms[1] + " ";
+            let livreParse = JSON.parse(donnees.livre);
+            divContenu.innerHTML += "<br>Quelques données du livre: " + livreParse.titre + " " + livreParse.datePublication;
 
-    })
-    .catch (function (error){
-        console.log (error);
+        })
+        .catch (function (error){
+            console.log (error);
+        });
     });
+
 });
+
 </script>
-
-
-
 {% endblock %}
 ```
 

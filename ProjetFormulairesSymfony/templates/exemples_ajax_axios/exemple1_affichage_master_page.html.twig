@@ -16,13 +16,15 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
     envoyerNom.addEventListener("click", function (event) {
         event.preventDefault();
 
         console.log(document.getElementById("leFormulaire"));
 
         axios({
-            url: '{{path ("exemple1_traitement")}}',
+            url: '{{path ("traitement_ajax_master_page")}}',
             method: 'POST',
             headers: { 'Content-Type': 'multipart/form-data' },
             data: new FormData(document.getElementById("leFormulaire"))
@@ -31,12 +33,13 @@
                 // response.data est un objet qui correspond à l'array associatif envoyé dans le controller
                 // JsonResponse a transformé l'array en JSON. Axios transforme le JSON en objet JS
                 // (et on utilise ici la clé "leMessage")
-                document.getElementById("divMessage").innerHTML = response.data.leMessage;
+                document.getElementById("divMessage").innerHTML = response.data.message;
                 console.log(response);
         })
         .catch(function (error) {
                 console.log(error);
         });
     });    
+});
 </script>
 {% endblock %}

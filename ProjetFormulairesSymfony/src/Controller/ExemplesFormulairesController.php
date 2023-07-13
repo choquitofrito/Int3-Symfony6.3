@@ -11,6 +11,7 @@ use App\Entity\Aeroport;
 use App\Form\AeroportType;
 // les classes des Formulaires
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -100,12 +101,13 @@ class ExemplesFormulairesController extends AbstractController
         return $this->render('/exemples_formulaires/exemple_aeroport.html.twig', $vars);
     }
     
-    #[Route("/exemples/formulaires/exemple/livre")]
-    public function exempleLivre()
+    #[Route("/insert/livre")]
+    public function insertLivre()
     {
         $livre = new Livre();
         $formulaireLivre = $this->createForm(LivreType::class, $livre, array(
-            'action' => $this->generateUrl("rajouter_livre"), // name de la route!
+            'action' => $this->generateUrl("traitement_insert_livre"), 
+            // name de la route
             // si on n'utilise pas le name d'une route on doit l'écrire à la main... mauvaise idée
             // 'action' => "/exemples/formulaires/livre/rajouter", 
             'method' => 'POST'
@@ -113,7 +115,7 @@ class ExemplesFormulairesController extends AbstractController
         $vars = ['unFormulaire' => $formulaireLivre->createView()];
 
 
-        return $this->render('/exemples_formulaires/exemple_livre.html.twig', $vars);
+        return $this->render('/exemples_formulaires/insert_livre.html.twig', $vars);
     }
 
 
