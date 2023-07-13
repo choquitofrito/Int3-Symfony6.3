@@ -168,7 +168,7 @@
   - [24.3. Logout](#243-logout)
 - [25. Accès à l'objet app.user](#25-accès-à-lobjet-appuser)
 - [26. Authentication et Rôles](#26-authentication-et-rôles)
-  - [26.1. Gestion de rôles](#261-gestion-de-rôles)
+  - [26.1. Gestion des rôles](#261-gestion-des-rôles)
   - [26.2. Contrôle d'accès par rôles](#262-contrôle-daccès-par-rôles)
     - [26.2.1. Dans security.yaml](#2621-dans-securityyaml)
     - [26.2.2. Dans le controller](#2622-dans-le-controller)
@@ -8627,17 +8627,13 @@ L'assistant vous demandera :
 
 -   Si on souhaite hasher les passwords (oui!)
 
-**Important**: Si vous obtenez une érreur, vous devez changer la version du maker-bundle à la 1.43 dans composer.json.
-
-``` 
-composer update
-```
 
 Ouvrez **src/Entity/User.php**:
 
 ```php
 <?php
 
+<?php
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -8676,7 +8672,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
@@ -8705,7 +8701,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): static
     {
         $this->roles = $roles;
 
@@ -8720,7 +8716,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
         $this->password = $password;
 
@@ -8730,13 +8726,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
 }
-
 
 ```
 
@@ -8769,7 +8764,7 @@ providers:
 ```
 
 
-Note : c'est très important de respecter l'indentation dans les
+**Note** : c'est très important de respecter l'indentation dans les
 fichiers .yaml 
 
 **3**.  **Créer le controller, le template et un Guard Authenticator (avec l'assistant)** :
@@ -8778,8 +8773,7 @@ fichiers .yaml
 
 -   Un **template pour afficher le formulaire** de login
 
--   Un **Guard Authenticator**, **classe** qui **traite les
-    informations** du formulaire de login
+-   Un **Guard Authenticator**, **classe** qui **traite les informations** du formulaire de login
 
 Ces trois pas se font **avec une seule commande de l'assistant** :
 ```console
@@ -8796,6 +8790,8 @@ Pour les questions posées par l'assistant on choisira :
 
 -   **Oui**, car on veut que Symfony crée aussi l'URL de logout (avec l'action qui deloggera l'user, c.à.d. l'effacer de la session)
 
+-   **Oui** si on veut que la caracteristique **Remember me** soit implementée
+
 Si vous vous trompez dans les options, effacez LoginAuthenticator et le controller SecurityController (avec ses templates) 
 
 Cette action met aussi à jour le fichier de configuration **config/packages/security.yaml**.
@@ -8803,12 +8799,21 @@ Cette action met aussi à jour le fichier de configuration **config/packages/sec
 ```yaml
 .
 .
-        main:
-            lazy: true
-            provider: app_user_provider
-            custom_authenticator: App\Security\LoginAuthenticator
-            logout:
-                path: app_logout
+main:
+    lazy: true
+    provider: app_user_provider
+    custom_authenticator: App\Security\LoginAuthenticator
+    logout:
+        path: app_logout
+        # where to redirect after logout
+        # target: app_any_route
+
+    # Si on a activé "Remember me"
+    remember_me:
+        secret: '%kernel.secret%'
+        lifetime: 604800
+        path: /
+        always_remember_me: true
 
 .
 .
@@ -8923,7 +8928,7 @@ Dans **phpmyadmin** votre tableau **User** ressemblera à :
 
 Allez sur la page de login (par défaut l'action **login** dans **SecurityController**) et tapez un couple *login/pass* valable (ex: user "user1@lala.com" et password "lePassword"). 
 
-Si tout va bien vous allez obtenir... une Exception! car **dans votre controller Authenticator** (**LoginAuthenticator** dans le dossier **src/Security**) vous n'avez pas spécifié une **Response** pour le serveur quand le login est correct.
+**Si tout va bien vous allez obtenir... une Exception**! car **dans votre controller Authenticator** (**LoginAuthenticator** dans le dossier **src/Security**) vous n'avez pas spécifié une **Response** pour le serveur quand le login est correct.
 Ceci arrive car Symfony lance la méthode **onAuthenticationSuccess** du controller **LoginAuthenticator** si le login est correct.
 
 ![](./images/loginredirect.png)
@@ -8954,8 +8959,40 @@ public function onAuthenticationSuccess(Request $request, TokenInterface $token,
 }
 ```
 
-Dans le cas de succès, **le code qui reste** de l'action **login** ne
-sera pas lancée car on fera un redirect. Ici vers une action de votre choix (ici *accueil*). Pour cet exemple, créez le controller **AccueilController** avec l'assistant, l'action *accueil* et une vue contenant un message de bienvenue.
+Dans le cas de succès, **le code qui reste** de l'action **login** ne sera pas lancée car on fera un redirect. Ici vers une action de votre choix (ici *accueil*). Pour cet exemple, créez le controller **AccueilController** avec l'assistant, l'action *accueil* et une vue contenant un message de bienvenue.
+
+
+**Controller** (src/Controller/AccueilController):
+
+```php
+<?php
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class AccueilController extends AbstractController
+{
+    #[Route('/accueil', name: 'accueil')]
+    public function index(): Response
+    {
+        return $this->render('accueil/index.html.twig');
+    }
+}
+```
+
+**Vue** (templates/accueil/index.html.twig)
+
+```twig
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+<h1>Bienvenue au site!</h1>
+{% endblock %}
+```
 
 Si une erreur de login s'est produite, **nous avons deux possibilités** pour le **traiter** :
 
@@ -8963,17 +9000,9 @@ Si une erreur de login s'est produite, **nous avons deux possibilités** pour le
 
 **a) Utiliser le template login crée par Symfony et l'adapter à nos besoins (par défaut)**
 
-Dans cet exemple, si le couple login/pass n'est pas correct
-l'action **onAuthenticationSuccess** ne sera pas lancéé. Symfony **cherchera l'action onAuthenticationFailure** mais elle n'existe pas. **Le code de l'action login continuera** et la variable **error** contiendra l'info de l'erreur de login.
+Dans cet exemple, si le couple login/pass n'est pas correct l'action **onAuthenticationSuccess** ne sera pas lancéé. Symfony **cherchera l'action onAuthenticationFailure** mais elle n'existe pas. **Le code de l'action login continuera** et la variable **error** contiendra l'info de l'erreur de login. La vue du login sera rechargée et affichera (voir **if** dans le code) un div contenant le message de l'erreur qui s'est produite (ex: mail inexistant, invalid credentials si le password n'est pas correcte...).
 
-La vue du login sera rechargée et affichera (voir **if** dans le code) un div contenant le message de l'erreur qui s'est produite (ex: mail inexistant, invalid credentials si le password n'est pas correcte...).
-
-Dans la vue on peut choisir par nous-mêmes quoi faire s'il y a une
-erreur, il suffit de vérifier la valeur de cette variable et agir
-conséquemment (afficher un message d'erreur, rediriger vers un autre
-site etc...). On peut aussi juste établir une traduction pour les
-messages d'erreur de base de Symfony, car par défaut ils seront en
-anglais !
+Dans la vue on peut choisir par nous-mêmes quoi faire s'il y a une erreur, il suffit de vérifier la valeur de cette variable et agir conséquemment (afficher un message d'erreur, rediriger vers un autre site etc...). On peut aussi juste établir une traduction pour les messages d'erreur de base de Symfony, car par défaut ils seront en anglais!
 
 À chaque essai de login c'est conseillé de lancer l'action **logout** pour effacer le contenu de la session. On parlera du logout plus bas.
 
@@ -8985,7 +9014,7 @@ L'action **onAuthenticationFailure** sera lancée quand il à chaque erreur de l
 
 
 ```php
-// méthode faite par nous-mêmes. Enlevez les commentaires pour voir l'effet
+// méthode faite par nous-mêmes. Enlevez les commentaires pour voir l'effet. Importez AuthenticationException
 public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
 {
     // la méthode est doit renvoyer une réponse. 
@@ -9020,8 +9049,7 @@ symfony console make:registration-form
 Suivez les instructions de l'assistant. Choisissez si :
 
 - Vous voulez qu'on ne puisse pas avoir de doublons dans les Users (yes) 
-- Vous voulez envoyer un lien d'authentification pour l'inscription par mail. Si oui, Symfony vous demandera de taper l'adresse mail et il faudra configurer le protocol de mail. **Tapez 'no'**
-- Vous voulez (par défaut non) rajouter l'user id dans le lien (no)
+- Vous voulez envoyer un lien d'authentification pour l'inscription par mail. Si oui, Symfony vous demandera de taper l'adresse mail et il faudra configurer le protocol de mail. **Tapez 'no'** car on veut simplifier cet exemple
 - Vous voulez que les utilisateurs soient connectés directement après l'inscription (comme dans la plupart de sites)
 
 L'assistant créera :
@@ -9038,21 +9066,19 @@ Pour pouvoir réaliser la vérification par mail (nous n'allons pas la faire ici
 ```console
 symfony composer req symfonycasts/verify-email-bundle
 ```
-Ce n'est pas notre cas pour le moment.
+mais ce n'est pas notre cas pour le moment.
 
 Testez le formulaire en lançant l'action **register**.
 Adaptez le formulaire, le controller et la vue selon vos besoins.
 
 **Important :** si vous modifiez l'entité User pour, par exemple,
-en rajoutant une propriété **nom,** et vous voulez **générer à nouveau le formulaire d'inscription**, **effacez** d'abord **le** **formulaire** RegistrationFormType.php, **le controller** RegistrationController.php **et le template** register.html.twig.
+en rajoutant une propriété **nom,** et vous voulez **générer à nouveau le formulaire d'inscription**, **effacez** d'abord **le formulaire** RegistrationFormType.php, **le controller** RegistrationController.php **et le template** register.html.twig.
 
 <br>
 
 ## 24.3. Logout
 
-
-Les outils de sécurité de Symfony nous permettent d'implémenter le
-logout très facilement :
+Par défaut, la route **logout** nous menera vers l'action qui affiche le formulaire de **login**. Si on veut lancer une autre action on devra le spéficier dans la configuration, comme expliqué ci-dessous.
 
 1. Rajoutez dans **config/packages/security.yaml** une section qui **indique le path à saisir dans l'URL** et l'action à lancer après que Symfony finisse de gérer le logout (ex: effacer l'objet User de la session) 
    
@@ -9101,7 +9127,8 @@ trouve dans **SecurityController**.
     #[Route("/apres/logout")]
     public function apresLogout()
     {
-        // on peut faire ce qu'on veut ici... ré-diriger vers le login, par exemple. 
+        // on peut faire ce qu'on veut ici, en général ré-diriger vers une autre route. 
+        // return $this->redirectToRoute('ma_route');
         return $this->redirectToRoute('app_login');
     }
 ```
@@ -9150,7 +9177,7 @@ Des actions d'exemple se trouvent dans le projet **ProjetLoginPass**, controller
 
 # 26. Authentication et Rôles 
 
-## 26.1. Gestion de rôles
+## 26.1. Gestion des rôles
 
 Nous allons traiter la gestion de rôles en Symfony et on va utiliser comme base le projet qu'on vient de créer, **ProjetLoginPass**. Nous voulons profiter de toute la partie d'authentification qui reste la même et qu'on ne veut pas refaire.
 
