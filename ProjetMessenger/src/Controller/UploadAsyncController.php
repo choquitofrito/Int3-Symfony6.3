@@ -15,8 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UploadAsyncController extends AbstractController
 {
 
-
-
     // action pour uploader une image et la traiter en utilisant messenger
     // Le traitement de l'image se fait de façon asynchrone (ASYNC). 
     #[Route("/upload/async")]

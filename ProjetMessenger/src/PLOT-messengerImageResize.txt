@@ -1,0 +1,71 @@
+importer le package
+créer l'entité
+créer le handler dans le dossir src/MessageHandler
+decommenter le transport doctrine dans .env
+rajouter le handler dans config/packages/messenger.yaml
+
+composer require liip/imagine-bundle
+rajouter le bundle dans bundles.php
+
+
+yarn add --dev @symfony/webpack-encore
+
+yarn add webpack-notifier --dev
+
+yarn encore dev
+
+----------------
+
+Un utilisateur enverra une image ainsi que une nouvelle taille.
+Le système changera la taille de l'image et la renverra en réponse.
+
+
+Copier l'entité Pays ainsi que son repository et son formulaire PaysType du ProjetFormulairesSymfony
+Copier le template qui affiche le formulaire d'upload du ProjetFormulairesSymfony
+Copier le service d'upload et configurer le paramètre pour le dossier de services.yaml tel qu'il se trouve dans ProjetFormulaires
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $dossierUpload: '%kernel.project_dir%/public/uploads'
+
+
+
+Messenger:
+
+Installez Messenger
+Installez Intervention (require intervention/image)
+
+
+DATABASE_URL="mysql://root:@127.0.0.1:3306/projetMessenger?serverVersion=8&charset=utf8mb4"
+
+
+
+Créer le Message ResizeImage
+
+Créer le handler
+
+Configurar le transport
+
+Créer le service
+
+Créer le controller
+
+Lancer la consommation de messages:
+
+
+
+php bin/console messenger:consume async -vv
+
+messenger.yaml : rajouter             reset_on_message: true
+
+
+Dans services.yaml on doit rajouter ImageManager comme service:
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    Intervention\Image\ImageManager:
