@@ -8358,6 +8358,7 @@ class MailController extends AbstractController
 
 Créez un projet **ProjetLoginPass**.
 
+
 <br>
 
 ## 2.4.1. Configuration de la sécurité et création d'un formulaire de login
