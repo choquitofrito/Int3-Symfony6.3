@@ -11,8 +11,8 @@
     <script>
       console.log("Début du script");
       // on "enregistre" le setTimeout et on continue l'exécution du script (le for plus bas)
-      // le moteur js essaiera de lancer ce code dans 3 sec.
-      // il ne pas car la suite du code dure plus de 3 sec.
+      // le moteur js va essayer de lancer ce code dans 3 sec.
+      // il ne le fait pas car la suite du code (le for) dure plus de 3 sec.
       setTimeout(() => {
         console.log("Exécution d'une tâche longue");
       }, 3000);
