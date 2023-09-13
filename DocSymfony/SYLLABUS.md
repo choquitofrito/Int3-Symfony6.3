@@ -3321,12 +3321,12 @@ propriétés!
 
 ### Exercices : création et manipulation des entités
 
-1)  Créez une nouvelle propriété *isbn* (varchar - 30) et migrez la BD
+1)  Créez une nouvelle propriété *isbn* (string - 30) et migrez la BD
 
-2)  Créez une nouvelle propriété *dateEdition* (datetime) et migrez la BD.
+2)  Créez une nouvelle propriété *dateEdition* (date) et migrez la BD.
     Supprimez-le et assurez-vous que la BD est toujours cohérente avec votre code
 
-3)  Créez l'entité Client (nom, prenom, email) et Exemplaire (etat - varchar(10))
+3)  Créez l'entité Client (nom, prenom, email) et Exemplaire (etat - string(10))
 
 4)  Créez l'entité Auteur (nom, nationalite)
 
