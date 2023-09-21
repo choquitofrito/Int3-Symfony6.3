@@ -7,69 +7,47 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ClientRepository::class)
- */
+#[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $prenom;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $prenom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Adresse::class, inversedBy="clients")
-     */
-    private $adresse;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Emprunt::class, orphanRemoval: true)]
+    private Collection $emprunts;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Emprunt::class, mappedBy="clientEmprunteur")
-     */
-    private $emprunts;
+    #[ORM\ManyToOne(inversedBy: 'clients')]
+    private ?Adresse $adresse = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="utilisateur", cascade={"persist", "remove"})
-     */
-    private $avatar;
+    #[ORM\OneToOne(mappedBy: 'utilisateur', cascade: ['persist', 'remove'])]
+    private ?Avatar $avatar = null;
 
 
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
             }
         }
     }
-    
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
+    public function __construct(array $init =[])
     {
+        $this->hydrate($init);
         $this->emprunts = new ArrayCollection();
-        // appel au hydrate
-        $this->hydrate($arrayInit);
-    
     }
-    
+
 
     public function getId(): ?int
     {
@@ -81,7 +59,7 @@ class Client
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
 
@@ -93,7 +71,7 @@ class Client
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
 
@@ -105,9 +83,39 @@ class Client
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emprunt>
+     */
+    public function getEmprunts(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmprunt(Emprunt $emprunt): static
+    {
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts->add($emprunt);
+            $emprunt->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmprunt(Emprunt $emprunt): static
+    {
+        if ($this->emprunts->removeElement($emprunt)) {
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getClient() === $this) {
+                $emprunt->setClient(null);
+            }
+        }
 
         return $this;
     }
@@ -117,39 +125,9 @@ class Client
         return $this->adresse;
     }
 
-    public function setAdresse(?Adresse $adresse): self
+    public function setAdresse(?Adresse $adresse): static
     {
         $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Emprunt[]
-     */
-    public function getEmprunts(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmprunt(Emprunt $emprunt): self
-    {
-        if (!$this->emprunts->contains($emprunt)) {
-            $this->emprunts[] = $emprunt;
-            $emprunt->setClientEmprunteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmprunt(Emprunt $emprunt): self
-    {
-        if ($this->emprunts->removeElement($emprunt)) {
-            // set the owning side to null (unless already changed)
-            if ($emprunt->getClientEmprunteur() === $this) {
-                $emprunt->setClientEmprunteur(null);
-            }
-        }
 
         return $this;
     }
@@ -159,7 +137,7 @@ class Client
         return $this->avatar;
     }
 
-    public function setAvatar(?Avatar $avatar): self
+    public function setAvatar(?Avatar $avatar): static
     {
         // unset the owning side of the relation if necessary
         if ($avatar === null && $this->avatar !== null) {

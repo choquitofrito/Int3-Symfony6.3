@@ -5,27 +5,19 @@ namespace App\Entity;
 use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=AvatarRepository::class)
- */
+#[ORM\Entity(repositoryClass: AvatarRepository::class)]
 class Avatar
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lien;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lien = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Client::class, inversedBy="avatar", cascade={"persist", "remove"})
-     */
-    private $utilisateur;
+    #[ORM\OneToOne(inversedBy: 'avatar', cascade: ['persist', 'remove'])]
+    private ?Client $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -37,7 +29,7 @@ class Avatar
         return $this->lien;
     }
 
-    public function setLien(string $lien): self
+    public function setLien(?string $lien): static
     {
         $this->lien = $lien;
 
@@ -49,7 +41,7 @@ class Avatar
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Client $utilisateur): self
+    public function setUtilisateur(?Client $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
 

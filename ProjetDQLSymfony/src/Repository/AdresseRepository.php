@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<Adresse>
+ *
  * @method Adresse|null find($id, $lockMode = null, $lockVersion = null)
  * @method Adresse|null findOneBy(array $criteria, array $orderBy = null)
  * @method Adresse[]    findAll()
@@ -19,42 +21,28 @@ class AdresseRepository extends ServiceEntityRepository
         parent::__construct($registry, Adresse::class);
     }
 
-    public function obtenirAdressesVille (string $nomVille){
-        $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT a 
-                        FROM App\Entity\Adresse a
-                        WHERE a.ville = :ville')
-                        ->setParameter('ville',$nomVille);
-        dd($query->getResult());
+//    /**
+//     * @return Adresse[] Returns an array of Adresse objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('a')
+//            ->andWhere('a.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('a.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
-    }
-
-    // /**
-    //  * @return Adresse[] Returns an array of Adresse objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Adresse
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+//    public function findOneBySomeField($value): ?Adresse
+//    {
+//        return $this->createQueryBuilder('a')
+//            ->andWhere('a.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 }

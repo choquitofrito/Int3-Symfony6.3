@@ -3,45 +3,48 @@
 namespace App\Entity;
 
 use App\Repository\EmpruntRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=EmpruntRepository::class)
- */
+#[ORM\Entity(repositoryClass: EmpruntRepository::class)]
 class Emprunt
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateEmprunt;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateEmprunt = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateRetour;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateRetourReelle = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $commentaires;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateRetourPrevu = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="emprunts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $clientEmprunteur;
+    #[ORM\ManyToOne(inversedBy: 'emprunts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $client = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Exemplaire::class, inversedBy="emprunts")
-     */
-    private $exemplaireEmprunte;
+    #[ORM\ManyToOne(inversedBy: 'emprunts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Exemplaire $exemplaire = null;
+
+
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
+            }
+        }
+    }
+    public function __construct(array $init =[])
+    {
+        $this->hydrate($init);
+    }
+    
 
     public function getId(): ?int
     {
@@ -53,57 +56,57 @@ class Emprunt
         return $this->dateEmprunt;
     }
 
-    public function setDateEmprunt(?\DateTimeInterface $dateEmprunt): self
+    public function setDateEmprunt(?\DateTimeInterface $dateEmprunt): static
     {
         $this->dateEmprunt = $dateEmprunt;
 
         return $this;
     }
 
-    public function getDateRetour(): ?\DateTimeInterface
+    public function getDateRetourReelle(): ?\DateTimeInterface
     {
-        return $this->dateRetour;
+        return $this->dateRetourReelle;
     }
 
-    public function setDateRetour(?\DateTimeInterface $dateRetour): self
+    public function setDateRetourReelle(?\DateTimeInterface $dateRetourReelle): static
     {
-        $this->dateRetour = $dateRetour;
+        $this->dateRetourReelle = $dateRetourReelle;
 
         return $this;
     }
 
-    public function getCommentaires(): ?string
+    public function getDateRetourPrevu(): ?\DateTimeInterface
     {
-        return $this->commentaires;
+        return $this->dateRetourPrevu;
     }
 
-    public function setCommentaires(?string $commentaires): self
+    public function setDateRetourPrevu(?\DateTimeInterface $dateRetourPrevu): static
     {
-        $this->commentaires = $commentaires;
+        $this->dateRetourPrevu = $dateRetourPrevu;
 
         return $this;
     }
 
-    public function getClientEmprunteur(): ?Client
+    public function getClient(): ?Client
     {
-        return $this->clientEmprunteur;
+        return $this->client;
     }
 
-    public function setClientEmprunteur(?Client $clientEmprunteur): self
+    public function setClient(?Client $client): static
     {
-        $this->clientEmprunteur = $clientEmprunteur;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getExemplaireEmprunte(): ?Exemplaire
+    public function getExemplaire(): ?Exemplaire
     {
-        return $this->exemplaireEmprunte;
+        return $this->exemplaire;
     }
 
-    public function setExemplaireEmprunte(?Exemplaire $exemplaireEmprunte): self
+    public function setExemplaire(?Exemplaire $exemplaire): static
     {
-        $this->exemplaireEmprunte = $exemplaireEmprunte;
+        $this->exemplaire = $exemplaire;
 
         return $this;
     }
