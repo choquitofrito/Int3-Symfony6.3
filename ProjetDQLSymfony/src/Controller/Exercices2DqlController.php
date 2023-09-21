@@ -14,6 +14,7 @@ class Exercices2DqlController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    // Chercher de clients par email
     #[Route('/clients/par/email/{email}', name: 'clients_by_email')]
     public function clientsByEmail($email)
     {
@@ -25,6 +26,7 @@ class Exercices2DqlController extends AbstractController
         dd($query->getResult());
     }
 
+    // Compter le nombre d'emprunts d'un client
     #[Route('/total/emprunts/{clientId}', name: 'emprunts_count')]
     public function empruntsCount($clientId)
     {
@@ -56,6 +58,18 @@ class Exercices2DqlController extends AbstractController
             'SELECT e FROM App\Entity\Emprunt e WHERE e.dateEmprunt = :date'
         );
         $query->setParameter('date', $date);
+
+        dd($query->getResult());
+    }
+
+
+    #[Route('/emprunts-overdue', name: 'emprunts_overdue')]
+    public function empruntsOverdue()
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT e FROM App\Entity\Emprunt e
+            WHERE e.dateRetourPrevu < CURRENT_DATE()'
+        );
 
         dd($query->getResult());
     }

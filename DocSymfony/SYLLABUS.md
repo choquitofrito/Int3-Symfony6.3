@@ -115,6 +115,7 @@
   - [18.1. SELECT](#181-select)
     - [18.1.1. Requête qui renvoi un array d'arrays](#1811-requête-qui-renvoi-un-array-darrays)
     - [18.1.2. Requête qui renvoi un array d'objets](#1812-requête-qui-renvoi-un-array-dobjets)
+    - [18.1.3. Exemples de requêtes](#1813-exemples-de-requêtes)
   - [18.2. Regular Joins et Fetch Joins](#182-regular-joins-et-fetch-joins)
     - [18.2.1. Regular Join](#1821-regular-join)
     - [18.2.2. Fetch Join](#1822-fetch-join)
@@ -5334,6 +5335,31 @@ Voici un exemple de vue:
 {% endfor %}
 
 {% endblock %}
+
+```
+
+### 18.1.3. Exemples de requêtes
+
+```sql
+-- Compter le nombre d'emprunts d'un client
+SELECT COUNT(e) FROM App\Entity\Emprunt e WHERE e.client = :clientId
+-- Chercher les livres selon le nombre de pages
+SELECT l FROM App\Entity\Livre l
+            WHERE l.nombrePages BETWEEN :minPages AND :maxPages
+-- Chercher les livres empruntés à une certaine date
+SELECT e FROM App\Entity\Emprunt e WHERE e.dateEmprunt = :date
+-- Chercher les emprunts qui ont depasé la date
+SELECT e FROM App\Entity\Emprunt e
+            WHERE e.dateRetourPrevu < CURRENT_DATE()
+-- Tous les exemplaires d'un livre (à partir d'un titre)
+SELECT e FROM App\Entity\Exemplaire e
+JOIN e.livre l
+WHERE l.titre = :titre
+
+
+
+
+
 
 ```
 
