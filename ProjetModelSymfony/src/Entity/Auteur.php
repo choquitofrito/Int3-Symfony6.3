@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AuteurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AuteurRepository::class)]
@@ -10,35 +12,36 @@ class Auteur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $nom;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $nationalite;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nationalite = null;
+
+    #[ORM\ManyToMany(targetEntity: Livre::class, inversedBy: 'auteurs')]
+    private Collection $livres;
 
 
-
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
             }
         }
     }
 
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
+
+    public function __construct(array $init=[])
     {
-        // appel au hydrate
-        $this->hydrate($arrayInit);
+        $this->hydrate($init);
+        $this->livres = new ArrayCollection();
     }
 
+    
 
     public function getId(): ?int
     {
@@ -50,7 +53,7 @@ class Auteur
         return $this->nom;
     }
 
-    public function setNom(?string $nom): self
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
 
@@ -62,9 +65,33 @@ class Auteur
         return $this->nationalite;
     }
 
-    public function setNationalite(?string $nationalite): self
+    public function setNationalite(?string $nationalite): static
     {
         $this->nationalite = $nationalite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livre>
+     */
+    public function getLivres(): Collection
+    {
+        return $this->livres;
+    }
+
+    public function addLivre(Livre $livre): static
+    {
+        if (!$this->livres->contains($livre)) {
+            $this->livres->add($livre);
+        }
+
+        return $this;
+    }
+
+    public function removeLivre(Livre $livre): static
+    {
+        $this->livres->removeElement($livre);
 
         return $this;
     }

@@ -1,23 +1,34 @@
 <?php
 
-
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use App\Entity\Livre;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+
+// Faker
+
+
+use Faker;
 
 class LivreFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
 
-        for ($i = 0; $i < 10; $i++) {
-            $livre = new Livre();
-            // si on a un hydrate, pas besoin de sets...
-            $livre->setTitre("La vie de Toto Vol. " . $i);
-            $livre->setIsbn("12123123123123" . $i);
-            $livre->setPrix($i + 20);
+        $faker = Faker\Factory::create();
+        for ($i = 0; $i < 20; $i++) {
+            $livre = new Livre(
+                [
+                    'titre' => $faker->text(),
+                    'isbn' => $faker->isbn13(),
+                    'nombrePages'=> $faker->numberBetween(50,200),
+                    'prix'=>$faker->numberBetween(10,50),
+                    'datePublication'=> $faker->dateTime(),
+                    'description' => $faker->text(),
+                    'dateEdition'=> $faker->dateTime()
+                ]
+            );
             $manager->persist($livre);
         }
 

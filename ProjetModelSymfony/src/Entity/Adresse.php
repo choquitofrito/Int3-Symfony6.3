@@ -12,45 +12,31 @@ class Adresse
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $rue;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $rue = null;
 
-    #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private $numero;
+    #[ORM\Column(length: 10)]
+    private ?string $numero = null;
 
-    #[ORM\Column(type: 'string', length: 20, nullable: true)]
-    private $codePostal;
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $codePostal = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $ville;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
 
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Client::class, cascade: ['persist', 'remove'])]
-    private $clients;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pays = null;
 
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Client::class)]
+    private Collection $clients;
 
-
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-    }
-
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
+    public function __construct()
     {
         $this->clients = new ArrayCollection();
-        // appel au hydrate
-        $this->hydrate($arrayInit);
     }
-
 
     public function getId(): ?int
     {
@@ -62,7 +48,7 @@ class Adresse
         return $this->rue;
     }
 
-    public function setRue(?string $rue): self
+    public function setRue(?string $rue): static
     {
         $this->rue = $rue;
 
@@ -74,7 +60,7 @@ class Adresse
         return $this->numero;
     }
 
-    public function setNumero(?string $numero): self
+    public function setNumero(string $numero): static
     {
         $this->numero = $numero;
 
@@ -86,7 +72,7 @@ class Adresse
         return $this->codePostal;
     }
 
-    public function setCodePostal(?string $codePostal): self
+    public function setCodePostal(?string $codePostal): static
     {
         $this->codePostal = $codePostal;
 
@@ -98,32 +84,44 @@ class Adresse
         return $this->ville;
     }
 
-    public function setVille(string $ville): self
+    public function setVille(?string $ville): static
     {
         $this->ville = $ville;
 
         return $this;
     }
 
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?string $pays): static
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
     /**
-     * @return Collection|Client[]
+     * @return Collection<int, Client>
      */
     public function getClients(): Collection
     {
         return $this->clients;
     }
 
-    public function addClient(Client $client): self
+    public function addClient(Client $client): static
     {
         if (!$this->clients->contains($client)) {
-            $this->clients[] = $client;
+            $this->clients->add($client);
             $client->setAdresse($this);
         }
 
         return $this;
     }
 
-    public function removeClient(Client $client): self
+    public function removeClient(Client $client): static
     {
         if ($this->clients->removeElement($client)) {
             // set the owning side to null (unless already changed)

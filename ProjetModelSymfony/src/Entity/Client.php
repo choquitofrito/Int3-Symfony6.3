@@ -12,46 +12,43 @@ class Client
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $nom;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $prenom;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $prenom = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $email;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
 
-    #[ORM\OneToOne(mappedBy: 'utilisateur', targetEntity: Avatar::class, cascade: ['persist', 'remove'])]
-    private $avatar;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Emprunt::class, orphanRemoval: true)]
+    private Collection $emprunts;
 
-    #[ORM\ManyToOne(targetEntity: Adresse::class, inversedBy: 'clients')]
-    private $adresse;
+    #[ORM\ManyToOne(inversedBy: 'clients')]
+    private ?Adresse $adresse = null;
 
-    
-    
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
+    #[ORM\OneToOne(mappedBy: 'utilisateur', cascade: ['persist', 'remove'])]
+    private ?Avatar $avatar = null;
+
+
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
             }
         }
     }
-
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
+    public function __construct(array $init =[])
     {
-        $this->exemplaires = new ArrayCollection();
-        // appel au hydrate
-        $this->hydrate($arrayInit);
+        $this->hydrate($init);
+        $this->emprunts = new ArrayCollection();
     }
 
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,7 +59,7 @@ class Client
         return $this->nom;
     }
 
-    public function setNom(?string $nom): self
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
 
@@ -74,7 +71,7 @@ class Client
         return $this->prenom;
     }
 
-    public function setPrenom(?string $prenom): self
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
 
@@ -86,9 +83,51 @@ class Client
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(?string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emprunt>
+     */
+    public function getEmprunts(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmprunt(Emprunt $emprunt): static
+    {
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts->add($emprunt);
+            $emprunt->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmprunt(Emprunt $emprunt): static
+    {
+        if ($this->emprunts->removeElement($emprunt)) {
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getClient() === $this) {
+                $emprunt->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAdresse(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?Adresse $adresse): static
+    {
+        $this->adresse = $adresse;
 
         return $this;
     }
@@ -98,7 +137,7 @@ class Client
         return $this->avatar;
     }
 
-    public function setAvatar(?Avatar $avatar): self
+    public function setAvatar(?Avatar $avatar): static
     {
         // unset the owning side of the relation if necessary
         if ($avatar === null && $this->avatar !== null) {
@@ -114,18 +153,4 @@ class Client
 
         return $this;
     }
-
-    public function getAdresse(): ?Adresse
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?Adresse $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    
 }

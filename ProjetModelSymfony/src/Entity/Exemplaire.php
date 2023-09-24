@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ExemplaireRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExemplaireRepository::class)]
@@ -10,34 +12,32 @@ class Exemplaire
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private $etat;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etat = null;
 
-    #[ORM\ManyToOne(targetEntity: Livre::class, inversedBy: 'exemplaires')]
+    #[ORM\ManyToOne(inversedBy: 'exemplaires')]
     #[ORM\JoinColumn(nullable: false)]
-    private $livre;
+    private ?Livre $livre = null;
+
+    #[ORM\OneToMany(mappedBy: 'exemplaire', targetEntity: Emprunt::class, orphanRemoval: true)]
+    private Collection $emprunts;
 
 
-
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
             }
         }
     }
-
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct(array $arrayInit = [])
+    public function __construct(array $init =[])
     {
-        // appel au hydrate
-        $this->hydrate($arrayInit);
+        $this->hydrate($init);
+        $this->emprunts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,7 +50,7 @@ class Exemplaire
         return $this->etat;
     }
 
-    public function setEtat(?string $etat): self
+    public function setEtat(?string $etat): static
     {
         $this->etat = $etat;
 
@@ -62,9 +62,39 @@ class Exemplaire
         return $this->livre;
     }
 
-    public function setLivre(?Livre $livre): self
+    public function setLivre(?Livre $livre): static
     {
         $this->livre = $livre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emprunt>
+     */
+    public function getEmprunts(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmprunt(Emprunt $emprunt): static
+    {
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts->add($emprunt);
+            $emprunt->setExemplaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmprunt(Emprunt $emprunt): static
+    {
+        if ($this->emprunts->removeElement($emprunt)) {
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getExemplaire() === $this) {
+                $emprunt->setExemplaire(null);
+            }
+        }
 
         return $this;
     }

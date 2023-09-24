@@ -10,35 +10,14 @@ class Avatar
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $lien;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lien = null;
 
-    #[ORM\OneToOne(inversedBy: 'avatar', targetEntity: Client::class, cascade: ['persist', 'remove'])]
-    private $utilisateur;
-
-
-
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-    }
-
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
-    {
-        // appel au hydrate
-        $this->hydrate($arrayInit);
-    }
-
+    #[ORM\OneToOne(inversedBy: 'avatar', cascade: ['persist', 'remove'])]
+    private ?Client $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -50,7 +29,7 @@ class Avatar
         return $this->lien;
     }
 
-    public function setLien(?string $lien): self
+    public function setLien(?string $lien): static
     {
         $this->lien = $lien;
 
@@ -62,7 +41,7 @@ class Avatar
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Client $utilisateur): self
+    public function setUtilisateur(?Client $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
 
