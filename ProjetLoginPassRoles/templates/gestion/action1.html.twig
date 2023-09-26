@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GestionController!{% endblock %}
+
+{% block body %}
+Voici action 1
+{# afficher l'objet app.user #}
+{{ dump (app.user)}}
+{# afficher les rôles de cet user (vous pouvez les voir dans la BD) #}
+{{ dump (app.user.getRoles())}}
+{% endblock %}
