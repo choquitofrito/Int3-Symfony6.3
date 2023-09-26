@@ -11,18 +11,19 @@
 <body>
     <script>
         // Si on veut généraliser le code pour pouvoir 
-        // faire appel à une URL de notre choix,
+        // faire appel à une URL de notre choix et SURTOUT utiliser la promesse plusieurs fois
         // on peut juste créer une fonction qui reçoit 
-        // l'URL et renvoie la promesse "personnalisée"
+        // l'URL et renvoie une nouvelle promesse à chaque fois qu'on peut comsomme
 
         // La fonction appelAjax n'utilise pas le résultat 
         // de l'appel AJAX elle même 
 
-        // appelAJAX crée et renvoie un promesse qui: 
+        // appelAJAX (une sorte de "fetch") crée et renvoie un promesse qui: 
         // - fait l'appel AJAX 
         // - fixe les résultats por resolve (succés) et reject (échec)
         // resolve et reject sont définies plus tard (then)
 
+        // appel ajax est une arrow function (pareil que "const appelAjax = function (url) {......})
         const appelAjax = (url) => {
 
             // crée et envoie une promesse, consommée à l'extérieur
