@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+Bienvenue {{ arrayNom['name'] | capitalize }}!!!
+<br>
+Votre genre est probablement
+<h3>
+{% if arrayNom['gender'] == "female" %}
+feminin
+{% else %}
+masculin
+{% endif %}
+</h3>
+
+
+{% endblock %}

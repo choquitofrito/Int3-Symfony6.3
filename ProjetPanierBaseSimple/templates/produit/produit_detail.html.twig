@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<p>{{ produit.nom }}</p>
+<p>{{ produit.description }}</p>
+<img src='{{ asset ("/images/" ~ produit.lien ) }}' />
+
+{# Formulaire isolé pour rajouter un produit. On met l'id dans un input hidden #}
+<form action="{{ path("panier_add_produit_plusieurs") }}" method="POST">
+<input type="hidden" name="id" value="{{ produit.id }}">
+Quantité à rajouter:<input type="number" name="quantite" value="1">
+<input type="submit" value="Rajouter">
+</form>
+
+{% endblock %}

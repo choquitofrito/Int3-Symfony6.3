@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const f1 = (v1, v2) => {
+        console.log(`Res f1 --> ${v1 + v2}`);
+      };
+
+      f1(5, 6);
+
+      const f2 = (v) => {
+        return v * 2;
+      };
+
+      console.log("Res f2 --> " + f2(10));
+
+      const f3 = (v) => v * 2; // return implicit return v*2
+      console.log("Res f3 --> " + f3(10));
+
+      const f4 = (v) => console.log(v * 4); // return implicit?
+      f4(100);
+
+    </script>
+  </body>
+</html>

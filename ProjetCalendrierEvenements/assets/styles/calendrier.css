@@ -1,0 +1,9 @@
+/* definir ici le style propre pour le entry "calendrier"
+Dans notre cas on a juste défini le style pour l'élément 
+"calendrier" dans la page, mais vous pouvez mettre ce que vous voulez 
+(classes, ids etc...) */
+
+#calendrier {
+  width: 50%;
+  height: 50%;
+}

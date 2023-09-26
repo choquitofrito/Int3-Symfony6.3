@@ -1,0 +1,45 @@
+{% extends '/exemples_ajax/master_page.html.twig' %}
+
+{% block contenuMain %}
+<!-- on mettra cet script dans un block  -->
+
+<!-- formulaire à envoyer  -->
+<form id="leFormulaire" method="POST">
+    <input type="text" name="nom" />
+    <input type="submit" id="envoyerNom" value="Envoyer" />
+    <div id="divMessage"></div>
+</form>
+{% endblock %}
+
+{% block javascripts %}
+<!-- AJAX - AXIOS dans la page, sans avoir un script externe -->
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+// attendre la charge du DOM
+window.addEventListener('DOMContentLoaded', (event) => {
+    envoyerNom.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        console.log(document.getElementById("leFormulaire"));
+
+        axios({
+            url: '{{path ("traitement_ajax_master_page")}}',
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: new FormData(document.getElementById("leFormulaire"))
+        })
+        .then(function (response) {
+                // response.data est un objet qui correspond à l'array associatif envoyé dans le controller
+                // JsonResponse a transformé l'array en JSON. Axios transforme le JSON en objet JS
+                // (et on utilise ici la clé "leMessage")
+                document.getElementById("divMessage").innerHTML = response.data.message;
+                console.log(response);
+        })
+        .catch(function (error) {
+                console.log(error);
+        });
+    });    
+});
+</script>
+{% endblock %}

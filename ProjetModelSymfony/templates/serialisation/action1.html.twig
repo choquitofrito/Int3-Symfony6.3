@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SerialisationController!{% endblock %}
+
+{% block body %}
+
+{{ dump (livres) }}
+
+On peut faire tout ce qu'on veut en PHP, pas en JS
+Même accéder aux entités liées (ici Exemplaires)
+
+{% for livre in livres %}
+    <h4>{{ livre.titre }}</h4>
+    
+    {% if livre.getExemplaires | length > 0 %}
+        {% for exemplaire in livre.getExemplaires %}
+
+            <h5>{{ exemplaire.etat }}</h5>    
+        
+        {% endfor %}
+    {% else %}
+        <h5>Pas d'exemplaires pour ce livre</h5>
+    {% endif %}
+{% endfor %}
+    
+{% endblock %}
+

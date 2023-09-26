@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+Les cartes:<br><br>
+{% for carte in arrayCartes %}
+
+<div style="border: 1px black solid">
+
+{# Rudimentaire #}
+{# <img src="/uploadsImages/cartes/{{ carte.getLien }}"   style="width:10em" /> #}
+
+{# Mieux, mais pas encore terrible. Avec asset au moins on peut choisir un base path 
+- on ne le voit pas ici - qui nous permettra de déplacer l'ensemble d'images à un autre dossier 
+sans changer le code de la vue. 
+https://symfony.com/doc/current/components/asset.html
+(ex: copier notre structure de dossier uploadsImages/cartes dans un dossier public/images et devoir 
+uniquement changer le base path dans )
+#}
+<img src="{{ asset ('uploadsImages/cartes/' ~ carte.getLien ) }}" style="width:10em" >  
+
+
+
+<h3>Nom:</h3>
+{{carte.getNom }}
+<h3>Description</h3>
+{{carte.getDescription }}
+<h3>PV</h3>
+{{carte.getPV }}
+</div>
+
+
+<br><br><br>
+
+{% endfor %}
+
+{% endblock %}

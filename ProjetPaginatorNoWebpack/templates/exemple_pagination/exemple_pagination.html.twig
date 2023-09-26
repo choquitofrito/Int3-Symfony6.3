@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExemplePaginationController!{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset ('/assets/css/bootstrap.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+{% for livre in paginationLivres %}
+<div class="">
+    {{ livre.titre }}<br>
+    {{ livre.description }}
+</div>
+{% endfor %}
+
+{# inclusion de la pagination  #}
+<div class="paginationLivres">
+    {{ knp_pagination_render (paginationLivres) }}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="module" src="{{ asset ('/assets/js/main.js') }}"></script>
+{% endblock %}

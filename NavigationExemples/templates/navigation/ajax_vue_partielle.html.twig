@@ -1,0 +1,11 @@
+Je n'hérite pas du base.html.twig.
+
+Je suis juste une vue incrustée ici qu'utilise les données reçues du controller.
+<br>
+<h4 class="text-success">ajax_vue_partielle.html.twig</h4>
+<br>
+
+{% for film in films %}
+    <h6>{{ film.titre }}</h6>
+    <h6>{{ film.duree }}</h6>
+{% endfor %}

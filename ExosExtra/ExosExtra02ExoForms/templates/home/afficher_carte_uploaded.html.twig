@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Carte uploaded!</h1>
+<h3>Nom:</h3>
+{{carteUploaded.getNom }}
+<h3>Description</h3>
+{{carteUploaded.getDescription }}
+<h3>PV</h3>
+{{carteUploaded.getPV }}
+<br>
+
+<img src="{{ asset ('/uploadsImages/cartes/' ~ carteUploaded.getLien) }}" />
+
+
+{% endblock %}

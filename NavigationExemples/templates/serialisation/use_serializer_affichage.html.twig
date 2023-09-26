@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SerialisationController!
+{% endblock %}
+
+{% block body %}
+
+    {# Attention au système de création d'evénéments : class pour tous les boutons, gestion du click sur le target
+    Pour créer la route, on prend l'attribute data-route (ou data-chemin, data-routing... à vous de choisir)
+    du dom. Cela nous permet d'avoir un JS propre sans twig et de pouvois l'exporter facilement dans un fichier .js (qui n'admet pas du twig) #}
+    {# Pour générer les routes dans le js on peut utiliser le module FOSJsRoutingBundle, mais je préfére cette solution 
+     https://symfony.com/doc/current/bundles/FOSJsRoutingBundle/usage.html} #}
+
+	<button class="btn_action" data-route="{{ path ('serializer_traitement') }}" type="button">Use Serializer</button>
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+	
+    
+    <script>
+    console.log ("ok");
+		$(document).ready(function() { 
+            $(".btn_action").on("click", function (event) {
+
+                event.preventDefault();
+                axios ({
+                    method: 'post',
+                    url: $(event.target).attr("data-route")
+                    // si vous voulez envoyer un form au serveur, mais ici on n'a pas besoin
+                    // data: new FormData ($(cibler ici le formulaire à envoyer))
+                    // headers: {'Content-Type': 'multipart/form-data'}
+                })
+                .then ((response)=>{
+                    console.log ("Response du serveur:");
+                    console.log (response.data);
+                })
+                .catch((error)=>{
+                    console.log ("Problème dans AJAX");
+                });
+            });
+        });
+	</script>
+
+
+{% endblock %}

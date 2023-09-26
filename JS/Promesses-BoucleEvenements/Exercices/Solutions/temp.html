@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      fetch("https://jsonplaceholder.typicode.com/posts?id=5")
+        .then((response) => response.json())
+        .then((res) => {
+          return fetch(
+            `https://jsonplaceholder.typicode.com/users?id=${res[0].userId}`
+          );
+        })
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res[0].name);
+        });
+    </script>
+  </body>
+</html>

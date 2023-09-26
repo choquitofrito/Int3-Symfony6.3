@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Les données dans l'array sont:
+<table>
+{% for cle, valeur in ville %}
+<tr><td>{{ cle }}</td><td>{{ valeur }}</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

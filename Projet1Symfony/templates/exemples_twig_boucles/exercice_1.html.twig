@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+{% for film in films %}    
+<table>
+    {% for cle, valeur in film %}
+    <tr><td>{{ cle }}</td><td>{{ valeur }}</td></tr>
+    {% endfor %}
+</table>
+{% endfor %}
+
+{% endblock %}

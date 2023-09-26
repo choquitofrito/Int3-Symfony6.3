@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pays{% endblock %}
+
+{% block contenu %}
+
+Cherchez un film:
+<form id="formRecherche">
+    Titre du film<input id="inputTitre" type ="text"> 
+    <button id="btnEnvoyer" type="submit" data-route="{{ path ("ajax_vue_partielle") }}">Chercher</button>
+</form>
+
+{# div où on incrustera la vue partielle #}
+<div id="divContenu" style="border: 1px black solid">Le contenu de ce div sera remplacé par une vue partielle</div>
+
+
+
+{# Axios et jQuery #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>{# jquery, plus simple #}
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script>
+
+$(document).ready(function() { 
+    $("#btnEnvoyer").on("click", function (event) {
+
+        event.preventDefault(); // eviter le submit
+        axios ({
+            method: 'post',
+            url: $(event.target).attr("data-route"), //on prends la route d'un attribut data du bouton, c'est le plus prop. Autrement on doit mettre le path ici avec un plugin....
+            // envoyer le form au serveur. Ça pourrait correspondre à une entité mais pas le cas ici
+            data: new FormData ($("#formRecherche")[0]), // [0] parce-qu'il faut envoyer l'objet HTML associé à l'objet JQueey de ce form, ou soit accéder avec document.getElementById("formRecherche)
+            headers: {'Content-Type': 'multipart/form-data'}
+        
+        })
+        .then ((response)=>{
+            console.log ("Response du serveur:");
+            // et ICI ON REMPLACE LE DIV AVEC LE CONTENU DE LA VUE PARTIELLE
+            $("#divContenu").html (response.data); // pas JSON ici, juste du texte
+        })
+        .catch((error)=>{
+            console.log ("Problème dans AJAX");
+        });
+    });
+});
+</script>
+
+
+{% endblock %}

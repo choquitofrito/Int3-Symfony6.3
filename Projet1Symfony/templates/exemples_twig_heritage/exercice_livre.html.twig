@@ -1,0 +1,10 @@
+{% extends "exemples_twig_heritage/master_page_2.html.twig" %}
+
+{% block contenuPrincipal %}
+{% for cle, valeur in livre %}
+    {{ cle }} : {{ valeur }}
+    <br>
+{% endfor %}
+{% endblock %}
+
+

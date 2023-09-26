@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<h2>Bienvenue {{app.user.nom}}</h2>
+
+<div>
+    <a href = "{{path('app_logout')}}">Se déconnecter</a>
+</div>
+<div>
+    <a href = "{{path('app_fleur')}}">Liste des fleurs</a>
+</div>
+
+{% endblock %}

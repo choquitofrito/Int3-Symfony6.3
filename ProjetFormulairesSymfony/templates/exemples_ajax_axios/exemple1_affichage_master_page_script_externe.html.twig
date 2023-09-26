@@ -1,0 +1,56 @@
+{% extends '/exemples_ajax/master_page.html.twig' %}
+
+{% block contenuMain %}
+<!-- on mettra cet script dans un block  -->
+
+<!-- formulaire à envoyer  -->
+<form id="leFormulaire" method="POST">
+    <input type="text" name="nom" />
+    <input type="submit" id="envoyerNom" value="Envoyer" />
+    <div id="divMessage"></div>
+</form>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js"></script>
+
+<!-- 
+le script externe contient la route du POST pour AXIOS... 
+elle est incluse dans un fichier .js et pas .twig alors "path" ne fonctionnera pas. 
+Mais on peut résoudre ce problème avec le bundle jsrouting-bundle
+
+Installation: 
+https://symfony.com/doc/master/bundles/FOSJsRoutingBundle/installation.html
+
+Utilisation:
+https://symfony.com/doc/master/bundles/FOSJsRoutingBundle/usage.html#generating-uris
+
+qui nous permettra de générer les chemins des routes en JS à partir du name d'une route:
+
+Routing.generate('nom_de_notre_route', {
+    'slug': 'mon_slug'
+});
+
+1. Installez le bundle
+2. Rajoutez les deux lignes de script ci-dessous
+3. Exposez la route de traitement (voir route dans le controller)
+3. Utilisez Route.generate dans les fichiers js pour générer de routes (voir /assets/js/exemple1Ajax.js)
+-->
+
+{# Charge du script pour fos_js_routing qui nous permet de générer les routes #}
+{# C'est indispensable de rajouter "options= {"expose"=true}" dans l'annotation de l'action  #}
+{# Utilisez des annotations et pas des attributs PHP pour ces actions #}
+{# Vous avez un exemple dans ExemplesAjaxAxiosController #}
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+<!-- notre script, là où on utilise Route.generate -->
+{# <script src="{{ asset('/assets/js/exemple1Ajax.js') }}"></script> #}
+{{ encore_entry_script_tags ('exemple1AjaxAxios') }}
+
+
+{% endblock %}
+
+

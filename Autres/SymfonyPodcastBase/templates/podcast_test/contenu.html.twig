@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+    <channel>
+        <title>{{ infoChannel['title'] }}</title>
+        <link>{{ infoChannel['link'] }}</link>
+        <language>{{ infoChannel['language'] }} </language>
+        <copyright>{{ infoChannel['copyright'] }} </copyright>
+        <itunes:subtitle>{{ infoChannel['itunes_subtitle'] }}</itunes:subtitle>
+        <itunes:author>{{ infoChannel['author'] }}</itunes:author>
+        <itunes:summary>{{ infoChannel['summary'] }}</itunes:summary>
+        <description>{{ infoChannel['description'] }}</description>
+        <itunes:owner>
+            <itunes:name>{{ infoChannel ['owner_name'] }}</itunes:name>
+            <itunes:email>{{ infoChannel ['owner_email'] }}</itunes:email>
+        </itunes:owner>
+        <itunes:image href="{{ infoChannel['channel_image'] }}"/>
+		{{ infoChannel['itunes_category'] | raw }}
+        <itunes:explicit>{{ infoChannel ['itunes_explicit'] }}</itunes:explicit>
+
+	{% for file in arrayInfoFiles %}
+        <item>
+            <title>{{  file['title'] }}</title>
+            <link>{{  file['fileUrl'] }}</link>
+            
+            <itunes:author>{{ file['author']}}</itunes:author>
+			{{ file['itunes_category']}}
+            <itunes:category>{{ file['category'] | raw }}</itunes:category>
+            <duration>{{  file['duration'] }}</duration>
+            
+            <description>{{  file['description'] }}</description>
+            <pubDate>{{  file['date'] }}</pubDate>
+
+            <enclosure url="{{  file['fileUrl'] }}" length="{{  file['size'] }}" type="audio/mpeg" />
+            <guid>{{  file['fileUrl'] }}</guid>
+            <author>{{  file['author'] }}</author>
+            <itunes:image href="{{  file['image'] }}"/>
+			<itunes:duration>{{  file['duration'] }}</itunes:duration>
+			<itunes:explicit>{{  file['explicit'] }}</itunes:explicit>
+        </item>
+    {% endfor %}
+    </channel>
+</rss>

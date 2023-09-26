@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boucle événements</title>
+  </head>
+
+  <body>
+    <script>
+      console.log("Début du script");
+
+      // opération asynchrone, pareil qu'un appel AJAX.
+
+      // on fait l'appel et après un certain temps, le callback (fonction à l'intérieur) sera exécuté
+      setTimeout(() => {
+        console.log("Exécution d'une tâche longue");
+      }, 3000);
+
+      console.log("Fin du script");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{% extends '/exemples_ajax/master_page.html.twig' %}
+
+{% block contenuMain %}
+Nom<input type="text" id="inputNom" />
+<button id="envoyerNom">Envoyer</button>
+<div id="divMessage"></div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="{{ asset('/assets/js/exemple1Ajax.js') }}"></script>
+{% endblock %}
+

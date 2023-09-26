@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Upload d'une carte</h1>
+
+{{ form_start (formCarte) }}
+{{ form_widget (formCarte) }}
+<input type="submit" value="Envoyer">
+{{ form_end (formCarte) }}
+
+{% endblock %}

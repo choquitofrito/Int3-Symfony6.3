@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExemplesFormCRUDUpdateController!{% endblock %}
+
+{% block body %}
+
+<h1>Liste Livres</h1>
+{% for livre in livres %}
+    <br>{{ livre.titre}}
+    <br>{{ livre.prix }}
+    {# etc... #}
+    
+    {# lien pour l'update #}
+    <br><a href ="{{ path ('livre_update', { id: livre.id } )}}">Update</a>
+{% endfor %}
+
+{% endblock %}

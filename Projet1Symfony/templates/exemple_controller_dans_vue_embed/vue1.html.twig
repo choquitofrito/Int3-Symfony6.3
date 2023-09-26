@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExempleControllerDansVueController!{% endblock %}
+
+{% block body %}
+
+
+<h1>Je suis la vue 1</h1>
+
+<div id='container1'>
+    Contenu de la vue 1<br>
+    Bla<br>
+    bla<br>
+    bla<br>
+    Bla<br>
+    bla<br>
+    bla<br>
+    Bla<br>
+    bla<br>
+    bla<br>
+    Bla<br>
+    bla<br>
+    bla<br>
+</div>
+<div id='container2'>
+{#on incruste l'action du controller ici#}
+    {{ render (controller (
+        'App\\Controller\\ExempleControllerDansVueEmbedController::sectionNouvellesDynamique',
+        { 'nombreNouvelles':3 }
+        ))
+    }}  
+</div>
+
+
+<style>
+    #container1 {
+        border: 3px black solid;
+        height: 400px;
+        width: 500px;
+        float:left;
+        padding:10px;
+        font-family: calibri;
+    }
+    #container2 {
+        border: 3px black solid;
+        height: 400px;
+        width: 300px;
+        float:left;
+        padding:10px;
+        font-family :calibri;
+        color:#2020ff;
+    }
+</style>
+{% endblock %}

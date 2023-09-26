@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des fleurs{% endblock %}
+
+
+{% block body %}
+    <div class="p-5">
+        <h2>Liste des fleurs</h2>
+
+        <table class="table table-responsive">
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Saisons</th>
+            </tr>
+            {% for fleur in fleurs %}
+                <tr>
+                    <td><img src='{{ asset ("/fleur01.jpg") }}'/></td>
+                    <td>{{ fleur.nom }}</td>
+                    <td>{{ fleur.prix }}</td>
+                    <td>
+                    <ul>Saisons : 
+                    {% for saison in fleur.saisons %}
+                    <li>{{saison.nom}}</li>
+                    {% endfor %}
+                    </ul>
+                    </td>
+                    {# <td><a href ="{{ path ('fleur_update', { id: fleur.id } )}}">Modifier</a></td> #}
+                    {# <td><a href ="{{ path ('fleur_delete', { id: fleur.id } )}}">Supprimer</a></td> #}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,1 @@
+INSERT INTO `livre` (`id`, `titre`, `prix`, `description`, `date_publication`, `isbn`) VALUES (NULL, 'La vie est belle', '33', 'lololo', '2021-04-14 14:42:45', '332424'), (NULL, 'Souvent la vie est belle', '3', 'asdvasdvdasvadsv', '2021-04-21 14:42:45', '23423423423');

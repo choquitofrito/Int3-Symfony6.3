@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if nom[-3:] in ['oni','ona'] %}
+    {{ nom }} est possiblement italien
+{% elseif nom[-3:] in ['ski','ska'] %}
+    {{ nom }} est possiblement un nom de famille polonais!
+{% elseif 'van ' in nom %}
+    {{ nom }} est possiblement néerlandais
+{% else %}
+    On ne sait pas vraiment d'òu il vient le nom {{ nom }}
+{% endif %}
+
+{% endblock %}

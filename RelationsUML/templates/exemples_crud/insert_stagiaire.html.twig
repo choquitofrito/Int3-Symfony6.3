@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Insert Stagiaire
+{% endblock %}
+
+{% block body %}
+	Le stagiare a été insérée
+	{{ dump (stagiaire) }}
+	{{ stagiaire.getNom() }}<br>
+	{{ stagiaire.getEmail() }}
+
+{% endblock %}

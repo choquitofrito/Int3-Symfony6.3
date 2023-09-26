@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if ville | length > 1 %}
+Le tableau n'est pas vide
+{% endif %}
+<table>
+    {% for cle, valeur in ville %}
+    <!-- capitalize renvoie la variable en majuscules -->
+    <tr>
+        <td>{{ cle | capitalize }}</td>
+        <td>{{ valeur }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

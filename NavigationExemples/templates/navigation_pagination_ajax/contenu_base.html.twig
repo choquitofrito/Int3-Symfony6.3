@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block contenu %}
+
+
+{# // ici le formulaire #}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{# div du formulaire #}
+<div>
+{{ form_start(form,{'action': path('contenu_base_ajax_traitement'), 'method': 'POST', 'attr' : { 'id' : 'form_recherche'} }) }}
+<h3>Filtres de Recherche</h3><input id="envoyer" type="submit">
+{{ form_end(form) }}
+</div>
+
+{# ce DIV a un contenu generique qui sera remplacé quand on fait une recherche ajax #}
+<div id="contenu_recherche"> 
+    
+    <h3>On incruste ici le contenu de la recherche<h3>
+    <h5>Ce div se modifie aussi quand on fait une recherche avec le form ou quand on utilise le paginator APRÈS une recherche (tout se fera en AJAX)<h5>
+    <h5>La pagination dans le generique (la prèmiere fois qu'on charge la page) recharge completement la page (voir url), n'est pas AJAX</h5>
+    {% if filmsFiltres is defined %}
+    <h1>Div Contenu Recherche Accueil (Génerique à personnaliser)</h1>
+        {% for film in filmsFiltres %}
+            <br>
+            <h6>Id: {{film.id }}</h6>
+            <h5>Titre du film : {{ film.titre }} - <strong>{{ film.getGenre.nom }}</strong></h5> 
+            </h5>Duree du film : {{ film.duree }} min. </h5>
+
+            
+        {% endfor %}    
+    
+    {% endif %}
+    {# paginator original #}
+    <div>
+    {{ knp_pagination_render(filmsFiltres, 
+        'templates_pagination/twitter_bootstrap_v4_pagination.html.twig') }}
+    </div>
+
+    {# renderview ici #}
+</div>
+
+
+{% block customJS %}
+
+
+
+<script>
+    // RECHERCHE
+    document.getElementById('envoyer').addEventListener('click', (event)=>{
+        // console.log ("changement dans un select! " + event.target.value);
+
+        // Si on click il faut faire la recherche du contenu du form.
+        // C'est la même recherche (action) qu'on lance quand on fait click sur 
+        // la pagination, mais ici on envoie toujours la page 1 
+        // (car après filtrer il faut montrer les prémiers résultats de la recherche) 
+
+        event.preventDefault(); // éviter le submit propre au form
+
+
+        let myFormData = new FormData(document.getElementById("form_recherche")); // l'id est rajouté dans la création, ici dans le twig plus haut. On aurait pu le rajouter ailleurs aussi (controller ou classe du form)
+        myFormData.append ('page',1); // on rajoute un champ au formulaire POST. L'action le reçoit en faisant $request->get ('page')
+        axios({
+            url: '{{ path ("contenu_base_ajax_traitement") }}',
+            method:'POST', 
+            headers: {'Content-type' : 'multipart/form-data'},
+            data: myFormData 
+        })
+        .then ( function (response) {
+            // on va recevoir un renderView
+            document.getElementById("contenu_recherche").innerHTML = response.data;
+            // console.log (response.data); // seulement si vous voulez vérifier que la vue est renvoyée dans la console (vous pouvez aussi regarder dans le Response de Network)
+        })
+        .catch( function (error)  {
+            console.log ("error:");
+            console.log (error);
+        })
+    });
+
+
+</script>
+
+
+<script>
+// PAGINATION
+document.addEventListener ('click', function (event){
+    console.log (event.target.nodeName);
+    // Ce script doit rester dans l'index 
+    // Event delegation: cibler et voir si on clique sur le paginator: 
+    // Un <a href> du paginator
+
+    // si le lien charge AJAX on charge AJAX. Autrement on est en train de cliquer sur le paginator
+    // généré pour le contenu générique (quand on charge la page par la première fois, avant de faire de recherches)
+    // Le lien, dans le prèmier cas, est vers "/contenu/base/generique?page=9" 
+    // dans le cas d'AJAX, les liens vont vers "/contenu/base/ajax/traitement?page=4"
+
+    // Mieux faire avec matches, eventuellement (==="A" c'est pour voir si c'est un lien)
+    // Vous pouvez cibler d'une façon plus précise si vous avez besoin
+    
+    // On lance ce code seulement si on clique sur une pagination 
+    // générée avec une action dans AJAX
+    if (event.target.nodeName ==="A"  && event.target.href.includes ("page=") &&  event.target.href.includes ("ajax")){
+        
+        console.log ("pagination ajax");
+        // empecher le lien de fonctionner
+        event.preventDefault();
+        event.stopPropagation();
+
+        // obtenir le lien du paginator
+        let lien = event.target.href;
+        // extraire du lien le nombre de page
+        let page = lien.split('=')[1]; // position 1 de l'array crée par split contient le text après le =
+        console.log ("page du lien (inspectez pour le voir): " + page);
+        
+        // l'appel renvoie le form tel qu'il est, avec le numero de page à charger
+        // rajouter un couple clé-val au form (POST). L'action a besoin de la page pour le paginator,
+        // qui renverra les éléments à afficher (pareil que sans AJAX)
+        let myFormData = new FormData(document.getElementById("form_recherche"));
+        // on rajoute à la main un couple clé=>valeur dans le POST: page: X
+        myFormData.append ('page', page);
+
+        axios({
+            url: '{{ path ("contenu_base_ajax_traitement") }}',
+            method:'POST',
+            headers: {'Content-type' : 'multipart/form-data'},
+            data: myFormData
+        })
+        .then ( function (response) {
+            document.getElementById("contenu_recherche").innerHTML = response.data;
+            // console.log (response.data);
+        })
+        .catch( function (error)  {
+            console.log ("error:");
+            console.log (error);
+        });
+    }
+    else {
+        // rien à faire, le submit aura lieu car nous somme dans
+        // un action qui n'est pas ajax
+        
+    }
+
+});
+
+// Capturer les événements
+document.getElementById("form_recherche").addEventListener ('input', (event) => {
+    // input nous convient:
+    // https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/input_event
+    // L'évènement DOM input (entrée) est déclenché de façon synchrone quand la valeur 
+    // d'un élément <input> (entrée), <select> (sélection) ou <textarea> (zone de texte) est modifiée
+    // console.log ("change dans un élément du formulaire"); // si quelque chose change dans le form
+    document.getElementById('envoyer').click(); // on lance le click de l'input à la main
+});
+
+</script>
+
+
+
+{% endblock %} 
+{# endblock customjs #}
+
+
+
+{% endblock %}
+{# endblock contenu #}

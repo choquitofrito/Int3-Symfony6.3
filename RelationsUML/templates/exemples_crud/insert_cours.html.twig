@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Insert Cours
+{% endblock %}
+
+{% block body %}
+	Le cours a été inséré
+	{{ dump (cours) }}
+	{{ cours.getTitre() }}<br>
+	{{ cours.getDescription() }}
+
+{% endblock %}

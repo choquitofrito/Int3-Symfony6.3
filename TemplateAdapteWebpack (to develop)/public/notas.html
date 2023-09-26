@@ -1,0 +1,158 @@
+Facilite l'utilisation de Webpack
+
+composer require encore
+yarn install
+
+this will install and enable the WebpackEncoreBundle, create the assets/ directory, 
+add a webpack.config.js file (/config/packages), and add node_modules/ to .gitignore. 
+
+Le fichier de configuration de Webpack est webpack.config.js.
+
+L'idée de Webpack est de pointer vers un seul fichier /assets/js/app.js qui contiendra 
+les requires et imports qui chargent d'autres fichiers (.js ... et .css!)
+
+.addEntry ('app','./assets/js/app.js')
+
+.setOutputPath : emplacement des fichiers compilés
+.setPublicPath : le chemin utilisé pour le serveur pour acceder le OutputPath
+
+Notez que dans app.js on importe aussi le .css!!
+
+Changez dans la configuration cette ligne :
+
+//.enableSingleRuntimeChunk()
+    .disableSingleRuntimeChunk()
+
+- Lancer Webpack pour compiler le js et le css :
+
+Windows : .\node_modules\.bin\encore dev
+
+- Le dossier build sera crée et contiendra un nouveua app.js et un app.css qui rassembleront tout le contenu JS et css
+(ainsi que les fichiers manifest.json, entrypoints.json, runtime.js)
+
+- Lancez maintenant le projet dans le serveur (serveur local de Symfony)
+
+- Changez le fichier original app.css: 
+
+body {
+    background-color: green !important;
+}
+
+- Rajoutez l'asset app.js dans un block javascript et le app.css dans un block stylesheet
+- Recompilez le js et css
+
+Windows : .\node_modules\.bin\encore dev
+
+- Lancez le projet et vous verrez les changements
+
+
+-----------
+Pour faciliter l'utilisation de Webpack dans les templates on a des fonctions Helper :
+Remplacez le lien .css avec : {{ encore_entry_link_tags ('app') }}
+Remplacez le lien .js avec : {{ encore_entry_script_tags ('app') }}
+
+Le reference 'app' est configurée dans le fichier entrypoints.json. On peut avoir plusieurs entrées dans ce fichier.
+
+Pour éviter d'avoir à recompiler on peut mettre Webpack en mode "watch" : chaque fois que nous modifions un fichier, la compilation se fera automatiquement.
+
+Windows : .\node_modules\.bin\encore dev --watch
+(ou l'opération équivalente: yarn watch, car dans package.json de racourcis sont configurés)
+
+La compilation sera realisée à chaque changement d'un fichier js ou css.
+
+--- 
+Pour JS :
+
+- Créer le fichier assets\get_nice_message.js
+
+module.exports = function (exclamationCount){
+    return "j'aime bien l'omelette". "!" . repeat (exclamationCount);
+}
+(Node)
+ou 
+
+export default function (exclamationCount){
+    return "j'aime bien l'omelette". "!" . repeat (exclamationCount);
+}
+(ECMA)
+
+
+
+- Dans app.js, importez le module :
+
+const getNiceMessage = require ('./get_nice_message');
+(Node)
+
+ou 
+
+import getNiceMessage from './get_nice_message'
+(ECMA)
+
+Changez aussi require pour import ()
+
+- Utilisez la fonction dans app.js pour la tester
+// any CSS you import will output into a single css file (app.css in this case)
+import '../css/app.css';
+const getNiceMessage = require ('./get_nice_message');
+
+// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
+// import $ from 'jquery';
+
+console.log(getNiceMessage(5));
+
+////////////////////////////////////
+// Installer de librairies avec YARN
+////////////////////////////////////
+
+jQuery
+------
+yarn add jquery --dev
+
+et puis (app.js)
+
+import $ from 'jquery'; 
+
+(pas besoin de "./" car de cette manière Webpack le cherchera dans node_modules (dossier)
+
+
+Bootstrap
+---------
+Quand on inclut Bootstrap avec une balise SCRIPT, le code attend que jQuery soit une variable globale.
+Pour inclure bootstrap avec Webpack on doit utiliser yarn :
+
+yarn add bootstrap --dev
+
+On change le app.js :
+
+import $ from 'jquery';
+import 'bootstrap';
+
+On doit arranger la dépendance de popper.js :
+
+npm install --save popper.js
+(yarn add popper --dev)
+
+Importer le bootstrap.css. La tilde est necessaire pour referencer un node module à l'interieur d'un fichier css.
+
+@import '~bootstrap/dist/css/bootstrap.css';
+
+Pour les fonts :
+yarn add font-awesome --dev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

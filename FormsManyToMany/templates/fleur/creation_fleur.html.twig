@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{{ form_start (formFleur) }}
+{{ form_widget (formFleur) }}
+<input type="submit" class="btn" value="Envoyer" />
+{{ form_end (formFleur) }}
+
+{% endblock %}

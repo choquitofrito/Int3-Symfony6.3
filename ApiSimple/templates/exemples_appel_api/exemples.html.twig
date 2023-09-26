@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExemplesAppelApiController!{% endblock %}
+
+{% block body %}
+
+<script>
+
+
+// appel à GET (tous) 
+fetch("/api/aeroport", {
+  method: 'GET'
+})
+.then(response => response.json()) // transformer le JSON en objet/array d'objets JS
+.then (data => console.log (data))
+.catch(error => {
+    console.log (response);
+});
+
+// appel à GET (un seul) 
+fetch("/api/aeroport/6", {
+  method: 'GET'
+})
+.then(response => response.json()) // transformer le JSON en objet/array d'objets JS
+.then (data => console.log (data))
+.catch(error => {
+    console.log (response);
+});
+
+
+
+// appel à DELETE (effacer l'aéroport 5)
+fetch("/api/aeroport/5", {
+  method: 'DELETE',
+})
+.then(response => response.json())
+.then (data => console.log (data))
+.catch(error => {
+    console.log (response);
+});
+
+
+
+// appel à PUT (update)
+fetch("/api/aeroport/3", {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    'nom': 'Tutti Frutti'
+  })
+})
+.then(response => response.json())
+.then (data => console.log (data))
+.catch(error => {
+    console.log (response);
+});
+
+
+// appel à POST (new)
+fetch("/api/aeroport", {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    'code': 'NNN',
+    'nom': 'Nanananana'
+  })
+})
+.then(response => response.json())
+.then (data => console.log (data))
+.catch(error => {
+    console.log (response);
+});
+
+
+
+
+</script>
+
+{% endblock %}

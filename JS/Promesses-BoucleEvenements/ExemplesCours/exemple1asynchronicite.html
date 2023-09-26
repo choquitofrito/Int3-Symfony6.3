@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn1">Bouton 1</button>
+
+    <script>
+      // fonctions
+      const f = () => {
+        console.log("hello, je suis la fonction f()");
+      };
+
+      console.log("start");
+
+      // code
+      // timer (asynchrone)
+      setTimeout(() => {
+        console.log("timer end");
+      }, 3000);
+
+      for (let i = 0; i < 10000000000; i++) {
+        let j = i * 2;
+      }
+      f();
+      console.log("end");
+    </script>
+  </body>
+</html>

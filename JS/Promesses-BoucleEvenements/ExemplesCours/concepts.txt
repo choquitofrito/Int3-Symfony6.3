@@ -1,0 +1,12 @@
+boucle d'événements
+
+synchronicité et asynchronicité  
+
+arrow
+
+callback hell
+
+promesses
+
+
+
