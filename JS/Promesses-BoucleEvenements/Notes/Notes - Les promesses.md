@@ -14,11 +14,15 @@
 # 1. Boucle d'événements, exemples de base
 
 <br>
-Pour comprendre les promesses on doit d'abord avoir certains notions sur la boucle d'événements de JS.
+Pour comprendre les promesses, il est tout d'abord nécessaire d'avoir certaines notions sur la boucle d'événements de JavaScript (Event Loop en anglais).
 
-La **boucle d'événements** (Event Loop en anglais) est un concept clé en JavaScript qui permet à l'exécution du code d'être gérée de manière asynchrone. Cela signifie que le code JavaScript peut continuer à s'exécuter même si des tâches longues ou des opérations de réseau sont en cours d'exécution.
+La boucle d'événements est un concept clé en JavaScript qui permet la gestion asynchrone de l'exécution du code. Cela signifie que le code JavaScript peut continuer à s'exécuter même si des tâches longues externes au script. Quand on parle de "externes au script" on veut dire des opérations réseau, requêtes aux bd, manipulation de données (images, vidéo, musique etc...).
 
-Voici un exemple simple d'utilisation de la boucle d'événements :
+Il est important de noter que JavaScript est **single-threaded**. Cela signifie qu'il ne peut pas exécuter deux instructions "en parallèle" car il ne dispose que **d'un seul fil d'exécution**. Mais, tel qu'on a dit, cela ne signifie pas qu'il est impossible de demander l'exécution d'une tâche externe au serveur tout en continuant l'exécution de notre script.
+
+Ex: quand on lance une recherche de données avec AJAX, même si le serveur peut prendre longtemps à obtenir les données, l'interface ne sera pas bloquée et le code js continuera à s'exécuter.
+
+Voici un exemple simple qui illustre le fonctionnement de la boucle d'événements :
 
 ```js
 console.log("Début du script");
@@ -71,14 +75,24 @@ console.log("Fin du script");
 
 ```
 
-1. lancer le prémier console.log
+
+
+1. lancer le prémier console.log mais pas l'afficher tout de suite sur la console à cause du comportement du browser (priorité à lancer le code qui suit au lieu d'afficher de messages dans la console)
 2. enregistrer le callback pour setTimeout
 3. **continuer le code** et lancer le for, **qui va prendre plein du temps**
 4. après 3s. , le moteur regarde s'il n'y a rien dans la pile d'éxécution. Le for est toujours en train d'être exécuté, pas moyen de lancer le callback!
 5. attendre la fin du for  
-6. attendre l'exécution du dernier console.log. Fin du code, pile d'éxécution vide!
-7. prendre le prémier et seul événement de la pile d'événements et lancer le callback ("Exécution....")
-   
+6. afficher le prémier console.log maintenant que le thread n'est pas bloqué dans le for
+7. lancer le dernier console.log et l'afficher immédiatement. Fin du code, pile d'éxécution vide!
+8. prendre le prémier et seul événement de la pile d'événements et lancer le callback ("Exécution...."). Ce callback a du attendre que le for finisse, il a attendu plus que les 3 secondes indiqués.
+
+On verra ce contenu dans la console.
+
+    Début du script efface1.html:3:9
+    Fin du script efface1.html:16:9
+    Exécution d'une tâche longue
+
+
 
 En gros on a deux taches longues, une asynchrone qui ne bloque pas le code (setTimeout) et une synchrone (la boucle) qui carrement bloque le code.
 Quand le moment d'être lancé est arrivé pour la tâche asynchrone (setTimeout) elle doit **quand-même attendre** que la pile d'exécution soit vide.
@@ -170,9 +184,12 @@ getData("https://example.com/page1.php", function(data1) {
 Une **promise** (promesse) est un objet qui: 
 
 - **surveille la finalisation d’un certain événement asynchrone** (timer, AJAX, accès à une BD, etc…) dans l’application et
-- **détermine quoi faire après cette finalisation** de l'action asynchrone 
+- **détermine quoi faire après la finalisation de l'événement asynchrone** 
 
 **La promesse détermine quoi faire avec une valeur qu’on recevra dans le futur** (ex: données d'une API, données d'un BD de la propre app...)  
+
+**Exemple:** l'utilisateur tape un mot dans la barre de recherche de Google. À chaque touche il y aura un appel AJAX qui demande au serveur de faire une recherche dans la BD.
+L'interface ne sera pas bloqué. Quand le serveur finira, on lancera le code défini dans la promesse (resolve)
 
 **Exemple:** demander la transformation d'une image qui se trouve dans le serveur. Quand l’image sera transformée et reçue, une action sera réalisée (resolve). Si la demande échoue, une autre action sera lancée (reject) 
 
@@ -183,7 +200,7 @@ Une promese peut se trouver dans les états suivants :
 
     a. **Resolved** - succes dans l’execution, résultat disponible
 
-    b. **Rejected** - erreur dans l’execution, le résultat n'est pas disponible 
+    b. **Rejected** - erreur dans l’execution, le résultat n'est pas disponible (échec)
 
 
 <br>
@@ -214,8 +231,10 @@ const obtenirFilm = new Promise ((resolve, reject) => {
     }
 })
 ```
-La fonction anonyme dans le constructeur est l'**executor**
-L'appel à resolve renvoie la variable **resultatResolve**
+Termes utiles:
+
+La fonction anonyme dans le constructeur est l'**executor**.
+L'appel à resolve renvoie la variable **resultatResolve**.
 L'appel à reject renvoie la variable **resultatReject**.
 
 **Resolve** et **reject** sont reçues en paramètres. C'est l'appel à la promesse ("consommer la promesse") qui envoie ces fonctions.
@@ -237,6 +256,11 @@ obtenirFilm
     }
 );
 ```
+
+**Attention**: des qu'on fait le **new** le code sera lancé:
+
+1. Appel au code asynchrone
+2. Définir les cas de figure pour appeller **resolve** et **reject**, **mais** pas définir le code de **resolve** et reject en **soi**.
 
 On lance la consommation de la promesse quand on fait appel à **then**. La méthode **then** reçoit un callback **onResolve** (quoi faire si la promesse est accomplie correctement). On peut aussi envoyer une autre méthode  **onRejected** (quoi faire si la promesse échoue). 
 
