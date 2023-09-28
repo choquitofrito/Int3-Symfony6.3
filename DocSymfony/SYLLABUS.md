@@ -10020,9 +10020,7 @@ pouvez personnaliser Encore selon vos besoins :
 .**setPublicPath** : le chemin utilisé par le serveur (ex: dans le code
 des vues) pour accéder l'OutputPath qu'on vient de mentionner
 
-**Attention**:
-
-on doit changer 
+**Note**:  uniquement sur le serveur d'Interface 3 on doit changer 
 ```
 .setPublicPath('/build')  
 ```
@@ -10053,44 +10051,47 @@ Continuez pour savoir comment les utiliser dans vos vues.
 
 <br>
 
-Maintenant on doit compiler les fichiers. 
-Pour compiler les assets une seule fois :
+Maintenant on doit compiler les fichiers.
+Vous pouvez utilisez **npm** ou **yarn**. Ce n'est pas une bonne idée de melanger les deux.
+
+Pour compiler les assets une seule fois, lancez
+
+```console
+npm run dev
+```
+**ou**
 
 ```console
 yarn encore dev
 ```
 
-```console
-npm run dev
-```
 
 Si on ne veut pas récompiler à chaque changement dans le .js ou le .css, on lancera :
-
-```console
-yarn encore dev --watch
-```
-ou
 
 ```console
 npm run watch
 ```
 
+**ou**
 
-yarn detectera les changements dans les fichiers .js et .css et recompilera par lui-même. Attention car il ne detectera pas actuellement vos erreurs dans js (observez bien la console du navigateur pendant l'execution de votre code)
+```console
+yarn encore dev --watch
+```
 
-Si vous obtenez des erreurs de compilation, il se peut que vous deviez arreter et ré-demarrer le serveur
+npm (ou yarn) lancera un **serveur* qui detectera (presque toujours :D) les changements dans les fichiers .js et .css et recompilera par lui-même. Attention car il ne detectera pas vos erreurs dans js (observez bien la console du navigateur pendant l'execution de votre code)
 
+Si vous obtenez des erreurs de compilation, il se peut que vous deviez arreter et ré-demarrer le serveur (CTRL-c)
 
 Finalement, et juste quand l'app est finie et on veut créer la version de production, on lance :
 
 ```console
-yarn encore production
+npm run build
 ```
 
 ou 
 
 ```console
-npm run build
+yarn encore production
 ```
 
 Webpack Encore compilera le code JS et CSS final dans le dossier **public/build**. Le dossier contiendra un nouveau fichier **app.js** et un **app.css** qui rassembleront tout le contenu JS et CSS (ainsi que les fichiers **manifest.json**, **entrypoints.json**, **runtime.js**) **sauf si on a crée plusieurs entries. Dans ce cas on aura plusieurs fichiers**
@@ -10101,17 +10102,24 @@ Webpack Encore compilera le code JS et CSS final dans le dossier **public/build*
 
 <br>
 
-Dans cette section on voit comment importer le code js dans nos vues.
+Dans cette section on voit comment importer le code js dans nos vues, c'est très simple.
 
-Pour faciliter l'utilisation de Webpack dans les templates on a des fonctions **Helper.** Vous pouvez inclure ces appels dans vos blocs **javascripts** et **css** dans les vues.
+Pour faciliter l'utilisation de Webpack dans les templates on a deux fonctions: 
+
+{{ encore_entry_link_tags ('app') }}
+{{ encore_entry_script_tags ('app') }}
+
+Ce sont les **Helpers** Vous pouvez inclure ces appels dans vos blocs **javascripts** et **css** dans les vues.
 
 Pour inclure le **css** qui apparait dans votre entry: 
+
 ```twig
 {{ encore_entry_link_tags ('app') }}
 ```
+
 Pour inclure le **js** qui apparait dans votre entry :
 ```twig
- {{ encore_entry_script_tags ('app') }}
+{{ encore_entry_script_tags ('app') }}
 ```
 
 <br>
@@ -10143,7 +10151,7 @@ Voici un exemple de code où on utilise Webpack pour inclure du .js et .css dans
 
 <br>
 
-**0**. Lancez **yarn install** ou **npm install** pour installer les dependances d'Encore
+**0**. Lancez **npm install** ou **yarn install**  pour installer les dependances d'Encore
 
 
 **1**. Créez votre fichier **/assets/styles/vue1.css** contenant votre code .css
@@ -10223,16 +10231,14 @@ Peu importe le nom de vos entries, mais il doit être cohérent avec la config q
 
 Compilez votre code en utilisant encore :
 
+```console
+npm run watch
+```
+ou 
 
 ```
 yarn encore dev --watch
 ```
-
-ou 
-```console
-npm run watch
-```
-
 
 **watch** indique que encore compilera à chaque changement du code.
 
@@ -10291,7 +10297,10 @@ Bootstrap utilise JQuery et la variable JQuery (raccourcie $). Quand on inclut B
 // app.js
 import './styles/app.css';
 // rajouter
-import $ from 'jquery';
+// jquery
+const $ = require ('jquery');
+window.jQuery = $;
+window.$ = $;
 import 'bootstrap';
 ```
 
@@ -10300,12 +10309,13 @@ Bootstrap a besoin de  **popper.js** :
 Installez le avec yarn ou npm (pas les deux, SVP):
 
 ```console
-yarn add jquery @popperjs/core --dev
+npm install jquery @popperjs/core --save-dev
 ```
 
 ```console
-npm install jquery @popperjs/core --save-dev
+yarn add jquery @popperjs/core --dev
 ```
+
 
 Pour utiliser le css de bootstrap on doit d'abord l'importer. Rajoutez dans le fichier **/assets/styles/app.css** :
 
@@ -10313,10 +10323,7 @@ Pour utiliser le css de bootstrap on doit d'abord l'importer. Rajoutez dans le f
 @import '~bootstrap/dist/css/bootstrap.css';
 ```
 
-On utilise la tilde pour referencer un fichier qui se trouve dans le
-dossier **node_modules** (sans devoir rajouter 'node_modules' dans le chemin).
-
-
+On utilise la tilde pour referencer un fichier qui se trouve dans le dossier **node_modules** (sans devoir rajouter 'node_modules' dans le chemin).
 
 
 Pour les fonts utilisées par bootstrap :
@@ -10337,6 +10344,8 @@ npm install font-awesome --save-dev
 
 <br>
 
+On peut, optionnellement, gérer les images de notre site avec Webpack.
+
 Il y a plusieurs manières de gérer les images statiques de votre site: 
 
 
@@ -10356,7 +10365,7 @@ Si vous changez la localisation de votre dossier images (ex: l'inclure dans un d
 <br>
 
 
-**Méthode 2**. Utiliser la fonction **asset**. On peut choisir un **base path** qu'on peut changer dans la config pour éviter le problème mentionné ci-dessus (on le verra pas ici).
+**Méthode 2**. Utiliser la fonction **asset**. On peut choisir un **base path** qu'on peut changer si on veut dans la config pour éviter le problème mentionné ci-dessus (on ne l'etudiera ici).
 Ceci est la méthode standard.
  
 Symfony part du dossier **public**.
@@ -10374,7 +10383,7 @@ On utilise la méthode getLien pour l'obtenir (pas besoin de parenthéses)
 <img src="{{ asset ('images/' ~ animal.getLien ) }}">  
 ```
 
-Pour que ce système fonctionne vous devez d'abord installer les dépendances de Webpack et compiler les assets (même si nos assets ne se trouvent pas dans /assets actuellement, mais dans **public/assets**)
+N'oubliez pas d'installer les dépendances de Webpack et compiler les assets .js et .css (même si nos assets ne se trouvent pas dans /assets actuellement, mais dans **public/assets**)
 
 Lancez:
 
@@ -10405,7 +10414,7 @@ Dans **webpack.config.js** :
 
 <br>
 
-**copyFiles** à plein d'option, ici on voit que les basiques:
+**copyFiles** à plein d'options, ici on voit que les basiques:
 https://symfony.com/doc/current/frontend/encore/copy-files.html
 Installez le module **file-loader** pour que webpack puisse faire le déplacement de vos fichiers.
 
