@@ -9958,44 +9958,46 @@ On a choisi, par défaut, d'envoyer déjà un ensemble de résultats à la vue (
 
 Si vous voulez utiliser du JS et CSS vous pourriez juste créer un dossier dans public et inclure vos fichiers .**js** et .**css**, mais la bonne pratique consiste à utiliser un outil comme **Webpack**. Symfony possède l'extension **Webpack Encore**, qui facilite énormément l'installation et utilisation de Webpack.
 
-On va procéder à installer Webpack dans un projet vide et réaliser
-quelques exemples. Créez un projet **ExemplesWebpack** et un controller
-**MainController** (le projet complet est disponible dans le repo).
-
 Le but de Webpack est de **centraliser la charge de tout notre code JS et CSS dans un seul** (ou éventuellement plusieurs si on le souhaite) **fichier .js**. Webpack permet en plus de compiler, minimiser et découper en morceaux notre code pour optimiser le chargement dans l'application.
 
-Nous allons installer, configurer et utiliser Webpack Encore.
+On va procéder à installer Webpack dans un projet vide  (ou dasn votre propre projet) et réaliser
+quelques exemples. Créez un projet **ExemplesWebpack** et un controller **MainController** (le projet complet est disponible dans le repo).
+
+En plus de configurer webpack pour gérer nos .js et .css, on va faire le necéssaire pour installer **bootstrap** et **axios** dans notre projet et ne plus utiliser des CDNs.
 
 <br>
 
 ## 28.1. Installation de Webpack Encore et de Node
 
 
+0. **Installez Node.js**
+
+https://nodejs.org/en/download/
+
 <br>
-
-
 
 1.  **Installez le module Webpack Encore dans votre projet**
 
 ```console
 symfony composer req symfony/webpack-encore-bundle
 ```
-Cette installation ('recipe'):
+
+**Cette installation ('recipe'):**
 
 - Crée le dossier **/assets** (à ne pas confondre avec un possible dossier **/public/assets** qu'on aurait pu créer avant d'utiliser Webpack Encore
 
-- Crée le fichier **/assets/app.js** qui centralisera par défaut la charge de tout le code **js** et **css** (voir **entryPoints** plus tard, car on peut avoir plusieurs fichiers où on compile le code)
+- Crée le fichier **/assets/app.js** qui, dans un prémier moment,  centralisera la charge de tout le code **js** et **css** (voir **entryPoints** plus tard, car on peut avoir plusieurs fichiers où on compile le code)
 
 - Crée un fichier **/webpack.config.js** qui contient la configuration du module
 
-2. **Installez le dépendances JS de Webpack Encore**. Lancez :
-
-```console
-yarn install
-```
+1. **Installez le dépendances JS de Webpack Encore**. Lancez :
 
 ```console
 npm install 
+```
+
+```console
+yarn install
 ```
 
 Cette ligne crée le dossier **node_modules** contenant les dépendances (du code .js) dont Encore a besoin. Le dossier est rajouté ./gitignore
@@ -10043,7 +10045,7 @@ Puis vous **copiez votre fichier .js dans l'emplacement que vous avez indiquez d
 Continuez pour savoir comment les utiliser dans vos vues.
 
 
-    Note: Ouvrez le fichier **app.js** et observez qu'on importe le **.css**! (Concrètement on importe le fichier **/assets/css/app.css**)
+**Note**: Ouvrez le fichier **app.js** et observez qu'on importe le **.css**! (Concrètement on importe le fichier **/assets/css/app.css**)
 
 <br>
 
@@ -10278,14 +10280,13 @@ Ici on explique comment installer bootstrap dans notre projet en utilisant Webpa
 **Installez bootstrap :**
 
 ```console
-yarn add bootstrap --dev
+npm add bootstrap --save-dev
 ```
 
-ou
-
+**ou**
 
 ```console
-npm add bootstrap --save-dev
+yarn add bootstrap --dev
 ```
 
 Les librairies de Bootstrap seront copiées dans le dossier **node_modules**.
@@ -10301,10 +10302,11 @@ import './styles/app.css';
 const $ = require ('jquery');
 window.jQuery = $;
 window.$ = $;
+// importer bootstrap
 import 'bootstrap';
 ```
 
-Bootstrap a besoin de  **popper.js** :
+Bootstrap a besoin de  **popper.js** (pop-up):
 
 Installez le avec yarn ou npm (pas les deux, SVP):
 
@@ -10316,8 +10318,7 @@ npm install jquery @popperjs/core --save-dev
 yarn add jquery @popperjs/core --dev
 ```
 
-
-Pour utiliser le css de bootstrap on doit d'abord l'importer. Rajoutez dans le fichier **/assets/styles/app.css** :
+Pour utiliser les style .css de bootstrap on doit d'abord l'importer. Rajoutez dans le fichier **/assets/styles/app.css** :
 
 ```css
 @import '~bootstrap/dist/css/bootstrap.css';
