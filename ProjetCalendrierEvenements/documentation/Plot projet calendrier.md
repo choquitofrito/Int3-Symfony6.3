@@ -130,6 +130,7 @@ symfony console make:auth
 symfony console make:migration --no-interaction
 symfony console doctrine:migration:migrate --no-interaction
 ```
+(Vous pouvez des maintenant utilisez un fichier .bat pour lancer toutes les procédures liées a la BD d'un coup)
 
 ### 3.7. Installez le module pour les fixtures
 ```
@@ -140,7 +141,7 @@ symfony composer req orm-fixtures
 
 <br>
 
- **UtilisateurFixtures**. Ici on n'a pas utilisé si Faker ni le Hydrate pour ne pas rajouter de pas.
+ **UtilisateurFixtures**. On n'a pas utilisé Faker car on veut fixer les emails et que le navigateur les mémorise.
 ```php
 <?php
 
@@ -200,21 +201,35 @@ class UtilisateurFixtures extends Fixture
 ```
 symfony console doctrine:fixtures:load
 ```
+(Le fichier .bat est votre ami....)
+
 
 ### 3.10. Installez les dependances de Webpack et compilez une prémiere fois 
-(Note: **uniquement** si vous utilisez Webpack)
+
+Dans ce projet on va utiliser **Webpack Encore**, un module qui facilite énormement l'utilisation de **webpack** dans Symfony.
+
+Webpack est un outil de JS qui permet, entre autre, de:  
+
+1. **Regrouper les fichiers**: Webpack **rassemble de nombreux fichiers**  (JavaScript, CSS, images, etc.) en un seul ou plusieurs bundles, réduisant ainsi le nombre de requêtes réseau et accélérant le chargement des pages.
+
+2. **Optimiser les ressources**: Webpack **peut optimiser les ressources en les minifiant** (réduisant leur taille), en les **obfusquant** (pour protéger le code source), et en éliminant les parties inutilisées, ce qui réduit la taille des fichiers finaux.
+
+3. **Gérer les dépendances**: Il gère automatiquement les **dépendances** entre les modules, ce qui facilite la gestion des bibliothèques tierces et des composants réutilisables (pensez à Composer!)
+
+Installez Webpack Encore:
 
 ```
 composer require symfony/webpack-encore-bundle
 ```
 
-<br>
+Lancez 
 
-Cela nous sert à éviter l'exception concernant le fichier **entrypoints.json** quand vous chargez une page qui utilisez base.html.twig. Cela nous arrange car on utilisera **webpack** quand-même. 
 ```
 npm install
-npm run dev 
 ```
+
+pour créer la configuration initiale de webpack.
+
 
 <br>
 
@@ -222,9 +237,7 @@ npm run dev
 
 <br>
 
-Ouvrez la page **templates/security/login.html.twig**
-
-Nous n'avons pas un **useridentifier**. 
+Ouvrez la page **templates/security/login.html.twig**, on va la modifier car nous n'avons pas un **useridentifier**. 
 
 Si votre **base.html.twig** contient déjà la barre de navigation, vous pouvez juste créer une vue indépendante (sans hériter de base.html.twig).C'est à votre choix.
 
@@ -262,7 +275,7 @@ Si votre **base.html.twig** contient déjà la barre de navigation, vous pouvez 
 
 <br>
 
-Nous voulons aller vers une page d'accueil après le login. Créons un controller contenant une page d'index.
+Nous **voulons aller vers une page d'accueil après le login**. Créons un controller contenant une page d'index.
 
 ```console
 symfony console make:controller AccueilController
@@ -316,7 +329,7 @@ Voici notre base.html.twig
 
 
 ```
-**Note**: on considere ici qu'on peut entrer sur le site et voir la barre de navigation uniquement si on se connecte préalablement dans une page de login. **Notre page login.html.twig n'hérite pas de base.html.twig**. Ceci est le système de gmail. Si vous voulez que l'user puisse parcourir le site et puis se connecter (ex: Amazon) vous pouvez hériter de base.html.twig aussi dans login.html.twig.
+**Note**: on considére ici qu'on peut entrer sur le site et voir la barre de navigation uniquement si on se connecte préalablement dans une page de login. **Notre page login.html.twig n'hérite pas de base.html.twig**. Ceci est le système de gmail. Si vous voulez que l'user puisse parcourir le site et puis se connecter (ex: Amazon) vous pouvez hériter de base.html.twig aussi dans login.html.twig.
 
 
 Observez bien la route de l'action:
@@ -344,7 +357,7 @@ class AccueilController extends AbstractController
     }
 }
 ```
-Vu qu'on veut charger l'action index après un login correct, on doit modifier la rédirection dans **src/Security/UtilisateurAthenticator** pour qu'elle pointe vers la route **index** (le name!):
+Vu qu'on veut charger cette action index après un login correct, on doit modifier la rédirection dans **src/Security/UtilisateurAthenticator** pour qu'elle pointe vers la route **index** (le name!):
 
 ```php
 .
@@ -499,7 +512,7 @@ class EvenementFixtures extends Fixture
 
 ```
 
-Dans la fixture qui lie les Utilisateurs et les Evenements n'oubliez pas d'implementer getDependencies. Autrement vous risquez de lancer les Fixtures dans un ordre qui ne vous convient pas (ici on a besoin des Utilisateurs et Evenements avant de créer les liens)
+Dans la fixture qui lie les Utilisateurs et les Evenements **n'oubliez pas d'implementer getDependencies. Autrement vous risquez de lancer les Fixtures dans un ordre qui ne vous convient pas** (ici on a besoin des Utilisateurs et Evenements avant de créer les liens)
 
 ```php
 <?php
@@ -561,7 +574,8 @@ Modifiez ces Fixtures selon vos besoins.
 
 <br>
 
-Nous avons la structure complete. On va obtenir les Evenement d'un Utilisateur, les transformer en JSON et les envoyer à la vue.
+Nous avons la structure complete. On va **obtenir les Evenement d'un Utilisateur, les transformer en JSON et les envoyer à la vue**,
+car **fullcalendar** à besoin de données en format JSON.
 
 Créez un controller **FullCalendarEvenementsController**.
 
@@ -662,9 +676,8 @@ npm install fullcalendar
 Installez aussi la libraire axios pour faciliter les appels AJAX :
 
 ```
-npm install axios --save
+npm install axios
 ```
---save rajoute la librairie aux dépéndances du projet
 
 <br>
 
@@ -724,6 +737,7 @@ On veut aussi le css et js de base.html.twig, alors on utilise la fonction **par
 {% block body %}
 Voici les données reçues du controller pour afficher dans le calendrier 
 
+
 <div id="calendrier" data-calendrier="{{ evenementsJSON }}" class="calendar"></div>
 
 {{ dump(evenementsJSON) }}
@@ -769,6 +783,10 @@ Dans notre cas on a juste défini le style pour l'élément
 
 ## 5.6.2. Créez/éditez le fichier assets/calendar.js
 
+
+Ce fichier gére le comportement du calendrier. Chacun doit créer du code .js selon ses besoins.
+Dans cete exemple, un clic sur une date rajoutera un événement (**Evenement**) à la BD. Si on fait à nouveau clic, l'événement sera effacé de la BD.
+Logiquement on doit utiliser AJAX car on ne va pas récharger la page à chaque clic!
 
 ```js
 // alert("hello");
