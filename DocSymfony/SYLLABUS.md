@@ -10280,13 +10280,13 @@ Ici on explique comment installer bootstrap dans notre projet en utilisant Webpa
 **Installez bootstrap :**
 
 ```console
-npm add bootstrap --save-dev
+npm add bootstrap 
 ```
 
 **ou**
 
 ```console
-yarn add bootstrap --dev
+yarn add bootstrap 
 ```
 
 Les librairies de Bootstrap seront copiées dans le dossier **node_modules**.
@@ -10311,17 +10311,17 @@ Bootstrap a besoin de  **popper.js** (pop-up):
 Installez le avec yarn ou npm (pas les deux, SVP):
 
 ```console
-npm install jquery @popperjs/core --save-dev
+npm install jquery @popperjs/core 
 ```
 
 ```console
-yarn add jquery @popperjs/core --dev
+yarn add jquery @popperjs/core 
 ```
 
 Pour utiliser les style .css de bootstrap on doit d'abord l'importer. Rajoutez dans le fichier **/assets/styles/app.css** :
 
 ```css
-@import '~bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css';
 ```
 
 On utilise la tilde pour referencer un fichier qui se trouve dans le dossier **node_modules** (sans devoir rajouter 'node_modules' dans le chemin).
@@ -10330,12 +10330,12 @@ On utilise la tilde pour referencer un fichier qui se trouve dans le dossier **n
 Pour les fonts utilisées par bootstrap :
 
 ```console
-yarn add font-awesome --dev
+yarn add font-awesome 
 ```
 ou 
 
 ```console
-npm install font-awesome --save-dev
+npm install font-awesome 
 ```
 
 <br>
