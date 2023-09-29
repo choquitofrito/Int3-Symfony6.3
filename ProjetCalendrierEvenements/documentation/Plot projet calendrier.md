@@ -219,7 +219,7 @@ Webpack est un outil de JS qui permet, entre autre, de:
 Installez Webpack Encore:
 
 ```
-composer require symfony/webpack-encore-bundle
+symfony composer req symfony/webpack-encore-bundle
 ```
 
 Lancez 
@@ -357,7 +357,7 @@ class AccueilController extends AbstractController
     }
 }
 ```
-Vu qu'on veut charger cette action index après un login correct, on doit modifier la rédirection dans **src/Security/UtilisateurAthenticator** pour qu'elle pointe vers la route **index** (le name!):
+Vu qu'on veut charger cette action index après un login correct, on doit modifier la rédirection dans **src/Security/UtilisateurAuthenticator** pour qu'elle pointe vers la route **index** (le name!):
 
 ```php
 .
