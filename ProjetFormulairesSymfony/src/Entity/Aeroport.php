@@ -3,46 +3,35 @@
 namespace App\Entity;
 
 use App\Repository\AeroportRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-/**
- * @ORM\Entity(repositoryClass=AeroportRepository::class)
- */
+
+#[Entity(repositoryClass: AeroportRepository::class)]
 class Aeroport
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[Column(type: "string", length: 255)]
     private $nom;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[Column(type: "string", length: 255)]
     private $code;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[Column(type: "date", nullable: true)]
     private $dateMiseEnService;
 
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     */
+    #[Column(type: "time", nullable: true)]
     private $heureMiseEnService;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[Column(type: "text")]
     private $description;
 
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
     public function hydrate(array $init)
     {
         foreach ($init as $key => $value) {
@@ -53,14 +42,10 @@ class Aeroport
         }
     }
 
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
+    public function __construct(array $arrayInit = [])
     {
-        // appel au hydrate
         $this->hydrate($arrayInit);
     }
-
-
 
     public function getId(): ?int
     {

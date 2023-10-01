@@ -5,34 +5,26 @@ namespace App\Entity;
 use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 
-/**
- * @ORM\Entity(repositoryClass=GenreRepository::class)
- */
+#[Entity(repositoryClass: GenreRepository::class)]
 class Genre
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[Column(type: "string", length: 255, nullable: true)]
     private $nom;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[Column(type: "text")]
     private $description;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Livre::class, mappedBy="genre")
-     */
-    private $livres;
 
     public function __construct()
     {
@@ -68,33 +60,5 @@ class Genre
         return $this;
     }
 
-    /**
-     * @return Collection|Livre[]
-     */
-    public function getLivres(): Collection
-    {
-        return $this->livres;
-    }
 
-    public function addLivre(Livre $livre): self
-    {
-        if (!$this->livres->contains($livre)) {
-            $this->livres[] = $livre;
-            $livre->setGenre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLivre(Livre $livre): self
-    {
-        if ($this->livres->removeElement($livre)) {
-            // set the owning side to null (unless already changed)
-            if ($livre->getGenre() === $this) {
-                $livre->setGenre(null);
-            }
-        }
-
-        return $this;
-    }
 }

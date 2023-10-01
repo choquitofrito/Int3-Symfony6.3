@@ -2,28 +2,23 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PaysRepository")
- */
+#[Entity(repositoryClass: "App\Repository\PaysRepository")]
 class Pays
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[Column(type: "string", length: 255)]
     private $nom;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable = true)
-     */
+    #[Column(type: "string", length: 255, nullable: true)]
     private $image;
 
     public function getId(): ?int
@@ -43,12 +38,12 @@ class Pays
         return $this;
     }
 
-    public function getImage() : ?string
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage($image) : self
+    public function setImage($image): self
     {
         $this->image = $image;
 

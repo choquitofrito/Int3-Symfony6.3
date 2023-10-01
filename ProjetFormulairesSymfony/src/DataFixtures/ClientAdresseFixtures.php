@@ -19,11 +19,11 @@ class ClientAdresseFixtures extends Fixture
         // créer quelques objets Adresse, stocker dans la BD
         for ($i = 0; $i < 4; $i++) {
             $adresse = new Adresse([
-                'rue' => $faker->streetAddress,
-                'numero' => $faker->buildingNumber,
-                'codePostal' => $faker->postcode,
-                'ville' => $faker->city,
-                'pays' => $faker->country
+                'rue' => $faker->streetAddress(),
+                'numero' => rand(1,100),
+                'codePostal' => $faker->postcode(),
+                'ville' => $faker->city(),
+                'pays' => $faker->country()
             ]);
             $manager->persist($adresse);
         }

@@ -5,90 +5,60 @@ namespace App\Entity;
 use App\Repository\LivreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LivreRepository::class)
- */
+#[ORM\Entity(repositoryClass: LivreRepository::class)]
 class Livre
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    // crée par nous mêmes, ainsi que le constructeur (vérifiez!)
-    public function hydrate(array $init)
-    {
-        foreach ($init as $key => $value) {
-            $method = "set" . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $titre = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $isbn = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $prix = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $datePublication = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $nombrePages = null;
+
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Exemplaire::class, orphanRemoval: true)]
+    private Collection $exemplaires;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateEdition = null;
+
+    #[ORM\ManyToMany(targetEntity: Auteur::class, mappedBy: 'livres')]
+    private Collection $auteurs;
+
+
+    public function hydrate (array $vals){
+        foreach ($vals as $cle => $valeur){
+            if (isset ($vals[$cle])){
+                $nomSet = "set" . ucfirst($cle);
+                $this->$nomSet ($valeur);
             }
         }
     }
-
-
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $titre;
-
-    /**
-     * @ORM\Column(type="decimal", precision=8, scale=2)
-     */
-    private $prix;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $datePublication;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $isbn;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Exemplaire::class, mappedBy="livre",cascade={"persist","remove"})
-     */
-    private $exemplaires;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $nombrePages;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $langue;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $format;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Genre::class, inversedBy="livres")
-     */
-    private $genre;
-
-    // constructeur modifié pour faire appel à hydrate
-    public function __construct($arrayInit = [])
+    public function __construct(array $init =[])
     {
+        $this->hydrate($init);
+        $this->auteurs = new ArrayCollection();
         $this->exemplaires = new ArrayCollection();
-        // appel au hydrate
-        $this->hydrate($arrayInit);
     }
+
 
     public function getId(): ?int
     {
@@ -100,9 +70,21 @@ class Livre
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitre(?string $titre): static
     {
         $this->titre = $titre;
+
+        return $this;
+    }
+
+    public function getIsbn(): ?string
+    {
+        return $this->isbn;
+    }
+
+    public function setIsbn(?string $isbn): static
+    {
+        $this->isbn = $isbn;
 
         return $this;
     }
@@ -112,7 +94,7 @@ class Livre
         return $this->prix;
     }
 
-    public function setPrix(string $prix): self
+    public function setPrix(?string $prix): static
     {
         $this->prix = $prix;
 
@@ -124,7 +106,7 @@ class Livre
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -136,44 +118,44 @@ class Livre
         return $this->datePublication;
     }
 
-    public function setDatePublication(?\DateTimeInterface $datePublication): self
+    public function setDatePublication(?\DateTimeInterface $datePublication): static
     {
         $this->datePublication = $datePublication;
 
         return $this;
     }
 
-    public function getIsbn(): ?string
+    public function getNombrePages(): ?int
     {
-        return $this->isbn;
+        return $this->nombrePages;
     }
 
-    public function setIsbn(string $isbn): self
+    public function setNombrePages(?int $nombrePages): static
     {
-        $this->isbn = $isbn;
+        $this->nombrePages = $nombrePages;
 
         return $this;
     }
 
     /**
-     * @return Collection|Exemplaire[]
+     * @return Collection<int, Exemplaire>
      */
     public function getExemplaires(): Collection
     {
         return $this->exemplaires;
     }
 
-    public function addExemplaire(Exemplaire $exemplaire): self
+    public function addExemplaire(Exemplaire $exemplaire): static
     {
         if (!$this->exemplaires->contains($exemplaire)) {
-            $this->exemplaires[] = $exemplaire;
+            $this->exemplaires->add($exemplaire);
             $exemplaire->setLivre($this);
         }
 
         return $this;
     }
 
-    public function removeExemplaire(Exemplaire $exemplaire): self
+    public function removeExemplaire(Exemplaire $exemplaire): static
     {
         if ($this->exemplaires->removeElement($exemplaire)) {
             // set the owning side to null (unless already changed)
@@ -185,58 +167,41 @@ class Livre
         return $this;
     }
 
-    // rajouté pour permettre l'encapsulation (section dans le notes)
-    public function addExemplaireNoClass($etat, $emplacement)
+    public function getDateEdition(): ?\DateTimeInterface
     {
-        $exemplaire = new \App\Entity\Exemplaire();
-        $exemplaire->setEtat($etat);
-        $this->addExemplaire($exemplaire);
+        return $this->dateEdition;
     }
 
-    public function getNombrePages(): ?int
+    public function setDateEdition(?\DateTimeInterface $dateEdition): static
     {
-        return $this->nombrePages;
-    }
-
-    public function setNombrePages(?int $nombrePages): self
-    {
-        $this->nombrePages = $nombrePages;
+        $this->dateEdition = $dateEdition;
 
         return $this;
     }
 
-    public function getLangue(): ?string
+    /**
+     * @return Collection<int, Auteur>
+     */
+    public function getAuteurs(): Collection
     {
-        return $this->langue;
+        return $this->auteurs;
     }
 
-    public function setLangue(?string $langue): self
+    public function addAuteur(Auteur $auteur): static
     {
-        $this->langue = $langue;
+        if (!$this->auteurs->contains($auteur)) {
+            $this->auteurs->add($auteur);
+            $auteur->addLivre($this);
+        }
 
         return $this;
     }
 
-    public function getFormat(): ?string
+    public function removeAuteur(Auteur $auteur): static
     {
-        return $this->format;
-    }
-
-    public function setFormat(string $format): self
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    public function getGenre(): ?Genre
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(?Genre $genre): self
-    {
-        $this->genre = $genre;
+        if ($this->auteurs->removeElement($auteur)) {
+            $auteur->removeLivre($this);
+        }
 
         return $this;
     }
