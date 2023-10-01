@@ -16,7 +16,7 @@
     <button type="submit">Rechercher</button>
 {{ form_end(form) }}
 
-<div id="resultats"></div>
+<div id="div_resultats"></div>
 
 
 {# On a importé axios ici pour nous simplifier le code #}
@@ -38,7 +38,21 @@
         // dans le JS. On peut contourner ce fait, mais on ne le fera pas ici
         axios.post('/form/search/livres/filtres/ajax', formData)
             .then(response => {
-                document.getElementById('resultats').innerHTML = response.data;
+                console.log (response.data); // axios parse déjà, on peut parcourir l'array d'objets
+                let arrayLivres = response.data;            
+                
+                let divResultats = document.getElementById ("div_resultats");
+                arrayLivres.forEach ( function (livre)  {
+                        
+                        // manipuler le DOM. Ex: vider un div et le remplir avec les résultats
+                        
+                        
+                        divResultats.textContent += livre.titre;
+
+                    }
+                );
+
+
             })
             .catch(error => {
                 console.error(error);

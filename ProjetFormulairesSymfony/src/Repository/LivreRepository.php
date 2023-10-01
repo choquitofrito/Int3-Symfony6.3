@@ -26,10 +26,12 @@ class LivreRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
 
         $query = $em->createQuery (
-                "SELECT l FROM App\Entity\Livre l WHERE 
+                "SELECT l FROM App\Entity\Livre l 
+                INNER JOIN l.auteurs a
+                WHERE 
                 (l.titre LIKE :titre OR :titre IS NULL) AND 
                 (l.prix >= :minPrix OR :minPrix IS NULL) AND
-                (l.prix <= :maxPrix OR :maxPrix IS NULL)"
+                (l.prix <= :maxPrix OR :maxPrix IS NULL) "
         );
         $query->setParameter("titre", "%" . $filtres['titre'] . "%");
         $query->setParameter("minPrix", $filtres['minPrix']);
@@ -39,7 +41,6 @@ class LivreRepository extends ServiceEntityRepository
 
 
         $res = $query->getResult();
-        dd($res);
         return $res;
     }
 
