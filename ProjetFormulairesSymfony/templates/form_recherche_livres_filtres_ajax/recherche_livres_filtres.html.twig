@@ -18,7 +18,6 @@
 
 <div id="div_resultats"></div>
 
-
 {# On a importé axios ici pour nous simplifier le code #}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js" integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -30,29 +29,44 @@
     // on detectera tous les inputs du form, peu importe quel fitre on change
     form.addEventListener('input', function(event) {
         event.preventDefault();
+        // obtenir le div pour afficher les résultats
+        let divResultats = document.getElementById ("div_resultats");
 
         console.log ("appel recherche...");
         const formData = new FormData(form);
+
+        // message de "recherche en cours ..."
+        divResultats.innerHTML = "Recherche en cours...";
+
 
         // appel axios. On a utilisé la vraie route au lieu d'un name car on ne peut pas incruster du twig (path)
         // dans le JS. On peut contourner ce fait, mais on ne le fera pas ici
         axios.post('/form/search/livres/filtres/ajax', formData)
             .then(response => {
                 console.log (response.data); // axios parse déjà, on peut parcourir l'array d'objets
-                let arrayLivres = response.data;            
                 
-                let divResultats = document.getElementById ("div_resultats");
-                arrayLivres.forEach ( function (livre)  {
-                        
-                        // manipuler le DOM. Ex: vider un div et le remplir avec les résultats
-                        
-                        
-                        divResultats.textContent += livre.titre;
 
+                // vider le div
+                divResultats.innerHTML = "";
+
+                // parcourir l'array d'objets reçu (car le JSON a été déjà parsé par AXIOS)    
+                let arrayLivres = response.data;       
+
+                console.log (arrayLivres);    
+
+                arrayLivres.forEach ( function (livre)  {
+                        // manipuler le DOM. Ex: vider un div et le remplir avec les résultats
+                        divResultats.innerHTML += "<p><b>Titre:</b> " + livre.titre + "</p>";
+                        
+                        // si on veut afficher les auteurs:  (note: on verra qu'un parce-que dans les fixtures on a fixé un Auteur par Livre, mais on aurait pu fixer plusieurs)
+                        divResultats.innerHTML += "<p><b>Auteurs:</b></p>";
+                        livre.nomsAuteurs.forEach (function (nom) {
+                            divResultats.innerHTML += nom + " ";
+                            
+                        })
+                        divResultats.innerHTML += "<hr>";
                     }
                 );
-
-
             })
             .catch(error => {
                 console.error(error);
