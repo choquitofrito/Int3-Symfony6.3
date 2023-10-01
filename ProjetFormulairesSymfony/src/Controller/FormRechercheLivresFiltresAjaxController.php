@@ -55,9 +55,9 @@ class FormRechercheLivresFiltresAjaxController extends AbstractController
             
             // on sérialise l'array qu'on vient de créer. On ignore les rélations, mais on 
             // a incrusté l'array "nomsAuteurs". Sérialiser l'array ne posera aucun problème
+
             // dd($livresAvecNomsAuteurs); // debuggez pour les voir...
             $response = $serializer->serialize($livresAvecNomsAuteurs, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['exemplaires','auteurs']]);
-            // dd ($response);    
 
             return new Response ($response);
         }
