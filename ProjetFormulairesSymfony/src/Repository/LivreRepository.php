@@ -19,6 +19,31 @@ class LivreRepository extends ServiceEntityRepository
         parent::__construct($registry, Livre::class);
     }
 
+    // méthode propre: recherche par filtres
+    public function rechercheLivresFiltres($filtres)
+    {
+
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery (
+                "SELECT l FROM App\Entity\Livre l WHERE 
+                (l.titre LIKE :titre OR :titre IS NULL) AND 
+                (l.prix >= :minPrix OR :minPrix IS NULL) AND
+                (l.prix <= :maxPrix OR :maxPrix IS NULL)"
+        );
+        $query->setParameter("titre", "%" . $filtres['titre'] . "%");
+        $query->setParameter("minPrix", $filtres['minPrix']);
+        $query->setParameter("maxPrix", $filtres['maxPrix']);
+
+
+
+
+        $res = $query->getResult();
+        dd($res);
+        return $res;
+    }
+
+
     // /**
     //  * @return Livre[] Returns an array of Livre objects
     //  */

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormSearchLivresFiltresAjaxController!{% endblock %}
+
+{% block body %}
+{# templates/plante/recherche.html.twig #}
+
+
+{# On crée le form, IMPORTANT: on doit obtenir ce form depuis JS pour créer le FormData . Ici on a mis un id pour qu'il soit accésible #}
+{{ form_start(form, {'attr': {'id': 'recherche-form'}}) }}
+    {{ form_row(form.titre) }}
+    {{ form_row(form.minPrix) }}
+    {{ form_row(form.maxPrix) }}
+    {{ form_row(form.nomAuteur) }}
+
+    <button type="submit">Rechercher</button>
+{{ form_end(form) }}
+
+<div id="resultats"></div>
+
+
+{# On a importé axios ici pour nous simplifier le code #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js" integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{# Script qui gére l'appel Axios et qui modifiera le DOM  #}
+<script>
+    // on obtient le formulaire pour 
+    const form = document.getElementById('recherche-form');
+
+    // on detectera tous les inputs du form, peu importe quel fitre on change
+    form.addEventListener('input', function(event) {
+        event.preventDefault();
+
+        console.log ("appel recherche...");
+        const formData = new FormData(form);
+
+        // appel axios. On a utilisé la vraie route au lieu d'un name car on ne peut pas incruster du twig (path)
+        // dans le JS. On peut contourner ce fait, mais on ne le fera pas ici
+        axios.post('/form/search/livres/filtres/ajax', formData)
+            .then(response => {
+                document.getElementById('resultats').innerHTML = response.data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script>
+
+{% endblock %}
