@@ -107,8 +107,8 @@
 - [17. Fixtures pour remplir la BD](#17-fixtures-pour-remplir-la-bd)
   - [17.1. Fixtures multi-entity et ordre d'exécution](#171-fixtures-multi-entity-et-ordre-dexécution)
   - [17.2. Fixtures dans un Many-to-Many décomposé en deux One-To-Many](#172-fixtures-dans-un-many-to-many-décomposé-en-deux-one-to-many)
-  - [16.3. Fixtures dans un Many-To-Many](#163-fixtures-dans-un-many-to-many)
-  - [17.3. Fixtures basées sur un fichier .sql](#173-fixtures-basées-sur-un-fichier-sql)
+  - [17.3. Fixtures dans un Many-To-Many](#173-fixtures-dans-un-many-to-many)
+  - [17.4. Fixtures basées sur un fichier .sql](#174-fixtures-basées-sur-un-fichier-sql)
   - [17.4. Exclure un ou plusieurs tableaux du purge](#174-exclure-un-ou-plusieurs-tableaux-du-purge)
     - [Exercices :](#exercices-)
   - [17.5. Fichier de reinitialisation de la BD et les fixtures, migration](#175-fichier-de-reinitialisation-de-la-bd-et-les-fixtures-migration)
@@ -4984,10 +4984,10 @@ class AeroportFixtures extends Fixture
 
             // avec hydrate
             $aeroport = new Aeroport([
-                'nom' => $faker->city . " Airport",
+                'nom' => $faker->city() . " Airport",
                 'code' => 'COD'. $i,
-                'dateMiseEnService' => $faker->dateTime,
-                'heureMiseEnService' => $faker->dateTime,
+                'dateMiseEnService' => $faker->dateTime(),
+                'heureMiseEnService' => $faker->dateTime(),
                 'description' => $faker->realText($faker->numberBetween(10, 30))
             ]);
             $manager->persist($aeroport);
@@ -4995,7 +4995,6 @@ class AeroportFixtures extends Fixture
         $manager->flush();
     }
 }
-
 ```
 
 <br>
@@ -5125,7 +5124,7 @@ class DetailCommandeFixtures extends Fixture implements DependentFixtureInterfac
 }
 ```
 
-## 16.3. Fixtures dans un Many-To-Many
+## 17.3. Fixtures dans un Many-To-Many
 
 Voici un exemple de fixtures pour une rélation Many-To-Many (Auteurs-Clients)
 
@@ -5176,7 +5175,7 @@ class AuteurLivreFixtures extends Fixture implements DependentFixtureInterface
 }
 ```
 
-## 17.3. Fixtures basées sur un fichier .sql
+## 17.4. Fixtures basées sur un fichier .sql
 
 <br>
 
