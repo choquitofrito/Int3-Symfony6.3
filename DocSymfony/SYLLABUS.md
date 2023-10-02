@@ -148,18 +148,19 @@
     - [21.12.1. Stockage dans le serveur d'une seule image pour chaque entité](#21121-stockage-dans-le-serveur-dune-seule-image-pour-chaque-entité)
     - [21.12.2. Possibles problèmes dans l'upload](#21122-possibles-problèmes-dans-lupload)
   - [21.13. AJAX en Symfony avec Axios (formulaire indépendant)](#2113-ajax-en-symfony-avec-axios-formulaire-indépendant)
-  - [21.14. Formulaire associé à une entité avec Axios](#2114-formulaire-associé-à-une-entité-avec-axios)
+  - [21.14. Formulaire associé à une entité avec Axios (insértion, mise à jour)](#2114-formulaire-associé-à-une-entité-avec-axios-insértion-mise-à-jour)
       - [Explication de base:](#explication-de-base)
-    - [21.14.1. Exemples extra AJAX (Axios)](#21141-exemples-extra-ajax-axios)
-  - [21.15. Utilisation de blocs dans twig avec AJAX](#2115-utilisation-de-blocs-dans-twig-avec-ajax)
+  - [21.15. Création d'un formulaire de recherche avec de filtres (AJAX - Axios)](#2115-création-dun-formulaire-de-recherche-avec-de-filtres-ajax---axios)
+    - [21.15.1. Exemples extra AJAX (Axios)](#21151-exemples-extra-ajax-axios)
+  - [21.16. Utilisation de blocs dans twig avec AJAX](#2116-utilisation-de-blocs-dans-twig-avec-ajax)
     - [Exercices : Ajax avec Axios](#exercices--ajax-avec-axios)
-  - [21.16. Ajax et Axios dans un script JS. Indispensable si script externe au Twig](#2116-ajax-et-axios-dans-un-script-js-indispensable-si-script-externe-au-twig)
-    - [21.16.1. Utilisation de FOSJsRoutingBundle pour générer les routes diréctement en JS](#21161-utilisation-de-fosjsroutingbundle-pour-générer-les-routes-diréctement-en-js)
-  - [21.17. AJAX en Symfony (Vanilla JS - juste théorie)](#2117-ajax-en-symfony-vanilla-js---juste-théorie)
-  - [21.18. Utilisation de blocs dans twig avec AJAX (Vanilla)](#2118-utilisation-de-blocs-dans-twig-avec-ajax-vanilla)
+  - [21.17. Ajax et Axios dans un script JS. Indispensable si script externe au Twig](#2117-ajax-et-axios-dans-un-script-js-indispensable-si-script-externe-au-twig)
+    - [21.17.1. Utilisation de FOSJsRoutingBundle pour générer les routes diréctement en JS](#21171-utilisation-de-fosjsroutingbundle-pour-générer-les-routes-diréctement-en-js)
+  - [21.18. AJAX en Symfony (Vanilla JS - juste théorie)](#2118-ajax-en-symfony-vanilla-js---juste-théorie)
+  - [21.19. Utilisation de blocs dans twig avec AJAX (Vanilla)](#2119-utilisation-de-blocs-dans-twig-avec-ajax-vanilla)
     - [Exercices : utilisation d'AJAX Vanilla](#exercices--utilisation-dajax-vanilla)
-  - [21.19. DateTime et datepicker (Bootstrap)](#2119-datetime-et-datepicker-bootstrap)
-  - [21.20. Validation des formulaires](#2120-validation-des-formulaires)
+  - [21.20. DateTime et datepicker (Bootstrap)](#2120-datetime-et-datepicker-bootstrap)
+  - [21.21. Validation des formulaires](#2121-validation-des-formulaires)
 - [22. Response JSON en Symfony](#22-response-json-en-symfony)
   - [22.1. Renvoi JSON d'un array d'objets depuis le controller](#221-renvoi-json-dun-array-dobjets-depuis-le-controller)
   - [22.2. Renvoi JSON d'un array d'objets obtenu avec DQL](#222-renvoi-json-dun-array-dobjets-obtenu-avec-dql)
@@ -7724,14 +7725,14 @@ Cette action reçoit un objet Request. On peut accéder aux éléments du formul
 ![](./images/axios1.png)
 
 
-## 21.14. Formulaire associé à une entité avec Axios 
+## 21.14. Formulaire associé à une entité avec Axios (insértion, mise à jour)
 
 <br>
 
 Voici un exemple d'un form associé à une entité. Lisez **très attentivement** les commentaires dans le code.
 Tous les points importants sont commentés.
 
-Le but ici est d'avoir un formulaire associé à une entité . Une fois il est envoyé on disposera directement d'une entité dans le controller, remplie avec les données du formulaire.
+Le but ici est d'avoir un formulaire associé à une entité . Une fois il est envoyé on disposera directement d'une entité dans le controller, remplie avec les données du formulaire (pour insérer, mettre à jour...)
 
 C'est la procédure normale, mais plus élaborée à cause d'avoir utilisé AJAX et FormData
 
@@ -7953,7 +7954,313 @@ Ce champ pourra ou pas être caché. Le but est de l'envoyer sans que ça soit v
 
 <br>
 
-### 21.14.1. Exemples extra AJAX (Axios)
+
+## 21.15. Création d'un formulaire de recherche avec de filtres (AJAX - Axios)
+
+Voici comment créer un formulaire de recherche en AJAX contenant plusieurs filtres.
+
+Controller : **FormSearchLivresFiltresAjax**
+Actions: **searchLivresFiltres**
+
+**Exemple**: création d'un formulaire contenant de filtres pour rechercher des Livres dans la BD
+
+- Filtre par titre
+- Filtre par prix (min, max)
+- Filtre par nom d'Auteur (pour montrer la liaison avec une autre entité)
+- 
+Le formulaire effectuera une recherche en fonction des critères et affichera les livres correspondants. Le contenu de la page changera dynamiquement en fonction des filtres sélectionnés, sans nécessiter de rechargement de la page.
+
+**Procédure** :
+
+1. Créez un formulaire (SearchFiltreLivresType) contenant tous les champs de filtrage.
+2. Créez une vue pour afficher ce formulaire.
+3. Mettez en place une action pour traiter et afficher les résultats du formulaire. Cette action sera une action de traitement de formulaire standard, mais elle devra exécuter une requête en fonction des critères spécifiés dans le formulaire de recherche, plutôt que de simplement utiliser les méthodes findAll ou findBy classiques. Cette requête sera créée dans la classe LivreRepository et appelée à partir du contrôleur.
+4. Création de la méthode du repo
+5. Création de l'appel AXIOS dans la vue
+
+Note: On considére que la BD Livres et les entités sont déjà crées.
+
+
+**1. Création du formulaire**
+
+```php
+<?php
+
+namespace App\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
+class RechercheiltreLivresType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('minPrix', IntegerType::class, [
+                'required' => false,
+                'label' => 'Prix minimum',
+            ])
+            ->add('maxPrix', IntegerType::class, [
+                'required' => false,
+                'label' => 'Prix maximum',
+            ])
+            ->add('titre', TextType::class, [
+                'required' => false,
+                'label' => 'Titre',
+            ])
+            ->add('nomAuteur', TextType::class, [
+                'required' => false,
+                'label' => 'Nom de l\'auteur',
+            ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            // Configure your form options here
+        ]);
+    }
+}
+
+```
+
+**2. Création de la vue pour afficher le formulaire**
+
+```php
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormSearchLivresFiltresAjaxController!{% endblock %}
+
+{% block body %}
+{# templates/plante/recherche.html.twig #}
+
+
+{# On crée le form, IMPORTANT: on doit obtenir ce form depuis JS pour créer le FormData . Ici on a mis un id pour qu'il soit accésible #}
+{{ form_start(form, {'attr': {'id': 'recherche-form'}}) }}
+    {{ form_row(form.titre) }}
+    {{ form_row(form.minPrix) }}
+    {{ form_row(form.maxPrix) }}
+    {{ form_row(form.nomAuteur) }}
+
+    <button type="submit">Rechercher</button>
+{{ form_end(form) }}
+
+<div id="div_resultats"></div>
+```
+
+**3. Création d'une action dans le controller**
+
+```php
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Livre;
+use App\Form\RechercheiltreLivresType;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
+
+class FormRechercheLivresFiltresAjaxController extends AbstractController
+{
+    #[Route('/form/search/livres/filtres/ajax', name: 'recherche_livres_filtres')]
+    public function rechercheLivresFiltres(Request $req, ManagerRegistry $doctrine, SerializerInterface $serializer): Response
+    {
+
+
+        $form = $this->createForm(RechercheiltreLivresType::class);
+
+        $form->handleRequest($req);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rep = $doctrine->getRepository(Livre::class);
+            $resultats = $rep->rechercheLivresFiltres($form->getData());
+
+            // Si on veut juste les livres, on serialise et on ignore les rélations pour éviter les références circulaires
+            // $response = $serializer->serialize ($resultats, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES=> ['exemplaires']]) ;
+            // Puis on renvoie le résultat JSON
+            // return new Response ($response);
+
+            // MAIS dans ce cas on a besoin aussi de l'auteur, alors on doit construire nous mêmes l'array ou définir
+            // un serialiser personnalisé. Ici on va le faire à la main (construire nous mêmes l'array)
+
+            $livresAvecNomsAuteurs = [];
+            foreach ($resultats as $livre) {
+                $arrLivre = [];
+                
+                $arrLivre['titre'] = $livre->getTitre();
+                $arrLivre['prix'] = $livre->getPrix();
+                // etc...
+                // créer la clé "nomsAuteur" 
+                $arrLivre['nomsAuteurs'] = [];
+                foreach ($livre->getAuteurs() as $auteur) {
+                    // rajouter le nom de l'auteur à l'array
+                    $arrLivre['nomsAuteurs'][] = $auteur->getNom();
+                }
+                // rajouter le livre ayant l'array d'auteurs incrusté
+                $livresAvecNomsAuteurs[] = $arrLivre;
+            }
+            
+            // on sérialise l'array qu'on vient de créer. On ignore les rélations, mais on 
+            // a incrusté l'array "nomsAuteurs". Sérialiser l'array ne posera aucun problème
+
+            // dd($livresAvecNomsAuteurs); // debuggez pour les voir...
+            $response = $serializer->serialize($livresAvecNomsAuteurs, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['exemplaires','auteurs']]);
+
+            return new Response ($response);
+        }
+
+        $vars = ['form' => $form];
+        return $this->render('form_recherche_livres_filtres_ajax/recherche_livres_filtres.html.twig', $vars);
+    }
+}
+```
+
+**4. Création de la méthode du repository**
+
+```php
+class LivreRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Livre::class);
+    }
+
+    // méthode propre: recherche par filtres
+    public function rechercheLivresFiltres($filtres)
+    {
+
+        $em = $this->getEntityManager();
+        // dd($filtres);
+
+        $query = $em->createQuery (
+                "SELECT l FROM App\Entity\Livre l 
+                INNER JOIN l.auteurs a
+                WHERE 
+                (l.titre LIKE :titre OR :titre IS NULL) AND 
+                (l.prix >= :minPrix OR :minPrix IS NULL) AND
+                (l.prix <= :maxPrix OR :maxPrix IS NULL) AND 
+                a.nom LIKE :nomAuteur"
+        );
+        $query->setParameter("titre", "%" . $filtres['titre'] . "%");
+        $query->setParameter("minPrix", $filtres['minPrix']);
+        $query->setParameter("maxPrix", $filtres['maxPrix']);
+        $query->setParameter("nomAuteur", "%" . $filtres['nomAuteur'] . "%");
+
+        $res = $query->getResult();
+        return $res;
+    }
+
+.
+.
+.
+```
+
+
+**5. Création de l'appel AXIOS pour lancer la recherche**
+
+```twig
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormSearchLivresFiltresAjaxController!{% endblock %}
+
+{% block body %}
+{# templates/plante/recherche.html.twig #}
+
+
+{# On crée le form, IMPORTANT: on doit obtenir ce form depuis JS pour créer le FormData . Ici on a mis un id pour qu'il soit accésible #}
+{{ form_start(form, {'attr': {'id': 'recherche-form'}}) }}
+    {{ form_row(form.titre) }}
+    {{ form_row(form.minPrix) }}
+    {{ form_row(form.maxPrix) }}
+    {{ form_row(form.nomAuteur) }}
+
+    <button type="submit">Rechercher</button>
+{{ form_end(form) }}
+
+<div id="div_resultats"></div>
+
+{# On a importé axios ici pour nous simplifier le code #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js" integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{# Script qui gére l'appel Axios et qui modifiera le DOM  #}
+<script>
+    // on obtient le formulaire pour 
+    const form = document.getElementById('recherche-form');
+
+    // on detectera tous les inputs du form, peu importe quel fitre on change
+    form.addEventListener('input', function(event) {
+        event.preventDefault();
+        // obtenir le div pour afficher les résultats
+        let divResultats = document.getElementById ("div_resultats");
+
+        console.log ("appel recherche...");
+        const formData = new FormData(form);
+
+        // message de "recherche en cours ..."
+        divResultats.innerHTML = "Recherche en cours...";
+
+
+        // appel axios. On a utilisé la vraie route au lieu d'un name car on ne peut pas incruster du twig (path)
+        // dans le JS. On peut contourner ce fait, mais on ne le fera pas ici
+        axios.post('/form/search/livres/filtres/ajax', formData)
+            .then(response => {
+                console.log (response.data); // axios parse déjà, on peut parcourir l'array d'objets
+                
+
+                // vider le div
+                divResultats.innerHTML = "";
+
+                // parcourir l'array d'objets reçu (car le JSON a été déjà parsé par AXIOS)    
+                let arrayLivres = response.data;       
+
+                console.log (arrayLivres);    
+
+                arrayLivres.forEach ( function (livre)  {
+                        // manipuler le DOM. Ex: vider un div et le remplir avec les résultats
+                        divResultats.innerHTML += "<p><b>Titre:</b> " + livre.titre + "</p>";
+                        
+                        // si on veut afficher les auteurs:  (note: 
+                        // on verra qu'un parce-que dans les fixtures on a 
+                        // fixé un Auteur par Livre, mais on aurait pu 
+                        // fixer plusieurs)
+                        divResultats.innerHTML += "<p><b>Auteurs:</b></p>";
+                        livre.nomsAuteurs.forEach (function (nom) {
+                            divResultats.innerHTML += nom + " ";
+                            
+                        })
+                        divResultats.innerHTML += "<hr>";
+                    }
+                );
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script>
+
+{% endblock %}
+
+```
+
+
+
+
+
+
+
+
+
+
+### 21.15.1. Exemples extra AJAX (Axios)
 
 <br>
 
@@ -7962,7 +8269,7 @@ Dans **AnnexeAxiosController** du **ProjetFormulairesSymfony** vous avez plusieu
 
 <br>
 
-## 21.15. Utilisation de blocs dans twig avec AJAX
+## 21.16. Utilisation de blocs dans twig avec AJAX
 
 <br>
 
@@ -8089,7 +8396,7 @@ public function exemple1TraitementMasterPage(Request $requeteAjax)
 
 
 
-## 21.16. Ajax et Axios dans un script JS. Indispensable si script externe au Twig 
+## 21.17. Ajax et Axios dans un script JS. Indispensable si script externe au Twig 
 
 **Si vous voulez générer de routes à l'interieur de JS**, vous allez remarquer que vous ne pouvez pas utiliser **path**.
 
@@ -8126,7 +8433,7 @@ Script externe:
 </script>
 ```
 
-### 21.16.1. Utilisation de FOSJsRoutingBundle pour générer les routes diréctement en JS
+### 21.17.1. Utilisation de FOSJsRoutingBundle pour générer les routes diréctement en JS
 
 Une autre manière de résoudre le problème est d'utiliser le module **FOSJsRoutingBundle**.
 
@@ -8176,7 +8483,7 @@ Scripts (on a utilisé webpack!):
 
 <br>
 
-## 21.17. AJAX en Symfony (Vanilla JS - juste théorie)
+## 21.18. AJAX en Symfony (Vanilla JS - juste théorie)
 
 **Objectif** : utiliser AJAX dans un template Twig
 
@@ -8267,7 +8574,7 @@ public function exemple1Traitement(Request $requeteAjax)
 <br>
 
 
-## 21.18. Utilisation de blocs dans twig avec AJAX (Vanilla)
+## 21.19. Utilisation de blocs dans twig avec AJAX (Vanilla)
 
 <br>
 
@@ -8402,7 +8709,7 @@ ExemplesAjaxController)**
 <br>
 
 
-## 21.19. DateTime et datepicker (Bootstrap)
+## 21.20. DateTime et datepicker (Bootstrap)
 
 
 <br>
@@ -8434,7 +8741,7 @@ Observez que pour exprimer la même chose on doit utiliser deux encodages diffé
 <br>
 <br>
 
-## 21.20. Validation des formulaires
+## 21.21. Validation des formulaires
 
 https://symfony.com/doc/6.3/validation.html
 
