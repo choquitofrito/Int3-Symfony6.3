@@ -107,6 +107,7 @@
 - [17. Fixtures pour remplir la BD](#17-fixtures-pour-remplir-la-bd)
   - [17.1. Fixtures multi-entity et ordre d'exécution](#171-fixtures-multi-entity-et-ordre-dexécution)
   - [17.2. Fixtures dans un Many-to-Many décomposé en deux One-To-Many](#172-fixtures-dans-un-many-to-many-décomposé-en-deux-one-to-many)
+  - [16.3. Fixtures dans un Many-To-Many](#163-fixtures-dans-un-many-to-many)
   - [17.3. Fixtures basées sur un fichier .sql](#173-fixtures-basées-sur-un-fichier-sql)
   - [17.4. Exclure un ou plusieurs tableaux du purge](#174-exclure-un-ou-plusieurs-tableaux-du-purge)
     - [Exercices :](#exercices-)
@@ -4959,41 +4960,42 @@ Notez qu'on doit juste rajouter:
 
 ```php
 <?php
-
 namespace App\DataFixtures;
 
-use App\Entity\Aeroport;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+
 use Faker;
+use App\Entity\Aeroport;
 
-class AeroportAutreFixtures extends Fixture implements DependentFixtureInterface
+class AeroportFixtures extends Fixture
 {
-
-    public function load(ObjectManager $om)
+    public function load(ObjectManager $manager)
     {
-        $faker = Faker\Factory::create('es_ES');
 
-        for ($i = 0; $i < 10; $i++) {
-            $a1 = new Aeroport();
-            $a1->setNom($faker->city);
-            $a1->setCode($faker->postcode);
-            $a1->setDateMiseEnService(new \DateTime());
-            $om->persist($a1);
+        $faker = Faker\Factory::create();
+    
+        for ($i = 0; $i < 5; $i++) {
+            
+            // sans hydrate
+            // $aeroport = new Aeroport();
+            // $aeroport->setNom ($faker->city . " Airport");
+
+
+            // avec hydrate
+            $aeroport = new Aeroport([
+                'nom' => $faker->city . " Airport",
+                'code' => 'COD'. $i,
+                'dateMiseEnService' => $faker->dateTime,
+                'heureMiseEnService' => $faker->dateTime,
+                'description' => $faker->realText($faker->numberBetween(10, 30))
+            ]);
+            $manager->persist($aeroport);
         }
-
-        $om->flush();
-    }
-
-    public function getDependencies()
-    {
-        return ([
-            AeroportFixtures::class, // 'App\DataFixtures\AeroportFixtures'
-            // autre classe ici 
-        ]);
+        $manager->flush();
     }
 }
+
 ```
 
 <br>
@@ -5119,6 +5121,57 @@ class DetailCommandeFixtures extends Fixture implements DependentFixtureInterfac
             ProduitFixtures::class,
             CommandeFixtures::class
         ]);
+    }
+}
+```
+
+## 16.3. Fixtures dans un Many-To-Many
+
+Voici un exemple de fixtures pour une rélation Many-To-Many (Auteurs-Clients)
+
+Une façon de le faire est d'obtenir tous les objets des deux entités. 
+Pour chaque objet d'une classe on fixera un objet au hasard de l'autre class.
+
+```php
+<?php
+
+namespace App\DataFixtures;
+
+use App\Entity\Auteur;
+use App\Entity\Livre;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+
+class AuteurLivreFixtures extends Fixture implements DependentFixtureInterface
+{
+    public function load(ObjectManager $manager): void
+    {
+
+        // 1. Obtenir tous les Livres
+        $repLivres = $manager->getRepository(Livre::class);
+        $arrayObjLivres = $repLivres->findAll();
+
+        // 2. Obtenir tous les Auteurs
+        $repAuteurs = $manager->getRepository(Auteur::class);
+        $arrayObjAuteurs = $repAuteurs->findAll();
+
+        // 3. Parcourir tous les Livres. Pour chaque Livre, rajouter (add) un Auteur aléatoire
+        foreach ($arrayObjLivres as $livre) {
+            $randomIndex = mt_rand(0, count($arrayObjAuteurs) - 1); // l'index d'un Auteur, random
+            $livre->addAuteur($arrayObjAuteurs[$randomIndex]); 
+            $manager->persist($livre);
+        }
+        $manager->flush();
+    }
+
+    // fixer les dépéndances de cette fixture
+    public function getDependencies(): array
+    {
+        return [
+            AuteurFixtures::class,
+            LivreFixtures::class
+        ];
     }
 }
 ```
