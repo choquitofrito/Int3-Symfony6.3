@@ -18,6 +18,12 @@
 		{% endblock %}
 	</head>
 	<body>
+		<nav>
+			<ul>
+				{# charger les Livres en rechargeant la page (une nouvelle vue) #}
+				<li><a href="{{ path ('lien1') }}">lien1-afficherLivres</a></li>
+			</ul>
+		</nav>
 		{% block body %}{% endblock %}
 
 
