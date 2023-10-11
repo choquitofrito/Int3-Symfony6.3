@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+Cette vue est chargée quand on clique sur lien 1.
+Affichons les livres qui viennent du Controller en paramètre ($vars)
+
+
+{% for livre in arrObjLivres %}
+    {{ livre.titre}} <br><br>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier{% endblock %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('calendrier') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('calendrier') }}
+{% endblock %}
+
+
+{% block body %}
+
+    <h5>Coach</h5>
+    <h3>Salut {{ app.user.person.prenom }}! </h3>
+
+    Calendrier
+  
+    {{ dump (evenementsJSON )}}
+    {# div du calendrier #}
+ 
+    
+    <div id="div_calendrier" data-calendrier="{{ evenementsJSON }}" data-equipe="{{ id_equipe}}">
+    </div>
+
+        {# <a href="{{path ('afficher_calendrier_utilisateur') }}">Calendrier</a>  #}
+
+    
+    {# // mettre date-idEquipe  #}
+
+
+
+
+{% endblock %}

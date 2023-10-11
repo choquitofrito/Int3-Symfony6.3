@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil Coach!{% endblock %}
+
+{% block body %}
+<h5>Présences</h5>
+    <h3>Bienvenue, {{ app.user.person.prenom }}! </h3>
+
+
+    <ul class="equipe_list">
+        {% for equipe in equipesCoaches %}
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <li> 
+                <a href={{ path('calendrier',{'id_equipe':equipe.id}) }} class="btn btn-outline-dark" type="button">{{ equipe.getNom }}</a>
+            
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

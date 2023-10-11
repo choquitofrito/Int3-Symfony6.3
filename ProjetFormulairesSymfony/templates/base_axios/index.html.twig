@@ -1,0 +1,141 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+			Je suis l'accueil, appuyez sur les liens
+			<ul>
+				{# charger les Livres en rechargeant la page (une nouvelle vue) #}
+				<li>
+					<a href="{{ path ('lien1') }}">lien1-afficherLivres</a>
+				</li>
+				{# lancer une action dans le controller.
+				Le controller nous renvoie un message de réponse 
+				qu'on afficher dans le DOM SANS recharger la page: AJAX.
+				On n'envoie rien au serveur #}
+				<li>
+					<button id="btn_ajax1">Bouton 1</button>
+				</li>
+
+				{# lancer une action dans le controller. Le controller
+				renvoie tous les livres en FORMAT JSON!!!
+				- Le serveur doit encoder les infos en JSON
+				- Le client doit parser le JSON 
+				#}
+				<li>
+					<button id="btn_liste_livres">Liste Livres</button>
+				</li>
+
+			
+			</ul>
+
+			{# barre de rechercher. On envoie un form au serveur,
+				il fera quoi qui ce soit avec les données.
+				Ici il renvoie les livres entre deux prix  #}
+			{# {% form_start (formulaire) %}
+			{% form_widget (formulaire) %}
+			<input type="submit" value="Chercher">
+			{% form_end (formulaire) %} #}
+
+            <div id="div_resultat">
+		        Pas encore de résultats
+		    </div>
+
+
+		{% block jsNav %}
+			{# script pour le btn1 #}
+			<script>
+				let btn1 = document.getElementById("btn_ajax1");
+				btn1.addEventListener ("click",function (event){
+					
+					// appel au serveur
+					axios.get("/obtenir/message")
+					.then (function (response){
+						console.log (response);
+						
+						// modifier le dom si on veut
+						let resultat = document.getElementById("div_resultat");
+						resultat.textContent = response.data;
+
+						console.log (response);
+
+					})
+					.catch (function (error){
+						console.log ("Problème dans l'appel AJAX");
+						console.log (error.message);
+					})
+				});
+			</script>
+
+			{# script pour le btn_liste_livres #}
+			<script>
+				let btn_liste_livres = document.getElementById("btn_liste_livres");
+				btn_liste_livres.addEventListener ("click", function (event){
+					axios.get ("/obtenir/liste/livres")
+					.then (function (response){
+						// array JS qui contient tous les livres
+						let arrayLivresJS = JSON.parse (response.data);
+
+						// afficher dans le DOM
+						let div_resultat = document.getElementById ("div_resultat");
+						div_resultat.innerHTML = ""; // vider le div
+
+						arrayLivresJS.forEach (function (objLivre){
+
+							let cardHTML = '<div class="card" style="width: 18rem">' +
+											'<img class="card-img-top" src="/pepe.jpg" alt="Card image cap">' +
+											'<div class="card-body"><h5 class="card-title">' + 
+											objLivre.titre + '</h5><p class="card-text">' +
+											objLivre.description + '</p><a href="/livre/detail/' + 
+											objLivre.id + '" class="btn btn-primary">Détail</a><a><button data-id=' + objLivre.id + ' class="btn btn-primary like">Like</button></a></div></div>';
+
+							// rajouter dans le Dom les éléments
+							div_resultat.innerHTML = div_resultat.innerHTML + cardHTML;	
+
+							// rajouter un event
+							let boutonsLike = document.getElementsByClassName ("like");
+							console.log (boutonsLike); 
+							Array.from(boutonsLike).forEach (function (btnLike){
+								console.log (btnLike);
+								btnLike.addEventListener ("click", function (event){
+									let btnClique = event.target;
+									// obtenir l'id du dataset 
+									console.log (btnClique.dataset.id);
+
+									let formLike = new FormData(); // pas associé à un form du DOM
+									formLike.append ("id", btnClique.dataset.id);
+
+									axios.post ("/livre/like", formLike, {
+										headers: {
+    										'Content-Type': 'multipart/form-data', // Spécifiez le type de contenu en tant que multipart/form-data
+  										},
+									})
+									.then (function (response){
+										console.log (response);
+									})
+									.catch (function (error){
+										console.log (error);
+									})
+
+								}); 
+							});
+
+
+
+						});
+
+
+						console.log (arrayLivresJS);
+					})
+					.catch (function (error){
+						console.log ("Problème dans l'appel AJAX");
+						console.log (error.message);
+					})
+
+
+				})
+
+			</script>
+		{% endblock %}
+
+
+{% endblock %}

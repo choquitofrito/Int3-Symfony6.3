@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+{# on affiche le détail du livre #}
+
+titre: {{ livre.titre }}<br>
+description: {{ livre.description}}<br>
+prix: {{ livre.prix }}
+{# <img src="/images/{{ livre.lien }}"> #}
+
+
+{% endblock %}

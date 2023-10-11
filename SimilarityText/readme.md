@@ -1,0 +1,1 @@
+Exemple d'utilisation du package **nlp-tools/nlp-tools** pour trouver la similarité entre deux textes

@@ -1,0 +1,21 @@
+
+.equipe_list{
+    list-style-type: none;
+}
+
+li{
+    margin-bottom: 0.3rem;
+}
+
+.btn btn-primary{
+        
+    background-color: #fefeff;
+    border-radius: 10px;
+    border: 4px solid rgb(0, 0, 0);
+    color: black;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 200px;
+
+}

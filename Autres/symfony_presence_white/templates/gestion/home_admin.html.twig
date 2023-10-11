@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Admin!{% endblock %}
+
+{% block body %}
+{% block content %}
+    
+    {# {% if app.user %}
+    {% set Person = app.user.personne.nom %}
+    <h1>Bonjour Admin {{ personne.prenom }} !</h1>
+    {% endif %} #}
+
+    <h5>Admin</h5>
+    <h3>Salut, {{ app.user.person.prenom }}! </h3>
+
+    <ul class="equipe_list">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            {% for equipe in equipes %} 
+                    <li>
+                        <a href={{ path('equipe_list',{'id':equipe.id}) }}" class="btn btn-outline-dark">{{ equipe.getNom }}
+                    </li>        
+            {% endfor %}
+        </div>
+    </ul>
+
+{% endblock %}
+
+{% endblock %}
