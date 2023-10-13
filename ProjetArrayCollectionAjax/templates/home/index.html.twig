@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+        
+{% block title %}
+    MealMatch - Accueil
+{% endblock %}
+
+{% block body %}
+
+<div class="background-image">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="container-div text-center">
+                    <h1 style="color:green; font-size: 4rem;">MealMatch</h1>
+                    <h3>Bienvenue sur MealMatch, le site pour partager et découvrir des recettes</h3>
+                    <button type="button" class="btn btn-success" id="recipes-button">Toutes les recettes</button>
+                </div>
+            </div>
+        </div>
+        <div class="recipes mt-5" style="display:none">
+            <h2 class="mb-4" style="color:green; text-align:center;">Recettes de la communauté</h2>
+            <div class="row justify-content-center">
+                {% for recipe in recettes %}
+                <div class="card border-success mx-3 mb-3" style="width: 20rem;">
+                    <div class="card-header">Recette n°{{ recipe.id }}</div>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="{{ path('recette.show', {id: recipe.id}) }}" style="color:green;">{{ recipe.titre}}</a>
+                        </h4>
+                        <p class="card-text">{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script>
+$(document).ready(function() {
+    $('#recipes-button').click(function() {
+        $('.recipes').toggle();
+    });
+});
+</script>
+{% endblock %}
+
+
+

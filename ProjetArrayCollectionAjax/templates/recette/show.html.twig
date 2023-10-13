@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	SymRecipe -
+	{{ recette.titre }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<h1 class="mt-4">{{ recette.titre }}</h1>
+
+		
+
+
+		<div>
+			<span class="badge bg-primary">Créée le
+				{{ recette.createdAt|date('d/m/Y') }}</span>
+		</div>
+
+		<div class="mt-4">
+			{% if recette.dureePreparation %}
+				<p>Temps (en minute) :
+					{{ recette.dureePreparation }}</p>
+			{% else %}
+				<p>Temps non renseigné</p>
+			{% endif %}
+		</div>
+
+		<div class="mt-4">
+			{% if recette.tempsCuisson  %}
+				<p>Difficulté :
+					{{ recette.tempsCuisson }}/5</p>
+			{% else %}
+				<p>Difficulté non renseigné</p>
+			{% endif %}
+		</div>
+
+		<div class="mt-4">
+			{% if recette.nbPersonne %}
+				<p>Pour
+					{{ recette.nbPersonne }}
+					personnes</p>
+			{% else %}
+				<p>Nombre de personnes non renseigné</p>
+			{% endif %}
+		</div>
+
+		<div class="mt-4">
+			{% if recette.photo %}
+				<p>Prix (en €) :
+					{{ recette.photo}}</p>
+			{% else %}
+				<p>Prix non renseigné</p>
+			{% endif %}
+		</div>
+
+		<div class="mt-4">
+			{{ recette.description|raw }}
+		</div>
+
+		
+
+	
+	{% endblock %}

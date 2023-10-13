@@ -1,0 +1,409 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MealMatch- Nouvelle Recette{% endblock %}
+
+	{% block body %}
+	<div class="container">
+	<h1 class="mt-4">Modifier Recette</h1>
+
+	{# Le form pour l'edit envoie l'id de la recette editée  #}
+	{{ form_start(form, {'attr': {'autocomplete':'off', 'id':'form_recette' , 'data-recette-id': recetteId }} ) }}
+
+			<div class="form-group">
+				{{ form_label(form.titre) }}
+				{{ form_widget(form.titre) }}
+				<div class="form-error">
+					{{ form_errors(form.titre) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.tempsCuisson) }}
+				{{ form_widget(form.tempsCuisson) }}
+				<div class="form-error">
+					{{ form_errors(form.tempsCuisson) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.dureePreparation) }}
+				{{ form_widget(form.dureePreparation) }}
+				<div class="form-error">
+					{{ form_errors(form.dureePreparation) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.nbPersonne) }}
+				{{ form_widget(form.nbPersonne) }}
+				<div class="form-error">
+					{{ form_errors(form.nbPersonne) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description) }}
+				<div class="form-error">
+					{{ form_errors(form.description) }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.photo) }}
+				{{ form_widget(form.photo) }}
+				<div class="form-error">
+					{{ form_errors(form.photo) }}
+				</div>
+			</div>		
+		
+
+
+			{# barre de Recherche #}
+			{# liste à remplir quand on reçoit le résultat de la recherche du fetch. Modal, s'affiche sur le reste 
+			du DOM. Style plus bas, à mettre dans un autre fichier. Notez qu'on désactive l'autocomplete de l'input 
+			#}
+			<div class="form-group search-container">
+				Ingrédients:
+				<input type="text" id="input_recherche" placeholder="Rechercher ingrédient..." autocomplete="off">
+				<div id="search-results">
+				{# ici il aura les ingrédients trouvés #}
+				</div>
+			</div>
+
+			{# ul qui contient tous le forms de détail #}
+			<div class="form-group">
+			<ul id="details" class="details"
+				data-index="{{ form.details|length > 0 ? form.details|last.vars.name + 1 : 0 }}"  
+				data-prototype="{{ form_widget(form.details.vars.prototype)|e('html_attr') }}">
+			{# forms originales + forms générés en js! #}
+			{# seulement pour EDIT: générer les forms pour les détails qui sont déjà dans la BD #}
+			{% for item in form.details %}
+				<li>{{ item.vars.value.ingredients.nom }}
+				{{ form_widget (item)}}
+				{{ form_errors (item)}}
+				</li> 
+			{% endfor %}
+			
+			</ul>
+			</div> 
+
+			{{ form_row(form._token) }}
+			<div class="form-group">
+				{{ form_widget(form.submit) }}
+			</div>
+		
+	{{ form_end(form, {render_rest:false}) }}
+
+	</div>
+
+
+
+
+	{% block customJS %}
+	<script>
+
+	// code js pour rajouter les nouveaux détails 
+	// De la doc https://symfony.com/doc/current/form/form_collections.html. 
+	// On doit le modifier pour l'adapter à nos besoins
+	// (on ne peut plus choisir l'ingrédient, ce ne sera plus une liste déroulante)
+	// Ce script crée les <li> pour le DOM. Tout modification du css ou de layout
+	// sera faite dans le script
+
+	// ceci est le code original, plus bas une modification possible pour
+	// afficher l'ingrédient comme un texte au lieu d'une liste déroulante.
+	// On va cacher la liste déroulante. On ne peut pas l'effacer car autrement 
+	// les détails ne s'enverront plus quand on fait submit!
+	
+
+	// dans cette version, addFormToCollection reçoit l'id de l'ul qui contient la collection
+	// Cette fonction rajoute les forms de détail, mais il faut incruster l'id de l'ingrédient choisi dans un hidden (voir type du form)
+	const addFormToCollectionCustom = (idCollectionHolder, idIngredient, nomIngredient) => {
+
+		let collectionHolder = document.querySelector ("." + idCollectionHolder);
+		const item = document.createElement('li');
+		
+		item.innerHTML = collectionHolder
+		.dataset
+		.prototype
+		.replace(
+			/__name__/g,
+			collectionHolder.dataset.index
+		);
+
+		// insérer le nom comme prémier élément
+		item.prepend (document.createTextNode (nomIngredient));
+
+
+		// mettre le value (id de l'ingredient) pour le hidden
+		let hiddenDetailIngredient = item.getElementsByClassName("hidden_detail_ingredient")[0];
+		hiddenDetailIngredient.value = idIngredient;
+
+		// rajouter le form du détail
+		collectionHolder.appendChild(item);
+		collectionHolder.dataset.index++;
+
+
+		// rajouter bouton delete
+		addDetailFormDeleteLink(item); 
+
+		
+	}; 
+
+	// fonction qui rajoute des boutons delete  et manipulation de la varre de 
+	// rechercher pour effacer les ingrédients déjà choisis  
+	const addDetailFormDeleteLink = (item) => {
+		const removeFormButton = document.createElement('button');
+		removeFormButton.innerText = 'X';
+
+		item.append(removeFormButton);
+
+		removeFormButton.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			// mettre le value (id de l'ingredient) pour le hidden
+			let hiddenDetailIngredient = item.getElementsByClassName("hidden_detail_ingredient")[0];
+			idIngredient = hiddenDetailIngredient.value ;
+			
+			// on doit éliminer de la liste d'interdits
+			const index = chosenIngredientsIds.indexOf(parseInt(idIngredient));
+			chosenIngredientsIds.splice(index, 1);
+
+			console.log ("On efface de la liste d'interdits:");
+			console.log (chosenIngredientsIds);
+
+			// remove the detail form
+			item.remove();
+
+		});
+	} 
+
+
+
+	// rajouter les liens pour effacer pour tous les li du details (c.à.d. chaque détail)
+	document
+		.querySelectorAll('ul.details li')
+		.forEach((item) => {
+			// rajouter les liens pour effacer
+			addDetailFormDeleteLink(item); 
+		});
+
+
+	// barre de recherche
+	const input_recherche = document.getElementById('input_recherche');
+	const search_results = document.getElementById('search-results');
+
+
+	// on utilise la technique de debouncing pour éviter l'accumulation d'appels AJAX
+	let debounceTimer; 
+
+	// keep track of the options already chosen
+	let chosenIngredientsIds = [];
+
+	// script recherche: appel AJAX et obtention des ingrédients
+	input_recherche.addEventListener('keyup', function ()  {
+
+		// obliger une attente avant de lancer un autre appel ajax
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(function() {	
+
+			// appel Ajax à action dans IngredientsController qui renverra les ingrédients qui conviennent à la recherche
+			fetch ('/search/ingredients/' + input_recherche.value.toLowerCase())
+			.then((response) => response.json())
+			.then((ingredients) => {
+				
+				// effacer l'ancienne recherche
+				// vider la liste de choix d'ingrédients (li dans l'ul)
+				search_results.innerHTML = "";
+
+				// ré-créer la liste qui affiche les éléments trouvés
+				const ul = document.createElement('ul');
+
+				// rajouter une class pour manipuler plus facilement en JS
+				ul.classList.add('search-results-list');
+
+				// rajouter le ul au div
+				search_results.appendChild(ul);
+
+				// parcourir les ingrédients et on crée les li pour pouvoir choisir un
+				ingredients.forEach ((ingredient) => {
+
+
+					// si l'ingrédient n'est pas sur un détail, l'afficher dans la liste
+					if (!chosenIngredientsIds.includes (ingredient.id)){
+							// remplir la liste d'options
+							let li_ingredient = document.createElement('li');
+							li_ingredient.innerHTML = ingredient.nom;
+							
+							// stocker dans le li l'id de l'ingredient choisi
+							li_ingredient.value = ingredient.id;
+
+							// rajouter le li au ul
+							ul.appendChild(li_ingredient);
+
+							
+							// action pour le click de l'ingrédient: 
+							// afficher les composants du form pour stocker 
+							// un détail (remplir quantité et mésure et stocker, caché, l'id de l'ingrédient)
+							li_ingredient.addEventListener ('click', (e)=>{
+
+								let nomIngredient = e.currentTarget.innerHTML;
+								
+							
+								// rajouter l'id de l'ingrédient dans la liste pour ne pas l'afficher
+								chosenIngredientsIds.push (parseInt(ingredient.id));
+								
+								
+								// Effacer la liste de recherche
+								search_results.innerHTML = "";
+								// Créer le détail dans le DOM. On envoie l'id de l'élément qui contient les nouveaux forms
+								addFormToCollectionCustom("details", ingredient.id, nomIngredient); // on envoie l'id de l'ul qui contiendra les forms
+							
+								// trier les lis dans l'ul
+								sortLis ("details");							
+								
+								// effacer le terme de recherche
+								document.getElementById("input_recherche").value="";
+
+							});
+
+					}
+					else {
+					}
+					
+				});
+				
+			});
+		},500);
+	});
+
+
+
+	const sortLis = (ulId) => {
+		// sort everything
+		const ul = document.getElementById(ulId); // replace 'details' with your list's ID
+		const lis = Array.from(ul.getElementsByTagName('li')); // get all the list items
+		lis.sort(function (a, b) {
+			return a.firstChild.data.localeCompare(b.firstChild.data); // sort the list items alphabetically based on their text content
+		});
+
+		while (ul.firstChild) {
+		ul.removeChild(ul.firstChild);
+		};
+
+		lis.forEach((li) => {
+			ul.appendChild(li); 
+		});
+	}
+
+
+	addEventListener("DOMContentLoaded", (event) => {
+
+		// trier les détails qui se trouvent déjà dans la BD
+		sortLis ("details");
+
+		// Seulement pour EDIT
+		// effacer le choix des ingrédients qui se trouvent dans ces détails
+		document.querySelectorAll(".hidden_detail_ingredient")
+		.forEach ((hiddenInput) => {
+			// mettre l'ingredient dans la liste des ingredients à ne pas afficher dans la liste de recherche
+			// pour les détails qui sont déjà dans la BD
+			chosenIngredientsIds.push (parseInt(hiddenInput.value));
+								
+		});
+
+
+		// AJAX form submit
+		const form = document.getElementById('form_recette');
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+
+			const formData = new FormData(form);
+
+			// on pourrait générer l'url avec FOSRouting, ici on le fait à la main
+			const url = "/recette/save/" + document.getElementById('form_recette').dataset.recetteId;
+			
+
+			const response = await fetch(url, {
+				method: 'POST',
+				body: formData,
+				
+			});
+
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+
+			const data = await response.json();
+
+			// ici on affichera les erreurs de la Recette mais pour afficher les érreurs des détails il faut faire plus de traitement
+			if (!data.success && data.errors) {
+				// Display form errors
+				const errors = data.errors;
+				Object.keys(errors).forEach((name) => {
+					const field = document.getElementsByName("recette[" + name +"]")[0];
+
+					const errorContainer = field.closest("div").querySelector(".form-error")
+					errorContainer.textContent = errors[name];
+				});
+			} else {
+				// les changements sont stockés, faire quoi qui ce soit
+				alert("update ok, décider quoi faire dans le DOM ici");
+			}
+		
+		});
+
+
+
+	});
+	</script>
+
+	<style>
+	/* css à déplacer en utilisant assets ou webpack */
+	.search-container {
+	position: relative;
+	margin-top: 20px;
+	}
+
+	.search-container input[type="text"] {
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	outline: none;
+	}
+
+	.search-results {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 999;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-top: none;
+	border-radius: 0 0 4px 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.search-results li {
+	padding: 10px;
+	cursor: pointer;
+	}
+
+	.search-results li:hover {
+	background-color: #f2f2f2;
+	}
+
+	</style>
+
+	{% endblock %}
+
+{% endblock %}
+

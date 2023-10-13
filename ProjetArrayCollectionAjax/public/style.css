@@ -1,0 +1,16 @@
+.container-div {
+    
+    background-color: transparent;/* Opacité à 80% */
+    padding: 20px;
+    border-radius: 10px;
+    padding-top:200px;
+    max-width: 800px; /* Largeur maximale pour éviter les problèmes d'adaptation */
+    margin: 50px auto; /* Marge automatique sur les côtés pour centrer la div */
+  }
+  
+  /* Style pour l'image de fond */
+  .background-image {
+    background-image: url('images/cuisine.jpg');
+    background-size: cover;
+    height: 100vh; /* Hauteur de l'image de fond égale à la hauteur de l'écran */
+  }
