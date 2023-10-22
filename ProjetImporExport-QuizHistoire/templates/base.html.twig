@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {# <nav class="crumbs">
+            <ol>
+                <li class="crumb">
+                    <a href="{{ path ("quiz") }}">Take a quiz!</a>
+                </li>
+                <li class="crumb">
+                    <a href="{{ path ("vue 1") }}">Ma vue 1</a>
+                </li>
+                <li class="crumb">
+                    <a href="{{ path ("vue 2") }}">Ma vue 2</a>
+                </li>
+            </ol>
+        </nav> #}
+
+        {% block body %}{% endblock %}
+    </body>
+</html>

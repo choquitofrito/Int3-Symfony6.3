@@ -1,0 +1,76 @@
+<mxfile host="Electron" modified="2023-09-20T14:32:41.088Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="dNFHnyeP383xG8q89zEf" version="21.7.5" type="device">
+  <diagram name="Page-1" id="58cdce13-f638-feb5-8d6f-7d28b1aa9fa0">
+    <mxGraphModel dx="1195" dy="697" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2of2VBa5doUOC-fRqOkc-1" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="160" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-2" value="take quiz" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="90" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-5" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="2of2VBa5doUOC-fRqOkc-1" target="2of2VBa5doUOC-fRqOkc-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="280" as="sourcePoint" />
+            <mxPoint x="570" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-6" value="propose new database item" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-7" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" target="2of2VBa5doUOC-fRqOkc-6" source="2of2VBa5doUOC-fRqOkc-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="160" y="320" as="sourcePoint" />
+            <mxPoint x="570" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-8" value="have an open &lt;br&gt;login session" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="240" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-10" value="create account" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="880" y="240" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-12" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;" edge="1" parent="1" source="2of2VBa5doUOC-fRqOkc-6" target="2of2VBa5doUOC-fRqOkc-8">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="470" y="260" as="sourcePoint" />
+            <mxPoint x="630" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-13" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;" edge="1" parent="1" source="2of2VBa5doUOC-fRqOkc-8" target="2of2VBa5doUOC-fRqOkc-10">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="740" y="279.58" as="sourcePoint" />
+            <mxPoint x="880" y="279.58" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-14" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-16" value="" style="endArrow=block;startArrow=none;endFill=0;startFill=0;endSize=8;html=1;verticalAlign=bottom;dashed=1;labelBackgroundColor=none;rounded=0;" edge="1" parent="1" source="2of2VBa5doUOC-fRqOkc-14" target="2of2VBa5doUOC-fRqOkc-1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="95" y="390" as="sourcePoint" />
+            <mxPoint x="100" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-18" value="approve newly proposed db item" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="390" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-19" value="manage database" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="390" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-20" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="2of2VBa5doUOC-fRqOkc-14" target="2of2VBa5doUOC-fRqOkc-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="436" as="sourcePoint" />
+            <mxPoint x="372" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2of2VBa5doUOC-fRqOkc-21" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;" edge="1" parent="1" source="2of2VBa5doUOC-fRqOkc-18" target="2of2VBa5doUOC-fRqOkc-19">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="490" y="429.58000000000004" as="sourcePoint" />
+            <mxPoint x="600" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

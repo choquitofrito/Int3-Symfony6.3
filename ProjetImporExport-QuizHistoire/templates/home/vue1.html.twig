@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vue 1{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('vue1') }}
+{% endblock %}
+
+{% block body %}
+
+Je suis la vue 1.
+
+{# tutorial: https://getbootstrap.com/docs/5.3/components/card/ #}
+<div class="card" style="width: 18rem;">
+    <img src="/images/1910_Tragic Atmosphere.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Painting</h5>
+        <p class="card-text">I love Marianne Werefkin.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+
+{% endblock %}

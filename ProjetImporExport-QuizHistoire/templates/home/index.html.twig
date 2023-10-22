@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+	
+	<header>
+		<h1 class="col d-flex justify-content-center">Welcome to History Quiz!</h1>
+		<br/>
+	</header>
+
+	<div class="col d-flex justify-content-center">
+		<div class="card text-center" style="width: 24rem;">
+			<div class="card-body">
+				<h5 class="card-title">Are you ready to take the challenge?</h5>
+				<p class="card-text">Click on the link below to start playing.<br/>Enjoy!</p>
+				<a href="{{ path ("quiz") }}" class="btn btn-primary" {#class="card-link"#}>TAKE A QUIZ</a>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

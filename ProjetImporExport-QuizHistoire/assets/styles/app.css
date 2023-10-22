@@ -1,0 +1,25 @@
+body {
+    background-color: lightgray;
+}
+
+.option {
+    cursor: pointer;
+}
+
+.green-border {
+    border: 0.5rem;
+    border-color: limegreen;
+    border-style: groove;
+}
+
+.red-border {
+    border: 0.5rem;
+    border-color: red;
+    border-style: groove;
+}
+
+.dotted-green-border {
+    border: 0.5rem;
+    border-color: lime;
+    border-style: dotted;
+}
